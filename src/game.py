@@ -1,6 +1,8 @@
 import pygame
 import pytmx
 import pyscroll
+
+from src.map import MapManager
 from src.player import Player
 
 
@@ -12,8 +14,12 @@ class Game:
         self.screen = pygame.display.set_mode((800, 800))
         pygame.display.set_caption("Lettres")
 
-        # charger la carte
-        tmx_data = pytmx.util_pygame.load_pygame('../Lettres/map/map.tmx')
+        # générer le joueur
+        self.player = Player(0, 0)
+        self.map_manager = MapManager(self.screen, self.player)
+
+        """"# charger la carte
+        tmx_data = pytmx.util_pygame.load_pygame('../Lettres/map/world1.tmx')
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 2
@@ -30,15 +36,10 @@ class Game:
 
         # groupes de calques
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
-        self.group.add(self.player)
-
+        self.group.add(self.player)"""
 
     def update(self):
-        self.group.update()
-
-        for sprite in self.group.sprites():
-            if sprite.feet.collidelist(self.walls) > -1:
-                sprite.move_back()
+        self.map_manager.update()
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
@@ -56,7 +57,6 @@ class Game:
             self.player.move_right()
             self.player.change_animation('right')
 
-
     def run(self):
 
         # pour les fps
@@ -69,8 +69,7 @@ class Game:
             self.player.save_location()
             self.handle_input()
             self.update()
-            self.group.center(self.player.rect)
-            self.group.draw(self.screen)
+            self.map_manager.draw()
             pygame.display.flip()
 
             for event in pygame.event.get():
