@@ -15,7 +15,7 @@ class Game:
         pygame.display.set_caption("Lettres")
 
         # générer le joueur
-        self.player = Player(0, 0)
+        self.player = Player()
         self.map_manager = MapManager(self.screen, self.player)
 
         """"# charger la carte
