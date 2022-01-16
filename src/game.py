@@ -1,7 +1,7 @@
 import pygame
 import pytmx
 import pyscroll
-from player import Player
+from src.player import Player
 
 
 class Game:
@@ -13,7 +13,7 @@ class Game:
         pygame.display.set_caption("Lettres")
 
         # charger la carte
-        tmx_data = pytmx.util_pygame.load_pygame('test.tmx')
+        tmx_data = pytmx.util_pygame.load_pygame('../Lettres/map/map.tmx')
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 2
@@ -29,7 +29,7 @@ class Game:
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         # groupes de calques
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=1)
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
         self.group.add(self.player)
 
 
