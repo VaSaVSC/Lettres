@@ -50,11 +50,13 @@ class Player(Entity):
 
 class PNJ(Entity):
 
-    def __init__(self, name, nb_points):
+    def __init__(self, name, nb_points, speed, dialog):
         super().__init__(name, 0, 0)
         self.nb_points = nb_points
         self.name = name
-        self.speed = 1
+        self.dialog = dialog
+        self.speed = speed
+        self.base_speed = speed
         self.points = []
         self.current_point = 0
 

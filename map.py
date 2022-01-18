@@ -37,13 +37,18 @@ class MapManager:
             Portal(origin="world1", origin_point="w1_h1_enter",
                    dest="world1_house1", dest_point="w1_h1_enterP")
         ],  pnjs=[
-            PNJ("paul", nb_points=4)])
+            PNJ("paul", nb_points=4, speed=1, dialog=["Yo bg tu fais quoi ajd????", "lol", "xDDDDDDDDDDDDDDDDDDDD"])])
         self.register_map("world1_house1", portals=[
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
                    dest="world1", dest_point="w1_h1_exitP")
         ])
         self.tp_player("player")
         self.tp_pnjs()
+
+    def check_pnj_collisions(self, dialog_box):
+        for sprite in self.get_group().sprites():
+            if sprite.feet.colliderect(self.player.rect) and type(sprite) is PNJ:
+                dialog_box.execute(sprite.dialog)
 
     def check_collisions(self):
         #portails
@@ -58,12 +63,14 @@ class MapManager:
                     self.tp_player(copy_portal.dest_point)
 
         # collisions
+        pnj_speed = []
         for sprite in self.get_group().sprites():
             if type(sprite) is PNJ:
+                pnj_speed.append(sprite.speed)
                 if sprite.feet.colliderect(self.player.rect):
                     sprite.speed = 0
                 else:
-                    sprite.speed = 1
+                    sprite.speed = sprite.base_speed
 
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
