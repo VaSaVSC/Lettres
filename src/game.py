@@ -2,6 +2,7 @@ import pygame
 import pytmx
 import pyscroll
 
+from src.dialog import DialogBox
 from src.map import MapManager
 from src.player import Player
 
@@ -17,6 +18,7 @@ class Game:
         # générer le joueur
         self.player = Player()
         self.map_manager = MapManager(self.screen, self.player)
+        self.dialog_box = DialogBox()
 
     def update(self):
         self.map_manager.update()
@@ -46,6 +48,7 @@ class Game:
             self.handle_input()
             self.update()
             self.map_manager.draw()
+            self.dialog_box.render(self.screen)
             pygame.display.flip()
 
             for event in pygame.event.get():
