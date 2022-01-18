@@ -291,7 +291,7 @@
  <objectgroup id="13" name="PNJPaths">
   <object id="31" name="paul_path1" x="97" y="433" width="13.5" height="14"/>
   <object id="32" name="paul_path2" x="288.5" y="432" width="15.5" height="16.5"/>
-  <object id="33" name="paul_path3" x="288.5" y="465" width="14.5" height="14.5"/>
-  <object id="34" name="paul_path4" x="97.5" y="464.5" width="14.5" height="16"/>
+  <object id="33" name="paul_path3" x="288.5" y="512" width="14.5" height="14.5"/>
+  <object id="34" name="paul_path4" x="96.5" y="511.5" width="14.5" height="16"/>
  </objectgroup>
 </map>

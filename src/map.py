@@ -43,6 +43,7 @@ class MapManager:
                    dest="world1", dest_point="w1_h1_exitP")
         ])
         self.tp_player("player")
+        self.tp_pnjs()
 
     def check_collisions(self):
         #portails
@@ -58,6 +59,9 @@ class MapManager:
 
         # collisions
         for sprite in self.get_group().sprites():
+            #if type(sprite) is PNJ:
+             #   if sprite.feet.colliderect(self.player.rect):
+
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
 
@@ -100,6 +104,15 @@ class MapManager:
     def get_object(self, name):
         return self.get_map().tmx_data.get_object_by_name(name)
 
+    def tp_pnjs(self):
+        for m in self.maps:
+            map_data = self.maps[m]
+            pnjs = map_data.pnjs
+
+            for pnj in pnjs:
+                pnj.load_points(map_data.tmx_data)
+                pnj.tp_spawn()
+
     def draw(self):
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
@@ -107,3 +120,6 @@ class MapManager:
     def update(self):
         self.get_group().update()
         self.check_collisions()
+
+        for pnj in self.get_map().pnjs:
+            pnj.move()
