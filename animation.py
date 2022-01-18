@@ -5,7 +5,7 @@ class AnimateSprite(pygame.sprite.Sprite):
 
     def __init__(self, name):
         super().__init__()
-        self.sprite_sheet = pygame.image.load(f"../Lettres/sprites/{name}.png")
+        self.sprite_sheet = pygame.image.load(f"./sprites/{name}.png")
         self.animation_index = 0
         self.animation_bool = True
         self.speed = 3

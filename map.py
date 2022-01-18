@@ -4,7 +4,7 @@ import pytmx
 import pyscroll
 from typing import List
 
-from src.player import PNJ
+from player import PNJ
 
 
 @dataclass
@@ -76,7 +76,7 @@ class MapManager:
 
     def register_map(self, name, portals=[], pnjs=[]):
         # charger la carte
-        tmx_data = pytmx.util_pygame.load_pygame(f"../Lettres/map/{name}.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame(f"./map/{name}.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 2
