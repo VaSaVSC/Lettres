@@ -1,9 +1,13 @@
+import fnmatch
 from dataclasses import dataclass
 import pygame
 import pytmx
 import pyscroll
+import os
+
 from typing import List
 
+from interactive_obj import Obj
 from player import PNJ
 
 
@@ -23,7 +27,15 @@ class Map:
     tmx_data: pytmx.TiledMap
     portals: List[Portal]
     pnjs: List[PNJ]
-    #texts: List[Text]
+    texts: dict()
+    interactive_obj: List[Obj]
+
+
+def check_type(type, type_list):
+    for e in type_list:
+        if e == type:
+            return True
+    return False
 
 
 class MapManager:
@@ -56,10 +68,16 @@ class MapManager:
     def check_pnj_collisions(self, dialog_box):
         for sprite in self.get_group().sprites():
             if sprite.feet.colliderect(self.player.rect) and type(sprite) is PNJ:
-                dialog_box.execute(sprite.dialog)
+                dialog_box.execute(sprite.refact_name, sprite.dialog)
+
+    def check_interactive_obj_collisions(self, dialog_box):
+        for obj in self.get_map().interactive_obj:
+            if obj.rect.colliderect(self.player.rect):
+                dialog_box.execute(obj.refact_name, obj.dialog)
 
     def check_collisions(self):
-        #portails
+
+        # portails
         for portal in self.get_map().portals:
             if portal.origin == self.current_map:
                 point = self.get_object(portal.origin_point)
@@ -90,6 +108,34 @@ class MapManager:
         self.player.save_location()
 
     def register_map(self, name, portals=[], pnjs=[]):
+
+        type_list = {'panel'}
+
+        # charger les textes
+        texts = dict()
+        for filename in os.listdir("texts"):
+            if fnmatch.fnmatch(filename, f'{name}.txt'):
+                with open(f'./texts/{filename}') as data:
+                    s = ""
+                    str = []
+                    b = False
+                    for line in data:
+                        line = line.rstrip('\n')
+                        if len(line) == 0:
+                            continue
+                        if line[len(line)-1] == ':':
+                            if b:
+                                texts[s] = str
+                                str = []
+                            else:
+                                b = True
+                            string = line.split(':')
+                            s = string[0]
+                            texts[s] = ""
+                        else:
+                            str.append(line)
+                    texts[s] = str
+
         # charger la carte
         tmx_data = pytmx.util_pygame.load_pygame(f"./map/{name}.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
@@ -97,9 +143,12 @@ class MapManager:
         map_layer.zoom = 2
 
         walls = []
+        interactive_obj = []
         for obj in tmx_data.objects:
             if obj.type == "collisions":
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+            if check_type(obj.type, type_list):
+                interactive_obj.append(Obj(obj.name, obj.type, texts[obj.name], obj.x, obj.y, obj.width, obj.height))
 
         # groupes de calques
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
@@ -108,7 +157,7 @@ class MapManager:
             group.add(pnj)
 
         # nouveau Map obj
-        self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs)
+        self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs, texts, interactive_obj)
 
     def get_map(self):
         return self.maps[self.current_map]

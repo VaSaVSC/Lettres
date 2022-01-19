@@ -55,6 +55,7 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.map_manager.check_pnj_collisions(self.dialog_box)
+                        self.map_manager.check_interactive_obj_collisions(self.dialog_box)
 
             clock.tick(60)
 

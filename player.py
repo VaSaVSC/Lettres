@@ -54,11 +54,16 @@ class PNJ(Entity):
         super().__init__(name, 0, 0)
         self.nb_points = nb_points
         self.name = name
+        self.refact_name = self.refactor(name)
         self.dialog = dialog
         self.speed = speed
         self.base_speed = speed
         self.points = []
         self.current_point = 0
+
+    def refactor(self, name):
+        name = name[0].upper() + name[1:]
+        return name
 
     def move(self):
         current_point = self.current_point
