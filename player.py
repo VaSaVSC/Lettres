@@ -5,7 +5,7 @@ from animation import AnimateSprite
 
 class Entity(AnimateSprite):
 
-    def __init__(self, name, x, y):
+    def __init__(self, name, x, y, life):
         super().__init__(name)
         self.image = self.get_image(0, 0)
         self.image.set_colorkey([0, 0, 0])
@@ -13,6 +13,8 @@ class Entity(AnimateSprite):
         self.position = [x, y]
         self.feet = pygame.Rect(0, 0, self.rect.width*0.5, 12)
         self.old_position = self.position.copy()
+        self.life = life
+        self.max_life = life
 
     def save_location(self): self.old_position = self.position.copy()
 
@@ -45,17 +47,17 @@ class Entity(AnimateSprite):
 class Player(Entity):
 
     def __init__(self):
-        super().__init__("player", 0, 0)
+        super().__init__("player", 0, 0, 5)
 
 
 class PNJ(Entity):
 
-    def __init__(self, name, nb_points, speed, dialog):
-        super().__init__(name, 0, 0)
+    def __init__(self, name, nb_points, speed):
+        super().__init__(name, 0, 0, 1)
         self.nb_points = nb_points
         self.name = name
         self.refact_name = self.refactor(name)
-        self.dialog = dialog
+        self.dialog = ""
         self.speed = speed
         self.base_speed = speed
         self.points = []

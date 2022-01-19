@@ -13,4 +13,4 @@ class Obj:
     def refactor(self, name):
         if self.type == "panel":
             numb = name[len(name)-1]
-            return "Panneau "+ numb
+            return "Panneau " + numb

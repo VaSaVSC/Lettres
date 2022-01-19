@@ -35,7 +35,7 @@ class DialogBox:
             text = self.font.render(self.texts[self.text_index][0:self.letter_index], False, (0, 0, 0))
             screen.blit(text, (self.X_POS + 50, self.Y_POS + 40))
             n = self.font.render(self.name, False, (0, 0, 0))
-            screen.blit(n , (self.X_POS + 50, self.Y_POS + 10))
+            screen.blit(n, (self.X_POS + 50, self.Y_POS + 10))
 
     def next_text(self):
         self.text_index += 1

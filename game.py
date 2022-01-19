@@ -18,6 +18,9 @@ class Game:
         self.map_manager = MapManager(self.screen, self.player)
         self.dialog_box = DialogBox()
 
+        self.hair = pygame.image.load("./ath_assets/meche.png")
+        self.hair = pygame.transform.scale(self.hair, (64, 64))
+
     def update(self):
         self.map_manager.update()
 
@@ -25,13 +28,21 @@ class Game:
         pressed = pygame.key.get_pressed()
 
         if pressed[pygame.K_UP]:
+            self.dialog_box.reading = False
             self.player.move_up()
         elif pressed[pygame.K_DOWN]:
+            self.dialog_box.reading = False
             self.player.move_down()
         elif pressed[pygame.K_LEFT]:
+            self.dialog_box.reading = False
             self.player.move_left()
         elif pressed[pygame.K_RIGHT]:
+            self.dialog_box.reading = False
             self.player.move_right()
+
+    def life_update(self):
+        for i in range(self.player.life):
+            self.screen.blit(self.hair, (50 + i*48, 30))
 
     def run(self):
 
@@ -39,7 +50,6 @@ class Game:
         clock = pygame.time.Clock()
 
         running = True
-
         while running:
 
             self.player.save_location()
@@ -47,6 +57,7 @@ class Game:
             self.update()
             self.map_manager.draw()
             self.dialog_box.render(self.screen)
+            self.life_update()
             pygame.display.flip()
 
             for event in pygame.event.get():

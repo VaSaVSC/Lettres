@@ -57,13 +57,15 @@ class MapManager:
             Portal(origin="world1", origin_point="s_w1_enter",
                    dest="start", dest_point="s_w1_enterP")
         ],  pnjs=[
-            PNJ("paul", nb_points=4, speed=1, dialog=["Marc Dutroux?!?!?", "lol", "xDDDDDDDDDDDDDDDDDDDD"])])
+            PNJ("paul", nb_points=4, speed=1)])
+
         self.register_map("world1_house1", portals=[
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
                    dest="world1", dest_point="w1_h1_exitP")
         ])
         self.tp_player("player")
         self.tp_pnjs()
+
 
     def check_pnj_collisions(self, dialog_box):
         for sprite in self.get_group().sprites():
@@ -154,6 +156,7 @@ class MapManager:
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
         group.add(self.player)
         for pnj in pnjs:
+            pnj.dialog = texts[pnj.name]
             group.add(pnj)
 
         # nouveau Map obj
