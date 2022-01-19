@@ -23,6 +23,7 @@ class Map:
     tmx_data: pytmx.TiledMap
     portals: List[Portal]
     pnjs: List[PNJ]
+    #texts: List[Text]
 
 
 class MapManager:
@@ -31,13 +32,20 @@ class MapManager:
         self.maps = dict()
         self.screen = screen
         self.player = player
-        self.current_map = "world1"
+        self.current_map = "start"
+
+        self.register_map("start", portals=[
+            Portal(origin="start", origin_point="s_w1_exit",
+                   dest="world1", dest_point="s_w1_exitP")
+        ])
 
         self.register_map("world1", portals=[
             Portal(origin="world1", origin_point="w1_h1_enter",
-                   dest="world1_house1", dest_point="w1_h1_enterP")
+                   dest="world1_house1", dest_point="w1_h1_enterP"),
+            Portal(origin="world1", origin_point="s_w1_enter",
+                   dest="start", dest_point="s_w1_enterP")
         ],  pnjs=[
-            PNJ("paul", nb_points=4, speed=1, dialog=["Yo bg tu fais quoi ajd????", "lol", "xDDDDDDDDDDDDDDDDDDDD"])])
+            PNJ("paul", nb_points=4, speed=1, dialog=["Marc Dutroux?!?!?", "lol", "xDDDDDDDDDDDDDDDDDDDD"])])
         self.register_map("world1_house1", portals=[
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
                    dest="world1", dest_point="w1_h1_exitP")
