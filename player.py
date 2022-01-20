@@ -50,22 +50,23 @@ class Player(Entity):
         super().__init__("player", 0, 0, 5)
 
 
+def refactor(name):
+    name = name[0].upper() + name[1:]
+    return name
+
+
 class PNJ(Entity):
 
     def __init__(self, name, nb_points, speed):
         super().__init__(name, 0, 0, 1)
         self.nb_points = nb_points
         self.name = name
-        self.refact_name = self.refactor(name)
+        self.refact_name = refactor(name)
         self.dialog = ""
         self.speed = speed
         self.base_speed = speed
         self.points = []
         self.current_point = 0
-
-    def refactor(self, name):
-        name = name[0].upper() + name[1:]
-        return name
 
     def move(self):
         current_point = self.current_point

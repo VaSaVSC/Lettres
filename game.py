@@ -21,6 +21,9 @@ class Game:
         self.hair = pygame.image.load("./ath_assets/meche.png")
         self.hair = pygame.transform.scale(self.hair, (64, 64))
 
+        self.item = pygame.image.load("./items/item.png")
+        self.item = pygame.transform.scale(self.item, (32, 32))
+
     def update(self):
         self.map_manager.update()
 

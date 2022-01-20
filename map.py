@@ -8,6 +8,7 @@ import os
 from typing import List
 
 from interactive_obj import Obj
+from inventory import Item
 from player import PNJ
 
 
@@ -29,11 +30,12 @@ class Map:
     pnjs: List[PNJ]
     texts: dict()
     interactive_obj: List[Obj]
+    items: List[Item]
 
 
-def check_type(type, type_list):
+def check_type(type_t, type_list):
     for e in type_list:
-        if e == type:
+        if e == type_t:
             return True
     return False
 
@@ -62,10 +64,11 @@ class MapManager:
         self.register_map("world1_house1", portals=[
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
                    dest="world1", dest_point="w1_h1_exitP")
+        ],  pnjs=[
+            PNJ("andreas", nb_points=4, speed=2)
         ])
         self.tp_player("player")
         self.tp_pnjs()
-
 
     def check_pnj_collisions(self, dialog_box):
         for sprite in self.get_group().sprites():
@@ -100,17 +103,23 @@ class MapManager:
                 else:
                     sprite.speed = sprite.base_speed
 
-            if sprite.feet.collidelist(self.get_walls()) > -1:
+            if sprite.feet.collidelist(self.get_walls()) > -1 and type(sprite) != Item:
                 sprite.move_back()
+
+            if type(sprite) == Item and sprite.feet.colliderect(self.player.rect):
+                self.player.move_back()
 
     def tp_player(self, name):
         point = self.get_object(name)
         self.player.position[0] = point.x
         self.player.position[1] = point.y
         self.player.save_location()
+        self.tp_items()
 
-    def register_map(self, name, portals=[], pnjs=[]):
+    def register_map(self, name, portals=[], pnjs=[], items=[]):
 
+        if items is None:
+            items = []
         type_list = {'panel'}
 
         # charger les textes
@@ -151,6 +160,8 @@ class MapManager:
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
             if check_type(obj.type, type_list):
                 interactive_obj.append(Obj(obj.name, obj.type, texts[obj.name], obj.x, obj.y, obj.width, obj.height))
+            if obj.type == "item":
+                items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height)))
 
         # groupes de calques
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
@@ -158,9 +169,11 @@ class MapManager:
         for pnj in pnjs:
             pnj.dialog = texts[pnj.name]
             group.add(pnj)
+        for i in items:
+            group.add(i)
 
         # nouveau Map obj
-        self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs, texts, interactive_obj)
+        self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs, texts, interactive_obj, items)
 
     def get_map(self):
         return self.maps[self.current_map]
@@ -182,6 +195,13 @@ class MapManager:
             for pnj in pnjs:
                 pnj.load_points(map_data.tmx_data)
                 pnj.tp_spawn()
+
+    def tp_items(self):
+        for i in self.get_map().items:
+            if i.should_appear:
+                i.tp_spawn()
+            else:
+                i.position = [None] * 2
 
     def draw(self):
         self.get_group().draw(self.screen)
