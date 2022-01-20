@@ -1,6 +1,7 @@
 import pygame
 
 from dialog import DialogBox
+from inventory import Inventory
 from map import MapManager
 from player import Player
 
@@ -15,7 +16,8 @@ class Game:
 
         # générer le joueur
         self.player = Player()
-        self.map_manager = MapManager(self.screen, self.player)
+        self.inventory = Inventory()
+        self.map_manager = MapManager(self.screen, self.player, self.inventory)
         self.dialog_box = DialogBox()
 
         self.hair = pygame.image.load("./ath_assets/meche.png")

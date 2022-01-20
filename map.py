@@ -42,10 +42,11 @@ def check_type(type_t, type_list):
 
 class MapManager:
 
-    def __init__(self, screen, player):
+    def __init__(self, screen, player, inventory):
         self.maps = dict()
         self.screen = screen
         self.player = player
+        self.inventory = inventory
         self.current_map = "start"
 
         self.register_map("start", portals=[
@@ -74,11 +75,13 @@ class MapManager:
         for sprite in self.get_group().sprites():
             if type(sprite) == PNJ and sprite.feet.colliderect(self.player.rect):
                 dialog_box.execute(sprite.refact_name, False, sprite.dialog)
-            if type(sprite) == Item and sprite.feet.colliderect(self.player.rect):
+            if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False
                 sprite.is_carried = True
-                #self.tp_items()
+                self.inventory.add_item(sprite)
+                self.get_group().remove(sprite)
+                self.tp_items()
 
     def check_interactive_obj_collisions(self, dialog_box):
         for obj in self.get_map().interactive_obj:
@@ -114,6 +117,7 @@ class MapManager:
             if type(sprite) == Item and sprite.feet.colliderect(self.player.rect):
                 self.player.move_back()
                 sprite.move_back()
+                sprite.can_be_carried = True
 
     def tp_player(self, name):
         point = self.get_object(name)

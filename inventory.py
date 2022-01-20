@@ -10,6 +10,7 @@ class Item(pygame.sprite.Sprite):
         self.dialog = ""
         self.should_appear = should_appear
         self.is_carried = False
+        self.can_be_carried = False
         self.rect = rect
         self.position = [0, 0]
         self.tp_spawn()

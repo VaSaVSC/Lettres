@@ -48,6 +48,7 @@ class Player(Entity):
 
     def __init__(self):
         super().__init__("player", 0, 0, 5)
+        self.name = "player"
 
 
 def refactor(name):
