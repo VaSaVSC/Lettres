@@ -12,7 +12,7 @@ class Game:
 
         # affichage de la fenêtre du jeu
         self.screen = pygame.display.set_mode((800, 800))
-        pygame.display.set_caption("Lettres")
+        pygame.display.set_caption("Gobzer vs Calvoche")
 
         # générer le joueur
         self.player = Player()

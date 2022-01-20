@@ -86,7 +86,7 @@ class MapManager:
     def check_interactive_obj_collisions(self, dialog_box):
         for obj in self.get_map().interactive_obj:
             if obj.rect.colliderect(self.player.rect):
-                dialog_box.execute(obj.refact_name, obj.dialog)
+                dialog_box.execute(obj.refact_name, False, obj.dialog)
 
     def check_collisions(self):
 
