@@ -12,11 +12,13 @@ class DialogBox:
         self.texts = []
         self.text_index = 0
         self.letter_index = 0
+        self.is_item = False
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 18)
         self.reading = False
         self.name = ""
 
-    def execute(self, name, dialog=[]):
+    def execute(self, name, is_item, dialog=[]):
+        self.is_item = is_item
         if self.reading:
             self.next_text()
         else:
@@ -34,8 +36,9 @@ class DialogBox:
             screen.blit(self.box, (self.X_POS, self.Y_POS))
             text = self.font.render(self.texts[self.text_index][0:self.letter_index], False, (0, 0, 0))
             screen.blit(text, (self.X_POS + 50, self.Y_POS + 40))
-            n = self.font.render(self.name, False, (0, 0, 0))
-            screen.blit(n, (self.X_POS + 50, self.Y_POS + 10))
+            if not self.is_item:
+                n = self.font.render(self.name, False, (0, 0, 0))
+                screen.blit(n, (self.X_POS + 50, self.Y_POS + 10))
 
     def next_text(self):
         self.text_index += 1

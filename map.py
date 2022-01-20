@@ -72,8 +72,13 @@ class MapManager:
 
     def check_pnj_collisions(self, dialog_box):
         for sprite in self.get_group().sprites():
-            if sprite.feet.colliderect(self.player.rect) and type(sprite) is PNJ:
-                dialog_box.execute(sprite.refact_name, sprite.dialog)
+            if type(sprite) == PNJ and sprite.feet.colliderect(self.player.rect):
+                dialog_box.execute(sprite.refact_name, False, sprite.dialog)
+            if type(sprite) == Item and sprite.feet.colliderect(self.player.rect):
+                dialog_box.execute(sprite.name, True, sprite.dialog)
+                sprite.should_appear = False
+                sprite.is_carried = True
+                #self.tp_items()
 
     def check_interactive_obj_collisions(self, dialog_box):
         for obj in self.get_map().interactive_obj:
@@ -108,6 +113,7 @@ class MapManager:
 
             if type(sprite) == Item and sprite.feet.colliderect(self.player.rect):
                 self.player.move_back()
+                sprite.move_back()
 
     def tp_player(self, name):
         point = self.get_object(name)
@@ -116,10 +122,8 @@ class MapManager:
         self.player.save_location()
         self.tp_items()
 
-    def register_map(self, name, portals=[], pnjs=[], items=[]):
+    def register_map(self, name, portals=[], pnjs=[]):
 
-        if items is None:
-            items = []
         type_list = {'panel'}
 
         # charger les textes
@@ -155,6 +159,7 @@ class MapManager:
 
         walls = []
         interactive_obj = []
+        items = []
         for obj in tmx_data.objects:
             if obj.type == "collisions":
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
@@ -170,6 +175,7 @@ class MapManager:
             pnj.dialog = texts[pnj.name]
             group.add(pnj)
         for i in items:
+            i.dialog = texts[i.name]
             group.add(i)
 
         # nouveau Map obj

@@ -1,3 +1,6 @@
 andreas:
 Salut je suis nu :o
 Trouve moi de quoi m'habiller!
+
+old_carapils:
+Vous avez trouvez l'objet "vieille cara" !
