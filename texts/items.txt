@@ -1,0 +1,11 @@
+old_carapils:
+Vieille Cara;
+Une bière blonde excellente,
+dont le goût a malheureusement
+été altéré par le temps.
+Son effet est aléatoire.
+
+null:
+Vide compact;
+Du vide, donc pas grand
+chose d'intéressant...

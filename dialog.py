@@ -6,14 +6,16 @@ class DialogBox:
     X_POS = 40
     Y_POS = 680
 
-    def __init__(self):
+    def __init__(self, box):
+
+        self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 18)
         self.box = pygame.image.load("./dialogs/dialog_box.png")
+        self.box = box
         self.box = pygame.transform.scale(self.box, (750, 100))
         self.texts = []
         self.text_index = 0
         self.letter_index = 0
         self.is_item = False
-        self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 18)
         self.reading = False
         self.name = ""
 

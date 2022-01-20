@@ -47,6 +47,7 @@ class MapManager:
         self.screen = screen
         self.player = player
         self.inventory = inventory
+        self.load_items()
         self.current_map = "start"
 
         self.register_map("start", portals=[
@@ -70,6 +71,31 @@ class MapManager:
         ])
         self.tp_player("player")
         self.tp_pnjs()
+
+    def load_items(self):
+        with open("./texts/items.txt") as data:
+            s = ""
+            str = []
+            b = False
+            for line in data:
+                line = line.rstrip('\n')
+                if len(line) == 0:
+                    continue
+                if line[len(line) - 1] == ':':
+                    if b:
+                        self.inventory.all_items[s] = str
+                    else:
+                        b = True
+                    str = line.split(':')
+                    s = str[0]
+                    self.inventory.all_items[s] = ""
+                elif line[len(line) - 1] == ';':
+                    str = line.split(';')
+                    self.inventory.all_items[s+"_refact"] = str[0]
+                    str = []
+                else:
+                    str.append(line)
+            self.inventory.all_items[s] = str
 
     def check_pnj_collisions(self, dialog_box):
         for sprite in self.get_group().sprites():
@@ -142,7 +168,7 @@ class MapManager:
                         line = line.rstrip('\n')
                         if len(line) == 0:
                             continue
-                        if line[len(line)-1] == ':':
+                        if line[len(line) - 1] == ':':
                             if b:
                                 texts[s] = str
                                 str = []

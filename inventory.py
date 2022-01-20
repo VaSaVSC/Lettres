@@ -6,7 +6,8 @@ class Item(pygame.sprite.Sprite):
     def __init__(self, name, should_appear, rect):
         super().__init__()
         self.name = name
-        self.info = ""
+        self.refact_name = ""
+        self.info = []
         self.dialog = ""
         self.should_appear = should_appear
         self.is_carried = False
@@ -19,6 +20,8 @@ class Item(pygame.sprite.Sprite):
         self.image = pygame.image.load("./items/item.png")
         self.image = pygame.transform.scale(self.image, (32, 32))
         self.image.set_colorkey([0, 0, 0])
+        self.number = 0
+        self.index = 0
 
     def tp_spawn(self):
         location = self.rect
@@ -35,7 +38,26 @@ class Inventory(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.items = dict()
+        self.items = []
+        self.all_items = dict()
 
     def add_item(self, item):
-        self.items[item.name] = item
+        b = False
+        index = 0
+        for i in self.items:
+            if i.name == item.name:
+                b = True
+                index = item.index
+        if b:
+            self.items[index].number += 1
+        else:
+            item.number += 1
+            item.refact_name = self.all_items[item.name+"_refact"]
+            item.info = self.all_items[item.name]
+            item.index = len(self.items)
+            self.items.append(item)
+
+    def remove_item(self, item):
+        item.number -= 1
+        if item.number == 0:
+            self.items.remove(item)

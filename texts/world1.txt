@@ -5,3 +5,6 @@ Et toi?
 
 old_carapils:
 Vous avez trouvez l'objet "vieille cara" !
+
+null:
+Vous avez trouvez du vide !
