@@ -31,6 +31,7 @@ class Map:
     texts: dict()
     interactive_obj: List[Obj]
     items: List[Item]
+    collide: List[pygame.Rect]
 
 
 def check_type(type_t, type_list):
@@ -145,6 +146,9 @@ class MapManager:
                 sprite.move_back()
                 sprite.can_be_carried = True
 
+        if self.player.feet.collidelist(self.get_map().collide) > -1:
+            self.player.move_back()
+
     def tp_player(self, name):
         point = self.get_object(name)
         self.player.position[0] = point.x
@@ -183,6 +187,20 @@ class MapManager:
 
         # charger la carte
         tmx_data = pytmx.util_pygame.load_pygame(f"./map/{name}.tmx")
+        index = []
+        acc = 0
+        for ln in tmx_data.layernames:
+            if "XXX" in ln:
+                index.append(acc)
+            acc += 1
+
+        collide = []
+        for i in index:
+            for x in range(tmx_data.width):
+                for y in range(tmx_data.height):
+                    if tmx_data.get_tile_image(x, y, i) is not None:
+                        collide.append(pygame.rect.Rect(x*16, y*16, 16, 16))
+
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 2
@@ -209,7 +227,8 @@ class MapManager:
             group.add(i)
 
         # nouveau Map obj
-        self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs, texts, interactive_obj, items)
+        self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs, texts,
+                              interactive_obj, items, collide)
 
     def get_map(self):
         return self.maps[self.current_map]

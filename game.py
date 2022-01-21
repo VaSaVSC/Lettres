@@ -97,11 +97,11 @@ class Game:
             self.screen.blit(self.inventory_display, (40, 100))
             self.screen.blit(self.box, (self.X_POS, self.Y_POS))
             n = self.font.render(self.man_inventory1, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 20))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 60))
             n = self.font.render(self.man_inventory2, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 50))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 90))
             n = self.font.render(self.man_inventory3, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 80))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 120))
             if len(self.inventory.items) > 0:
                 self.blit_inventory(self.inventory_index)
 
