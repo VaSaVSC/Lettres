@@ -62,7 +62,8 @@ class MapManager:
             Portal(origin="world1", origin_point="s_w1_enter",
                    dest="start", dest_point="s_w1_enterP")
         ],  pnjs=[
-            PNJ("paul", nb_points=4, speed=1)])
+            PNJ("paul", nb_points=4, speed=1)
+        ])
 
         self.register_map("world1_house1", portals=[
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
@@ -70,6 +71,7 @@ class MapManager:
         ],  pnjs=[
             PNJ("andreas", nb_points=4, speed=2)
         ])
+
         self.tp_player("player")
         self.tp_pnjs()
 

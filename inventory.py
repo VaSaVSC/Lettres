@@ -1,4 +1,5 @@
 import pygame
+import random as rd
 
 
 class Item(pygame.sprite.Sprite):
@@ -32,6 +33,19 @@ class Item(pygame.sprite.Sprite):
         self.position = self.old_position
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+
+
+def use_item(item, player):
+    if item.name == "old_carapils":
+        if rd.randint(0, 100) > 95:
+            player.life -= player.life
+        elif rd.randint(0, 100) < 20:
+            player.life = player.max_life
+        elif rd.randint(0, 10) == 2:
+            player.life -= 1
+        else:
+            if player.life < player.max_life:
+                player.life += 1
 
 
 class Inventory(pygame.sprite.Sprite):

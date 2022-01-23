@@ -46,9 +46,13 @@ class Entity(AnimateSprite):
 
 class Player(Entity):
 
-    def __init__(self):
+    def __init__(self, event):
         super().__init__("player", 0, 0, 5)
         self.name = "player"
+        self.event = event
+
+    def fight_event(self):
+        pygame.event.post(self.event)
 
 
 def refactor(name):

@@ -15,3 +15,6 @@ ont ainsi été morcelés et dispersés à travers le monde!
 L'humanité toute entière (sauf les chevelus du coup)
 est derrière toi!
 Retrouve les morceaux des parchemins au plus vite!
+
+pizza:
+Vous trouvez un morceau de pizza !

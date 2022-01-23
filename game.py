@@ -2,7 +2,7 @@ import pygame
 import time
 
 from dialog import DialogBox
-from inventory import Inventory
+from inventory import Inventory, use_item
 from map import MapManager
 from player import Player
 
@@ -19,8 +19,11 @@ class Game:
         pygame.display.set_caption("Gobzer vs Calvoche")
 
         # générer le joueur
-        self.player = Player()
+        self.fight_event = pygame.event.Event(pygame.USEREVENT)
+        self.player = Player(self.fight_event)
+
         self.inventory = Inventory()
+
         self.map_manager = MapManager(self.screen, self.player, self.inventory)
 
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
@@ -32,6 +35,9 @@ class Game:
         self.man_inventory3 = "Z & S = item précédent/suivant"
         self.inventory_index = 0
 
+        self.fight = pygame.image.load("./ath_assets/fight_background.png")
+        self.fight = pygame.transform.scale(self.fight, (800, 800))
+
         self.hair = pygame.image.load("./ath_assets/meche.png")
         self.hair = pygame.transform.scale(self.hair, (64, 64))
 
@@ -41,7 +47,10 @@ class Game:
         self.inventory_display = pygame.image.load("./ath_assets/inventory.png")
         self.inventory_display = pygame.transform.scale(self.inventory_display, (700, 350))
         self.inventory_opened = False
+        self.fighting = False
         self.can_handle_input = True
+        self.can_handle_inventory_input = False
+        self.can_handle_fight_input = False
 
     def update(self):
         self.map_manager.update()
@@ -68,7 +77,7 @@ class Game:
             self.screen.blit(self.hair, (50 + i*48, 30))
 
     def handle_inventory_input(self):
-        if not self.can_handle_input:
+        if self.can_handle_inventory_input:
             pressed = pygame.key.get_pressed()
 
             if pressed[pygame.K_z]:
@@ -78,6 +87,10 @@ class Game:
             if pressed[pygame.K_s]:
                 if self.inventory_index < len(self.inventory.items) - 1:
                     self.inventory_index += 1
+
+            if pressed[pygame.K_a]:
+                use_item(self.inventory.items[self.inventory_index], self.player)
+                self.inventory.items[self.inventory_index].number -= 1
 
     def blit_inventory(self, index):
         name = self.inventory.items[index].refact_name
@@ -109,9 +122,21 @@ class Game:
         if self.inventory_opened:
             self.inventory_opened = False
             self.can_handle_input = True
+            self.can_handle_inventory_input = False
         else:
             self.inventory_opened = True
             self.can_handle_input = False
+            self.can_handle_inventory_input = True
+
+    def close_open_fight(self):
+        if self.fighting:
+            self.fighting = False
+            self.can_handle_input = True
+            self.can_handle_fight_input = False
+        else:
+            self.fighting = True
+            self.can_handle_input = False
+            self.can_handle_fight_input = True
 
     def run(self):
 
@@ -140,6 +165,8 @@ class Game:
                         self.map_manager.check_interactive_obj_collisions(self.dialog_box)
                     if event.key == pygame.K_e:
                         self.close_open_inventory()
+                elif event.type == self.fight_event.type:
+                    self.close_open_fight()
 
             clock.tick(60)
 

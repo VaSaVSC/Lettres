@@ -9,3 +9,8 @@ null:
 Vide compact;
 Du vide, donc pas grand
 chose d'intéressant...
+
+pizza:
+Bout de pizza;
+Un joli morceau de pizza
+4 fromages.
