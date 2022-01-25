@@ -46,6 +46,7 @@ def use_item(item, player):
         else:
             if player.life < player.max_life:
                 player.life += 1
+        return
 
 
 class Inventory(pygame.sprite.Sprite):
@@ -58,10 +59,12 @@ class Inventory(pygame.sprite.Sprite):
     def add_item(self, item):
         b = False
         index = 0
+        acc = 0
         for i in self.items:
             if i.name == item.name:
                 b = True
-                index = item.index
+                index = acc
+            acc += 1
         if b:
             self.items[index].number += 1
         else:

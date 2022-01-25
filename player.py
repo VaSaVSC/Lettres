@@ -46,10 +46,26 @@ class Entity(AnimateSprite):
 
 class Player(Entity):
 
-    def __init__(self, event):
+    def __init__(self, event, saved_location=0):
         super().__init__("player", 0, 0, 5)
         self.name = "player"
         self.event = event
+        self.hp = 10
+        self.ad = 5
+        self.ap = 0
+        self.armor = 3
+        self.rm = 2
+        self.chance = 99
+
+    def set_stats(self, hp, ad, ap, armor, rm, chance):
+        self.hp += hp
+        self.ad += ad
+        self.ap += ap
+        self.armor += armor
+        self.rm += rm
+        self.chance -= chance
+        if self.chance < 2:
+            self.chance = 2
 
     def fight_event(self):
         pygame.event.post(self.event)

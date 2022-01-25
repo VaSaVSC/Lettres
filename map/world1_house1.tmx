@@ -102,7 +102,7 @@
   <object id="14" name="w1_h1_enterP" x="189.897" y="303.623">
    <point/>
   </object>
-  <object id="22" name="old_carapils" type="item" x="80.931" y="112.14" width="14.2819" height="14.8109"/>
+  <object id="22" name="old_carapils" type="item1" x="80.931" y="112.14" width="14.2819" height="14.8109"/>
  </objectgroup>
  <objectgroup id="5" name="PNJPaths">
   <object id="17" name="andreas_path1" x="159.746" y="111.61" width="15.3399" height="15.3399"/>

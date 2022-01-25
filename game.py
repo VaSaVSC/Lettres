@@ -1,5 +1,4 @@
 import pygame
-import time
 
 from dialog import DialogBox
 from inventory import Inventory, use_item
@@ -18,18 +17,24 @@ class Game:
         self.screen = pygame.display.set_mode((800, 800))
         pygame.display.set_caption("Gobzer vs Calvoche")
 
-        # générer le joueur
-        self.fight_event = pygame.event.Event(pygame.USEREVENT)
-        self.player = Player(self.fight_event)
-
-        self.inventory = Inventory()
-
-        self.map_manager = MapManager(self.screen, self.player, self.inventory)
-
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
         self.box = pygame.image.load("./dialogs/dialog_box.png")
         self.dialog_box = DialogBox(self.box)
         self.box = pygame.transform.scale(self.box, (750, 200))
+
+        self.intro1 = "N = nouvelle partie"
+        self.intro2 = "S = charger le jeu depuis la dernière sauvegarde"
+
+        self.load_from_saved_game = False
+
+        # générer le joueur
+        self.fight_event = pygame.event.Event(pygame.USEREVENT)
+        self.player = self.load_player(self.load_from_saved_game)
+
+        self.inventory = self.load_inventory(self.load_from_saved_game)
+
+        self.map_manager = self.load_maps(self.load_from_saved_game)
+
         self.man_inventory1 = "E = quitter"
         self.man_inventory2 = "A = utiliser item"
         self.man_inventory3 = "Z & S = item précédent/suivant"
@@ -52,8 +57,38 @@ class Game:
         self.can_handle_inventory_input = False
         self.can_handle_fight_input = False
 
+    # le chargement du joueur, des cartes et de l'inventaire
+    def load_player(self, from_save):
+        if not from_save:
+            return Player(self.fight_event)
+        else:
+            return Player(self.fight_event)
+
+    def load_inventory(self, from_save):
+        if not from_save:
+            return Inventory()
+        else:
+            return Inventory()
+
+    def load_maps(self, from_save):
+        if not from_save:
+            return MapManager(self.screen, self.player, self.inventory)
+        else:
+            return MapManager(self.screen, self.player, self.inventory)
+
+    def save(self):
+        with open("loading/save.txt", 'wt') as data:
+            data.write("print('issou')")
+
+    def decrypt_saving(self):
+        with open("loading/save.txt", 'r') as data:
+            for line in data:
+                exec(line)
+
+    # interactions sur la carte actuelle
     def update(self):
-        self.map_manager.update()
+        if self.can_handle_input:
+            self.map_manager.update()
 
     def handle_input(self):
         if self.can_handle_input:
@@ -76,21 +111,29 @@ class Game:
         for i in range(self.player.life):
             self.screen.blit(self.hair, (50 + i*48, 30))
 
-    def handle_inventory_input(self):
+    # méthodes relatives à l'inventaire
+    def handle_inventory_input(self, pressed):
         if self.can_handle_inventory_input:
-            pressed = pygame.key.get_pressed()
 
-            if pressed[pygame.K_z]:
+            if pressed == pygame.K_z:
                 if self.inventory_index > 0:
                     self.inventory_index -= 1
 
-            if pressed[pygame.K_s]:
+            if pressed == pygame.K_s:
                 if self.inventory_index < len(self.inventory.items) - 1:
                     self.inventory_index += 1
 
-            if pressed[pygame.K_a]:
-                use_item(self.inventory.items[self.inventory_index], self.player)
-                self.inventory.items[self.inventory_index].number -= 1
+            if pressed == pygame.K_a:
+                if len(self.inventory.items) > 0 and self.inventory.items[self.inventory_index].number > 0:
+                    use_item(self.inventory.items[self.inventory_index], self.player)
+                    if self.inventory.items[self.inventory_index].number == 1 and \
+                            self.inventory_index == len(self.inventory.items) - 1:
+                        self.inventory_index -= 1
+                        self.inventory.remove_item(self.inventory.items[self.inventory_index + 1])
+                    else:
+                        self.inventory.remove_item(self.inventory.items[self.inventory_index])
+                if self.inventory_index == -1:
+                    self.inventory_index = 0
 
     def blit_inventory(self, index):
         name = self.inventory.items[index].refact_name
@@ -128,6 +171,11 @@ class Game:
             self.can_handle_input = False
             self.can_handle_inventory_input = True
 
+    # méthodes relatives aux combats
+    def show_fight(self):
+        if self.fighting:
+            self.screen.blit(self.fight, (0, 0))
+
     def close_open_fight(self):
         if self.fighting:
             self.fighting = False
@@ -138,7 +186,24 @@ class Game:
             self.can_handle_input = False
             self.can_handle_fight_input = True
 
+    # le jeu tourne
     def run(self):
+
+        starting = True
+        while starting:
+            self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
+            n = self.font.render(self.intro1, False, (0, 0, 0))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 140))
+            n = self.font.render(self.intro2, False, (0, 0, 0))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 110))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_n:
+                        starting = False
+                    if event.key == pygame.K_s:
+                        self.load_from_saved_game = True
+                        starting = False
 
         # pour les fps (ici 60)
         clock = pygame.time.Clock()
@@ -153,7 +218,7 @@ class Game:
             self.dialog_box.render(self.screen)
             self.life_update()
             self.show_inventory()
-            self.handle_inventory_input()
+            self.show_fight()
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -165,8 +230,12 @@ class Game:
                         self.map_manager.check_interactive_obj_collisions(self.dialog_box)
                     if event.key == pygame.K_e:
                         self.close_open_inventory()
-                elif event.type == self.fight_event.type:
-                    self.close_open_fight()
+                    if event.key == pygame.K_w:
+                        self.close_open_fight()
+                    if event.key == pygame.K_z or event.key == pygame.K_s or event.key == pygame.K_a:
+                        self.handle_inventory_input(event.key)
+                # elif event.type == self.fight_event.type:
+                #    self.close_open_fight()
 
             clock.tick(60)
 

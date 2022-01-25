@@ -353,8 +353,8 @@
   <object id="43" type="collisions" x="504.667" y="656.667" width="14.6667" height="11.3333"/>
   <object id="44" type="collisions" x="90.6667" y="559.333" width="14.6667" height="14"/>
   <object id="45" type="collisions" x="186" y="639.333" width="12.6667" height="13.3333"/>
-  <object id="47" name="old_carapils" type="item" x="689.333" y="720.667" width="14.6667" height="14.6667"/>
-  <object id="48" name="null" type="item" x="480.667" y="160" width="15.3333" height="15.3333"/>
+  <object id="47" name="old_carapils" type="item1" x="689.333" y="720.667" width="14.6667" height="14.6667"/>
+  <object id="48" name="null" type="item1" x="480.667" y="160" width="15.3333" height="15.3333"/>
  </objectgroup>
  <objectgroup id="13" name="PNJPaths">
   <object id="31" name="paul_path1" x="97" y="433" width="13.5" height="14"/>

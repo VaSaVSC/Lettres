@@ -125,6 +125,6 @@
   <object id="8" type="collisions" x="315.5" y="318.5" width="5" height="160.5"/>
   <object id="9" type="collisions" x="314" y="480" width="172" height="32"/>
   <object id="10" type="collisions" x="372" y="391" width="54.5" height="22"/>
-  <object id="11" name="pizza" type="item" x="465" y="321.5" width="12.5" height="13.5"/>
+  <object id="11" name="pizza" type="item1" x="465" y="321.5" width="12.5" height="13.5"/>
  </objectgroup>
 </map>
