@@ -1,6 +1,7 @@
 import pygame
 
 from animation import AnimateSprite
+from monster import Stats
 
 
 class Entity(AnimateSprite):
@@ -17,6 +18,9 @@ class Entity(AnimateSprite):
         self.max_life = life
 
     def save_location(self): self.old_position = self.position.copy()
+
+    def get_location(self):
+        return self.position
 
     def move_right(self):
         self.change_animation('right')
@@ -46,29 +50,29 @@ class Entity(AnimateSprite):
 
 class Player(Entity):
 
-    def __init__(self, event, saved_location=0):
+    def __init__(self, event):
         super().__init__("player", 0, 0, 5)
         self.name = "player"
         self.event = event
-        self.hp = 10
-        self.ad = 5
-        self.ap = 0
-        self.armor = 3
-        self.rm = 2
-        self.chance = 99
+        self.stats = Stats(10, 5, 0, 3, 2, 99)
+        self.fight_stats = self.stats
+        self.attacks = []
 
     def set_stats(self, hp, ad, ap, armor, rm, chance):
-        self.hp += hp
-        self.ad += ad
-        self.ap += ap
-        self.armor += armor
-        self.rm += rm
-        self.chance -= chance
-        if self.chance < 2:
-            self.chance = 2
+        self.stats.hp += hp
+        self.stats.ad += ad
+        self.stats.ap += ap
+        self.stats.armor += armor
+        self.stats.rm += rm
+        self.stats.chance -= chance
+        if self.stats.chance < 2:
+            self.stats.chance = 2
 
     def fight_event(self):
         pygame.event.post(self.event)
+
+    def base_stats(self):
+        self.fight_stats = self.stats
 
 
 def refactor(name):
@@ -88,6 +92,7 @@ class PNJ(Entity):
         self.base_speed = speed
         self.points = []
         self.current_point = 0
+        self.mode = 0
 
     def move(self):
         current_point = self.current_point

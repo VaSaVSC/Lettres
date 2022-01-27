@@ -54,7 +54,6 @@ class MapManager:
         self.screen = screen
         self.player = player
         self.inventory = inventory
-        self.load_items()
 
         self.monsters = dict()
         self.load_monsters()
@@ -82,101 +81,7 @@ class MapManager:
             PNJ("andreas", nb_points=4, speed=2)
         ])
 
-        self.tp_player("player")
         self.tp_pnjs()
-        self.tp_items()
-
-    def load_items(self):
-        with open("loading/items.txt") as data:
-            s = ""
-            str = []
-            b = False
-            for line in data:
-                line = line.rstrip('\n')
-                if len(line) == 0:
-                    continue
-                if line[len(line) - 1] == ':':
-                    if b:
-                        self.inventory.all_items[s] = str
-                    else:
-                        b = True
-                    str = line.split(':')
-                    s = str[0]
-                    self.inventory.all_items[s] = ""
-                elif line[len(line) - 1] == ';':
-                    str = line.split(';')
-                    self.inventory.all_items[s+"_refact"] = str[0]
-                    str = []
-                else:
-                    str.append(line)
-            self.inventory.all_items[s] = str
-
-    def load_monsters(self):
-        print("lol")
-
-    def check_pnj_collisions(self, dialog_box):
-        for sprite in self.get_group().sprites():
-            if type(sprite) == PNJ and sprite.feet.colliderect(self.player.rect):
-                dialog_box.execute(sprite.refact_name, False, sprite.dialog)
-            if type(sprite) == Item and sprite.can_be_carried:
-                dialog_box.execute(sprite.name, True, sprite.dialog)
-                sprite.should_appear = False
-                sprite.is_carried = True
-                self.inventory.add_item(sprite)
-                self.get_group().remove(sprite)
-                self.tp_items()
-
-    def check_interactive_obj_collisions(self, dialog_box):
-        for obj in self.get_map().interactive_obj:
-            if obj.rect.colliderect(self.player.rect):
-                dialog_box.execute(obj.refact_name, False, obj.dialog)
-
-    def check_collisions(self):
-
-        # portails
-        for portal in self.get_map().portals:
-            if portal.origin == self.current_map:
-                point = self.get_object(portal.origin_point)
-                rect = pygame.Rect(point.x, point.y, point.width, point.height)
-
-                if self.player.feet.colliderect(rect):
-                    copy_portal = portal
-                    self.current_map = portal.dest
-                    self.tp_player(copy_portal.dest_point)
-
-        # collisions
-        pnj_speed = []
-        for sprite in self.get_group().sprites():
-            if type(sprite) is PNJ:
-                pnj_speed.append(sprite.speed)
-                if sprite.feet.colliderect(self.player.rect):
-                    sprite.speed = 0
-                else:
-                    sprite.speed = sprite.base_speed
-
-            if sprite.feet.collidelist(self.get_walls()) > -1 and type(sprite) != Item:
-                sprite.move_back()
-
-            if type(sprite) == Item and sprite.feet.colliderect(self.player.rect):
-                self.player.move_back()
-                sprite.move_back()
-                sprite.can_be_carried = True
-
-        if self.player.feet.collidelist(self.get_map().collide) > -1:
-            self.player.move_back()
-
-        if self.player.feet.collidelist(self.get_map().fight_zone) > -1:
-            self.launch_fight(self.get_map().level)
-
-    def launch_fight(self, level):
-        print("lol")
-        self.player.fight_event()
-
-    def tp_player(self, name):
-        point = self.get_object(name)
-        self.player.position[0] = point.x
-        self.player.position[1] = point.y
-        self.player.save_location()
 
     def register_map(self, name, portals=[], pnjs=[], level=0):
 
@@ -247,8 +152,10 @@ class MapManager:
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
             if check_type(obj.type):
                 interactive_obj.append(Obj(obj.name, obj.type, texts[obj.name], obj.x, obj.y, obj.width, obj.height))
+            # items directement présents sur la carte
             if obj.type == "item1":
                 items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height)))
+            # items qui apparaîtront suite à la complétion d'une quête
             if obj.type == "item2":
                 items.append(Item(obj.name, False, pygame.Rect(obj.x, obj.y, obj.width, obj.height)))
 
@@ -265,6 +172,73 @@ class MapManager:
         # nouveau Map obj
         self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs, texts,
                               interactive_obj, items, collide, fight_zone, level)
+
+    def load_monsters(self):
+        print("lol")
+
+    def check_pnj_collisions(self, dialog_box):
+        for sprite in self.get_group().sprites():
+            if type(sprite) == PNJ and sprite.feet.colliderect(self.player.rect):
+                dialog_box.execute(sprite.refact_name, False, sprite.dialog)
+            if type(sprite) == Item and sprite.can_be_carried:
+                dialog_box.execute(sprite.name, True, sprite.dialog)
+                sprite.should_appear = False
+                sprite.is_carried = True
+                self.inventory.add_item(sprite)
+                self.get_group().remove(sprite)
+
+    def check_interactive_obj_collisions(self, dialog_box):
+        for obj in self.get_map().interactive_obj:
+            if obj.rect.colliderect(self.player.rect):
+                dialog_box.execute(obj.refact_name, False, obj.dialog)
+
+    def check_collisions(self):
+
+        # portails
+        for portal in self.get_map().portals:
+            if portal.origin == self.current_map:
+                point = self.get_object(portal.origin_point)
+                rect = pygame.Rect(point.x, point.y, point.width, point.height)
+
+                if self.player.feet.colliderect(rect):
+                    copy_portal = portal
+                    self.current_map = portal.dest
+                    self.tp_player(copy_portal.dest_point)
+
+        # collisions
+        pnj_speed = []
+        for sprite in self.get_group().sprites():
+            if type(sprite) is PNJ:
+                pnj_speed.append(sprite.speed)
+                if sprite.feet.colliderect(self.player.rect):
+                    sprite.speed = 0
+                else:
+                    sprite.speed = sprite.base_speed
+
+            if sprite.feet.collidelist(self.get_walls()) > -1 and type(sprite) != Item:
+                sprite.move_back()
+
+            if type(sprite) == Item and sprite.feet.colliderect(self.player.rect):
+                self.player.move_back()
+                sprite.move_back()
+                sprite.can_be_carried = True
+
+        if self.player.feet.collidelist(self.get_map().collide) > -1:
+            self.player.move_back()
+
+        if self.player.feet.collidelist(self.get_map().fight_zone) > -1:
+            self.launch_fight(self.get_map().level)
+
+    def launch_fight(self, level):
+        print("lol")
+        self.player.fight_event()
+
+    def tp_player(self, name="player", from_save=False):
+        if not from_save:
+            point = self.get_object(name)
+            self.player.position[0] = point.x
+            self.player.position[1] = point.y
+        self.player.save_location()
 
     def get_map(self):
         return self.maps[self.current_map]
@@ -287,12 +261,12 @@ class MapManager:
                 pnj.load_points(map_data.tmx_data)
                 pnj.tp_spawn()
 
-    def tp_items(self):
+    """def tp_items(self):
         for i in self.get_map().items:
             if i.should_appear:
                 i.tp_spawn()
             else:
-                i.position = [None] * 2
+                i.position = [None] * 2"""
 
     def draw(self):
         self.get_group().draw(self.screen)

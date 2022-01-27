@@ -1,1 +1,23 @@
-print('issou')
+player
+self.player.position = [78.89699999999999, 135.623]
+self.player.life = 5
+self.player.hp = 10
+self.player.ad = 5
+self.player.ap = 0
+self.player.armor = 3
+self.player.rm = 2
+self.player.chance = 99
+:
+inventory
+self.inventory.add_item(Item('pizza', False, pygame.Rect(0, 0, 0, 0)))
+self.inventory.items[0].number = 1
+self.inventory.add_item(Item('old_carapils', False, pygame.Rect(0, 0, 0, 0)))
+self.inventory.items[1].number = 1
+:
+map
+self.map_manager.current_map = 'world1_house1'
+self.map_manager.maps['start'].items[0].should_appear = False
+self.map_manager.maps['start'].group.remove(self.map_manager.maps['start'].items[0])
+self.map_manager.maps['world1_house1'].items[0].should_appear = False
+self.map_manager.maps['world1_house1'].group.remove(self.map_manager.maps['world1_house1'].items[0])
+:

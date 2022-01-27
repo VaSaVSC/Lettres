@@ -3,7 +3,8 @@ Vieille Cara;
 Une bière blonde excellente,
 dont le goût a malheureusement
 été altéré par le temps.
-Son effet est aléatoire.
+Son effet sur l'organisme
+est aléatoire.
 
 null:
 Vide compact;

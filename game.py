@@ -1,7 +1,7 @@
 import pygame
 
 from dialog import DialogBox
-from inventory import Inventory, use_item
+from inventory import Inventory, use_item, Item
 from map import MapManager
 from player import Player
 
@@ -29,15 +29,16 @@ class Game:
 
         # générer le joueur
         self.fight_event = pygame.event.Event(pygame.USEREVENT)
-        self.player = self.load_player(self.load_from_saved_game)
+        self.player = None
 
-        self.inventory = self.load_inventory(self.load_from_saved_game)
+        self.inventory = None
 
-        self.map_manager = self.load_maps(self.load_from_saved_game)
+        self.map_manager = None
 
         self.man_inventory1 = "E = quitter"
         self.man_inventory2 = "A = utiliser item"
-        self.man_inventory3 = "Z & S = item précédent/suivant"
+        self.man_inventory3 = "Z/S = item précédent/suivant"
+        self.man_inventory4 = "P = sauvegarde"
         self.inventory_index = 0
 
         self.fight = pygame.image.load("./ath_assets/fight_background.png")
@@ -45,9 +46,6 @@ class Game:
 
         self.hair = pygame.image.load("./ath_assets/meche.png")
         self.hair = pygame.transform.scale(self.hair, (64, 64))
-
-        self.item = pygame.image.load("./items/item.png")
-        self.item = pygame.transform.scale(self.item, (32, 32))
 
         self.inventory_display = pygame.image.load("./ath_assets/inventory.png")
         self.inventory_display = pygame.transform.scale(self.inventory_display, (700, 350))
@@ -59,31 +57,104 @@ class Game:
 
     # le chargement du joueur, des cartes et de l'inventaire
     def load_player(self, from_save):
-        if not from_save:
-            return Player(self.fight_event)
-        else:
-            return Player(self.fight_event)
+        self.player = Player(self.fight_event)
+        if from_save:
+            self.decrypt_saving("player")
 
     def load_inventory(self, from_save):
-        if not from_save:
-            return Inventory()
-        else:
-            return Inventory()
+        self.inventory = Inventory()
+        self.load_items()
+        if from_save:
+            self.decrypt_saving("inventory")
+
+    def load_items(self):
+        with open("loading/items.txt") as data:
+            s = ""
+            str = []
+            b = False
+            for line in data:
+                line = line.rstrip('\n')
+                if len(line) == 0:
+                    continue
+                if line[len(line) - 1] == ':':
+                    if b:
+                        self.inventory.all_items[s] = str
+                    else:
+                        b = True
+                    str = line.split(':')
+                    s = str[0]
+                    self.inventory.all_items[s] = ""
+                elif line[len(line) - 1] == ';':
+                    str = line.split(';')
+                    self.inventory.all_items[s+"_refact"] = str[0]
+                    str = []
+                else:
+                    str.append(line)
+            self.inventory.all_items[s] = str
 
     def load_maps(self, from_save):
-        if not from_save:
-            return MapManager(self.screen, self.player, self.inventory)
+        self.map_manager = MapManager(self.screen, self.player, self.inventory)
+        if from_save:
+            self.decrypt_saving("map")
+            self.map_manager.tp_player(from_save=from_save)
         else:
-            return MapManager(self.screen, self.player, self.inventory)
+            self.map_manager.tp_player()
 
     def save(self):
         with open("loading/save.txt", 'wt') as data:
-            data.write("print('issou')")
+            data.write("player\n")
+            data.write("self.player.position = " + str(self.player.get_location()) + "\n")
+            data.write("self.player.life = " + str(self.player.life) + "\n")
+            data.write("self.player.hp = " + str(self.player.stats.hp) + "\n")
+            data.write("self.player.ad = " + str(self.player.stats.ad) + "\n")
+            data.write("self.player.ap = " + str(self.player.stats.ap) + "\n")
+            data.write("self.player.armor = " + str(self.player.stats.armor) + "\n")
+            data.write("self.player.rm = " + str(self.player.stats.rm) + "\n")
+            data.write("self.player.chance = " + str(self.player.stats.chance) + "\n")
+            data.write(":\n")
 
-    def decrypt_saving(self):
-        with open("loading/save.txt", 'r') as data:
+            data.write("inventory\n")
+            acc = 0
+            for item in self.inventory.items:
+                data.write("self.inventory.add_item(Item('" + item.name + "', False, pygame.Rect(0, 0, 0, 0)))\n")
+                data.write("self.inventory.items[" + str(acc) + "].number = " + str(item.number) + "\n")
+                acc += 1
+            data.write(":\n")
+
+            data.write("map\n")
+            data.write("self.map_manager.current_map = '" + self.map_manager.current_map + "'\n")
+            for m in self.map_manager.maps:
+                acc = 0
+                for pnj in self.map_manager.maps[m].pnjs:
+                    if pnj.mode != 0:
+                        data.write("self.map_manager.maps['" + m + "'].pnjs[" +
+                                   str(acc) + "].mode = " + str(pnj.mode) + "\n")
+                    acc += 1
+                acc = 0
+                for item in self.map_manager.maps[m].items:
+                    if not item.should_appear:
+                        data.write("self.map_manager.maps['" + m + "'].items[" +
+                                   str(acc) + "].should_appear = " + str(item.should_appear) + "\n")
+                        self.map_manager.maps[m].group.add(item)
+                        data.write("self.map_manager.maps['" + m + "'].group.remove(self.map_manager.maps['" +
+                                   m + "'].items[" + str(acc) + "])\n")
+                        self.map_manager.maps[m].group.remove(item)
+                    acc += 1
+            data.write(":\n")
+
+    def decrypt_saving(self, start):
+        starting = False
+        ending = False
+        with open("loading/save.txt") as data:
             for line in data:
-                exec(line)
+                line = line.rstrip('\n')
+                if line == ':' and ending:
+                    break
+                if starting:
+                    exec(line)
+                    ending = True
+                if line == start:
+                    starting = True
 
     # interactions sur la carte actuelle
     def update(self):
@@ -135,6 +206,9 @@ class Game:
                 if self.inventory_index == -1:
                     self.inventory_index = 0
 
+            if pressed == pygame.K_p:
+                self.save()
+
     def blit_inventory(self, index):
         name = self.inventory.items[index].refact_name
         name = self.font.render(name, False, (0, 0, 0))
@@ -153,11 +227,13 @@ class Game:
             self.screen.blit(self.inventory_display, (40, 100))
             self.screen.blit(self.box, (self.X_POS, self.Y_POS))
             n = self.font.render(self.man_inventory1, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 60))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 40))
             n = self.font.render(self.man_inventory2, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 90))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 70))
             n = self.font.render(self.man_inventory3, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 120))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 100))
+            n = self.font.render(self.man_inventory4, False, (0, 0, 0))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 130))
             if len(self.inventory.items) > 0:
                 self.blit_inventory(self.inventory_index)
 
@@ -205,6 +281,12 @@ class Game:
                         self.load_from_saved_game = True
                         starting = False
 
+        self.load_player(self.load_from_saved_game)
+
+        self.load_inventory(self.load_from_saved_game)
+
+        self.load_maps(self.load_from_saved_game)
+
         # pour les fps (ici 60)
         clock = pygame.time.Clock()
 
@@ -232,7 +314,7 @@ class Game:
                         self.close_open_inventory()
                     if event.key == pygame.K_w:
                         self.close_open_fight()
-                    if event.key == pygame.K_z or event.key == pygame.K_s or event.key == pygame.K_a:
+                    if event.key == pygame.K_z or event.key == pygame.K_s or event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
                 # elif event.type == self.fight_event.type:
                 #    self.close_open_fight()
