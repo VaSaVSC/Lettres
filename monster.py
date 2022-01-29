@@ -11,6 +11,7 @@ class Stats:
     armor: int
     rm: int
     chance: int
+    speed: int
 
 
 @dataclass
@@ -21,6 +22,7 @@ class StatsGrowth:
     armor_growth: int
     rm_growth: int
     chance_growth: int
+    speed_growth: int
 
 
 def random_factor(growing):
@@ -35,14 +37,14 @@ class Monster(Stats, StatsGrowth):
         self.stats = None
         self.stats_g = None
         self.level = level
-        self.level_range = self.monster_level(level)
+        self.level_range = self.monster_level_range(level)
         self.attacks = attacks
 
-    def set_stats(self, hp, ad, ap, armor, rm, chance):
-        self.stats = Stats(hp, ad, ap, armor, rm, chance)
+    def set_stats(self, hp, ad, ap, armor, rm, chance, speed):
+        self.stats = Stats(hp, ad, ap, armor, rm, chance, speed)
 
-    def set_stats_g(self, hp, ad, ap, armor, rm, chance):
-        self.stats_g = StatsGrowth(hp, ad, ap, armor, rm, chance)
+    def set_stats_g(self, hp, ad, ap, armor, rm, chance, speed):
+        self.stats_g = StatsGrowth(hp, ad, ap, armor, rm, chance, speed)
 
     def real_stats(self):
         self.set_stats(self.hp + random_factor(self.hp_growth * self.level),
@@ -50,9 +52,10 @@ class Monster(Stats, StatsGrowth):
                        self.ap + random_factor(self.ap_growth * self.level),
                        self.armor + random_factor(self.armor_growth * self.level),
                        self.rm + random_factor(self.rm_growth * self.level),
-                       self.chance + random_factor(self.chance_growth * self.level))
+                       self.chance + random_factor(self.chance_growth * self.level),
+                       self.speed + random_factor(self.speed_growth * self.level))
 
-    def monster_level(self, level):
+    def monster_level_range(self, level):
         if level == 1:
             return {1, 2}
         else:

@@ -57,8 +57,11 @@ class Player(Entity):
         self.stats = Stats(10, 5, 0, 3, 2, 99)
         self.fight_stats = self.stats
         self.attacks = []
+        self.xp = 0
+        self.level = 1
+        self.xp_needed_to_level_up = 10
 
-    def set_stats(self, hp, ad, ap, armor, rm, chance):
+    def set_stats(self, hp, ad, ap, armor, rm, chance, speed):
         self.stats.hp += hp
         self.stats.ad += ad
         self.stats.ap += ap
@@ -67,12 +70,16 @@ class Player(Entity):
         self.stats.chance -= chance
         if self.stats.chance < 2:
             self.stats.chance = 2
+        self.stats.speed += speed
 
     def fight_event(self):
         pygame.event.post(self.event)
 
     def base_stats(self):
         self.fight_stats = self.stats
+
+    def xp_needed(self):
+        self.xp_needed_to_level_up += 2 * self.level
 
 
 def refactor(name):
