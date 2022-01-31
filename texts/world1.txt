@@ -8,3 +8,6 @@ Vous avez trouvez une vieille Cara !
 
 null:
 Vous avez trouvez du vide !
+
+claude:
+Jui tout plein :§

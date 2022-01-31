@@ -1,4 +1,7 @@
-Phacolin:
-15
-3
-0
+attacks = {"test1", "test2", "test3", "test4"}
+colin = Monster("colin", 1, attacks, "Phacolin")
+colin.set_stats(15, 3, 0, 15, 15, 95, 5)
+colin.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+colin.real_stats()
+self.monsters["colin"] = colin
+

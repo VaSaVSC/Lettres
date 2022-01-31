@@ -19,7 +19,7 @@ class Item(pygame.sprite.Sprite):
         self.old_position = self.position.copy()
         self.feet = pygame.Rect(rect.x, rect.y, rect.width*0.5, 12)
         self.image = pygame.image.load("./items/item.png")
-        self.image = pygame.transform.scale(self.image, (32, 32))
+        self.image = pygame.transform.scale(self.image, (16, 16))
         self.image.set_colorkey([0, 0, 0])
         self.number = 0
         self.index = 0

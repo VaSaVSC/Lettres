@@ -32,8 +32,9 @@ def random_factor(growing):
 
 class Monster(Stats, StatsGrowth):
 
-    def __init__(self, name, level, attacks):
+    def __init__(self, name, level, attacks, refact_name):
         self.name = name
+        self.refact_name = refact_name
         self.stats = None
         self.stats_g = None
         self.level = level
@@ -47,13 +48,13 @@ class Monster(Stats, StatsGrowth):
         self.stats_g = StatsGrowth(hp, ad, ap, armor, rm, chance, speed)
 
     def real_stats(self):
-        self.set_stats(self.hp + random_factor(self.hp_growth * self.level),
-                       self.ad + random_factor(self.ad_growth * self.level),
-                       self.ap + random_factor(self.ap_growth * self.level),
-                       self.armor + random_factor(self.armor_growth * self.level),
-                       self.rm + random_factor(self.rm_growth * self.level),
-                       self.chance + random_factor(self.chance_growth * self.level),
-                       self.speed + random_factor(self.speed_growth * self.level))
+        self.set_stats(self.stats.hp + random_factor(self.stats_g.hp_growth * self.level),
+                       self.stats.ad + random_factor(self.stats_g.ad_growth * self.level),
+                       self.stats.ap + random_factor(self.stats_g.ap_growth * self.level),
+                       self.stats.armor + random_factor(self.stats_g.armor_growth * self.level),
+                       self.stats.rm + random_factor(self.stats_g.rm_growth * self.level),
+                       self.stats.chance - random_factor(self.stats_g.chance_growth * self.level),
+                       self.stats.speed + random_factor(self.stats_g.speed_growth * self.level))
 
     def monster_level_range(self, level):
         if level == 1:

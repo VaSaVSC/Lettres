@@ -1,4 +1,5 @@
 import pygame
+import random as rd
 
 from animation import AnimateSprite
 from monster import Stats
@@ -23,19 +24,23 @@ class Entity(AnimateSprite):
         return self.position
 
     def move_right(self):
-        self.change_animation('right')
+        if self.speed > 0:
+            self.change_animation('right')
         self.position[0] += self.speed
 
     def move_left(self):
-        self.change_animation('left')
+        if self.speed > 0:
+            self.change_animation('left')
         self.position[0] -= self.speed
 
     def move_up(self):
-        self.change_animation('up')
+        if self.speed > 0:
+            self.change_animation('up')
         self.position[1] -= self.speed
 
     def move_down(self):
-        self.change_animation('down')
+        if self.speed > 0:
+            self.change_animation('down')
         self.position[1] += self.speed
 
     def update(self):
@@ -54,12 +59,13 @@ class Player(Entity):
         super().__init__("player", 0, 0, 5)
         self.name = "player"
         self.event = event
-        self.stats = Stats(10, 5, 0, 3, 2, 99)
+        self.stats = Stats(10, 5, 0, 3, 2, 99, 5)
         self.fight_stats = self.stats
         self.attacks = []
         self.xp = 0
         self.level = 1
         self.xp_needed_to_level_up = 10
+        self.status = None
 
     def set_stats(self, hp, ad, ap, armor, rm, chance, speed):
         self.stats.hp += hp
@@ -77,6 +83,7 @@ class Player(Entity):
 
     def base_stats(self):
         self.fight_stats = self.stats
+        self.status = None
 
     def xp_needed(self):
         self.xp_needed_to_level_up += 2 * self.level
@@ -89,7 +96,7 @@ def refactor(name):
 
 class PNJ(Entity):
 
-    def __init__(self, name, nb_points, speed):
+    def __init__(self, name, nb_points, speed, random_move=False):
         super().__init__(name, 0, 0, 1)
         self.nb_points = nb_points
         self.name = name
@@ -100,6 +107,7 @@ class PNJ(Entity):
         self.points = []
         self.current_point = 0
         self.mode = 0
+        self.random_move = random_move
 
     def move(self):
         current_point = self.current_point
@@ -125,6 +133,40 @@ class PNJ(Entity):
 
         if self.rect.colliderect(target_rect):
             self.current_point = target_point
+
+    def random_moving(self, walls, collide):
+        rand1 = rd.randint(1, 100)
+        if rand1 > 98:
+            rand2 = rd.randint(1, 4)
+            rand3 = rd.randint(1, 5)
+            if rand2 == 1 and self.pnj_collide(walls, collide, "up"):
+                for i in range(rand3):
+                    self.move_up()
+            elif rand2 == 2 and self.pnj_collide(walls, collide, "down"):
+                for i in range(rand3):
+                    self.move_down()
+            elif rand2 == 3 and self.pnj_collide(walls, collide, "right"):
+                for i in range(rand3):
+                    self.move_right()
+            elif rand2 == 4 and self.pnj_collide(walls, collide, "left"):
+                for i in range(rand3):
+                    self.move_left()
+            else:
+                self.move_back()
+
+    def pnj_collide(self, walls, collide, direction):
+        if direction == "up":
+            feet = pygame.Rect(self.position[0], self.position[1] - self.speed, self.rect.width*0.5, 12)
+        elif direction == "down":
+            feet = pygame.Rect(self.position[0], self.position[1] + self.speed, self.rect.width*0.5, 12)
+        elif direction == "right":
+            feet = pygame.Rect(self.position[0] + self.speed, self.position[1], self.rect.width*0.5, 12)
+        else:
+            feet = pygame.Rect(self.position[0] - self.speed, self.position[1], self.rect.width*0.5, 12)
+        if feet.collidelist(walls) > -1 or feet.collidelist(collide) > -1:
+            self.move_back()
+            return False
+        return True
 
     def tp_spawn(self):
         location = self.points[self.current_point]

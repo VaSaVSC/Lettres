@@ -4,9 +4,11 @@ import pygame
 import pytmx
 import pyscroll
 import os
+import random as rd
 
 from typing import List
 
+from fight import Fight
 from interactive_obj import Obj
 from inventory import Item
 from monster import Monster
@@ -35,6 +37,7 @@ class Map:
     collide: List[pygame.Rect]
     fight_zone: List[pygame.Rect]
     level: int
+    monsters: List[Monster]
 
 
 type_list = {'panel'}
@@ -71,7 +74,8 @@ class MapManager:
             Portal(origin="world1", origin_point="s_w1_enter",
                    dest="start", dest_point="s_w1_enterP")
         ],  pnjs=[
-            PNJ("paul", nb_points=4, speed=1)
+            PNJ("paul", nb_points=4, speed=1),
+            PNJ("claude", nb_points=1, speed=2, random_move=True)
         ])
 
         self.register_map("world1_house1", portals=[
@@ -159,6 +163,12 @@ class MapManager:
             if obj.type == "item2":
                 items.append(Item(obj.name, False, pygame.Rect(obj.x, obj.y, obj.width, obj.height)))
 
+        # charger les monstres disponibles sur cette carte
+        monsters = []
+        for monster in self.monsters:
+            if level in self.monsters[monster].level_range:
+                monsters.append(monster)
+
         # groupes de calques
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
         group.add(self.player)
@@ -171,10 +181,13 @@ class MapManager:
 
         # nouveau Map obj
         self.maps[name] = Map(name, walls, group, tmx_data, portals, pnjs, texts,
-                              interactive_obj, items, collide, fight_zone, level)
+                              interactive_obj, items, collide, fight_zone, level, monsters)
 
     def load_monsters(self):
-        print("lol")
+        with open("loading/monsters.txt") as data:
+            for line in data:
+                line = line.rstrip('\n')
+                exec(line)
 
     def check_pnj_collisions(self, dialog_box):
         for sprite in self.get_group().sprites():
@@ -227,10 +240,16 @@ class MapManager:
             self.player.move_back()
 
         if self.player.feet.collidelist(self.get_map().fight_zone) > -1:
-            self.launch_fight(self.get_map().level)
+            self.launch_fight()
 
-    def launch_fight(self, level):
-        print("lol")
+    def launch_fight(self):
+        self.player.fight_event()
+        rand = rd.randint(0, len(self.monsters) - 1)
+        monster = self.monsters[rand]
+        monster.level = self.get_map().level
+        monster.real_stats()
+        f = Fight(self.player, monster)
+        f.fight()
         self.player.fight_event()
 
     def tp_player(self, name="player", from_save=False):
@@ -277,4 +296,7 @@ class MapManager:
         self.check_collisions()
 
         for pnj in self.get_map().pnjs:
-            pnj.move()
+            if pnj.random_move:
+                pnj.random_moving(self.get_walls(), self.get_map().collide)
+            else:
+                pnj.move()

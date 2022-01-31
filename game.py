@@ -86,7 +86,7 @@ class Game:
                     self.inventory.all_items[s] = ""
                 elif line[len(line) - 1] == ';':
                     str = line.split(';')
-                    self.inventory.all_items[s+"_refact"] = str[0]
+                    self.inventory.all_items[s + "_refact"] = str[0]
                     str = []
                 else:
                     str.append(line)
@@ -105,13 +105,13 @@ class Game:
             data.write("player\n")
             data.write("self.player.position = " + str(self.player.get_location()) + "\n")
             data.write("self.player.life = " + str(self.player.life) + "\n")
-            data.write("self.stats.player.hp = " + str(self.player.stats.hp) + "\n")
-            data.write("self.stats.player.ad = " + str(self.player.stats.ad) + "\n")
-            data.write("self.stats.player.ap = " + str(self.player.stats.ap) + "\n")
-            data.write("self.stats.player.armor = " + str(self.player.stats.armor) + "\n")
-            data.write("self.stats.player.rm = " + str(self.player.stats.rm) + "\n")
-            data.write("self.stats.player.chance = " + str(self.player.stats.chance) + "\n")
-            data.write("self.stats.player.speed = " + str(self.player.stats.speed) + "\n")
+            data.write("self.player.stats.hp = " + str(self.player.stats.hp) + "\n")
+            data.write("self.player.stats.ad = " + str(self.player.stats.ad) + "\n")
+            data.write("self.player.stats.ap = " + str(self.player.stats.ap) + "\n")
+            data.write("self.player.stats.armor = " + str(self.player.stats.armor) + "\n")
+            data.write("self.player.stats.rm = " + str(self.player.stats.rm) + "\n")
+            data.write("self.player.stats.chance = " + str(self.player.stats.chance) + "\n")
+            data.write("self.player.stats.speed = " + str(self.player.stats.speed) + "\n")
             data.write(":\n")
 
             data.write("inventory\n")
