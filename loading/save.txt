@@ -1,16 +1,20 @@
 player
-self.player.position = [403.0, 438.5]
+self.player.position = [78.89699999999999, 141.623]
 self.player.life = 5
-self.stats.player.hp = 10
-self.stats.player.ad = 5
-self.stats.player.ap = 0
-self.stats.player.armor = 3
-self.stats.player.rm = 2
-self.stats.player.chance = 99
-self.stats.player.speed = 5
+self.player.stats.hp = 10
+self.player.stats.ad = 5
+self.player.stats.ap = 0
+self.player.stats.armor = 3
+self.player.stats.rm = 2
+self.player.stats.chance = 99
+self.player.stats.speed = 5
 :
 inventory
 :
 map
-self.map_manager.current_map = 'start'
+self.map_manager.current_map = 'world1_house1'
+self.map_manager.maps['start'].items[0].should_appear = False
+self.map_manager.maps['start'].group.remove(self.map_manager.maps['start'].items[0])
+self.map_manager.maps['world1_house1'].items[0].should_appear = False
+self.map_manager.maps['world1_house1'].group.remove(self.map_manager.maps['world1_house1'].items[0])
 :

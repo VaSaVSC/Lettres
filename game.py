@@ -17,6 +17,9 @@ class Game:
         self.screen = pygame.display.set_mode((800, 800))
         pygame.display.set_caption("Gobzer vs Calvoche")
 
+        pygame.mixer.music.load('./sound.mp3')
+        pygame.mixer.music.play(-1) # -1 = infini
+
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
         self.box = pygame.image.load("./dialogs/dialog_box.png")
         self.dialog_box = DialogBox(self.box)
