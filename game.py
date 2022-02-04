@@ -1,3 +1,5 @@
+import os
+
 import pygame
 
 from dialog import DialogBox
@@ -279,7 +281,8 @@ class Game:
                     if event.key == pygame.K_n:
                         starting = False
                     if event.key == pygame.K_s:
-                        self.load_from_saved_game = True
+                        if os.stat("./loading/save.txt").st_size > 0:
+                            self.load_from_saved_game = True
                         starting = False
 
         self.load_player(self.load_from_saved_game)
