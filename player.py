@@ -139,18 +139,22 @@ class PNJ(Entity):
         if rand1 > 98:
             rand2 = rd.randint(1, 4)
             rand3 = rd.randint(1, 5)
-            if rand2 == 1 and self.pnj_collide(walls, collide, "up"):
+            if rand2 == 1:
                 for i in range(rand3):
-                    self.move_up()
-            elif rand2 == 2 and self.pnj_collide(walls, collide, "down"):
+                    if self.pnj_collide(walls, collide, "up"):
+                        self.move_up()
+            elif rand2 == 2:
                 for i in range(rand3):
-                    self.move_down()
-            elif rand2 == 3 and self.pnj_collide(walls, collide, "right"):
+                    if self.pnj_collide(walls, collide, "down"):
+                        self.move_down()
+            elif rand2 == 3:
                 for i in range(rand3):
-                    self.move_right()
-            elif rand2 == 4 and self.pnj_collide(walls, collide, "left"):
+                    if self.pnj_collide(walls, collide, "right"):
+                        self.move_right()
+            elif rand2 == 4:
                 for i in range(rand3):
-                    self.move_left()
+                    if self.pnj_collide(walls, collide, "left"):
+                        self.move_left()
             else:
                 self.move_back()
 
