@@ -60,6 +60,7 @@ class MapManager:
 
         self.monsters = dict()
         self.load_monsters()
+        self.fight = None
 
         self.current_map = "start"
 
@@ -240,16 +241,16 @@ class MapManager:
             self.player.move_back()
 
         if self.player.feet.collidelist(self.get_map().fight_zone) > -1:
-            self.launch_fight()
+            rand = rd.randint(1,10)
+            if rand > 8:
+                self.launch_fight()
 
     def launch_fight(self):
-        self.player.fight_event()
         rand = rd.randint(0, len(self.monsters) - 1)
         monster = self.monsters[rand]
         monster.level = self.get_map().level
         monster.real_stats()
-        f = Fight(self.player, monster)
-        f.fight()
+        self.fight = Fight(self.player, monster)
         self.player.fight_event()
 
     def tp_player(self, name="player", from_save=False):

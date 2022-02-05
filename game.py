@@ -60,6 +60,7 @@ class Game:
         self.can_handle_input = True
         self.can_handle_inventory_input = False
         self.can_handle_fight_input = False
+        self.quit_while_fighting = False
 
     # le chargement du joueur, des cartes et de l'inventaire
     def load_player(self, from_save):
@@ -150,7 +151,6 @@ class Game:
             for line in data:
                 line = line.rstrip('\n')
                 exec(line)
-
 
     # interactions sur la carte actuelle
     def update(self):
@@ -245,8 +245,13 @@ class Game:
 
     # méthodes relatives aux combats
     def show_fight(self):
-        if self.fighting:
+        while self.fighting:
             self.screen.blit(self.fight, (0, 0))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.quit_while_fighting = True
+                    return
 
     def close_open_fight(self):
         if self.fighting:
@@ -303,6 +308,8 @@ class Game:
             self.life_update()
             self.show_inventory()
             self.show_fight()
+            if self.quit_while_fighting:
+                break
             pygame.display.flip()
 
             for event in pygame.event.get():
@@ -319,8 +326,8 @@ class Game:
                     if event.key == pygame.K_z or event.key == pygame.K_s or\
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
-                # elif event.type == self.fight_event.type:
-                #    self.close_open_fight()
+                elif event.type == self.fight_event.type:
+                    self.close_open_fight()
 
             clock.tick(60)
 
