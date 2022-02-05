@@ -1,4 +1,5 @@
 import os
+import shelve
 
 import pygame
 
@@ -40,6 +41,8 @@ class Game:
 
         self.map_manager = None
 
+        self.state = None
+
         self.man_inventory1 = "E = quitter"
         self.man_inventory2 = "A = utiliser item"
         self.man_inventory3 = "Z/S = item précédent/suivant"
@@ -65,12 +68,22 @@ class Game:
         self.player = Player(self.fight_event)
         if from_save:
             self.decrypt_saving("player")
+        """self.player = Player(self.fight_event)
+        if from_save:
+            self.player = self.decrypt_saving("player")
+        else:
+            self.player = Player(self.fight_event)"""
 
     def load_inventory(self, from_save):
         self.inventory = Inventory()
         self.load_items()
         if from_save:
             self.decrypt_saving("inventory")
+        """if from_save:
+            self.inventory = self.decrypt_saving("inventory")
+        else:
+            self.inventory = Inventory()
+        self.load_items()"""
 
     def load_items(self):
         with open("loading/items.txt") as data:
@@ -104,10 +117,28 @@ class Game:
             self.map_manager.tp_player(from_save=from_save)
         else:
             self.map_manager.tp_player()
+        """if from_save:
+            self.map_manager = self.decrypt_saving("map")
+            self.map_manager.tp_player(from_save=from_save)
+        else:
+            self.map_manager = MapManager(self.screen, self.player, self.inventory)
+            self.map_manager.tp_player()"""
+
+    """def save(self):
+        save = shelve.open("savegame")
+        save["player"] = self.player
+        save["inventory"] = self.inventory
+        save["map"] = self.map_manager
+        save.close()
+
+    def decrypt_saving(self, start):
+        save = shelve.open("savegame")
+        x = save[start]
+        save.close()
+        return x"""
 
     def save(self):
-        with open("loading/save.txt", 'wt') as data:
-            data.write("player\n")
+        with open("loading/save_player.txt", 'wt') as data:
             data.write("self.player.position = " + str(self.player.get_location()) + "\n")
             data.write("self.player.life = " + str(self.player.life) + "\n")
             data.write("self.player.stats.hp = " + str(self.player.stats.hp) + "\n")
@@ -117,17 +148,15 @@ class Game:
             data.write("self.player.stats.rm = " + str(self.player.stats.rm) + "\n")
             data.write("self.player.stats.chance = " + str(self.player.stats.chance) + "\n")
             data.write("self.player.stats.speed = " + str(self.player.stats.speed) + "\n")
-            data.write(":\n")
 
-            data.write("inventory\n")
+        with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
             for item in self.inventory.items:
                 data.write("self.inventory.add_item(Item('" + item.name + "', False, pygame.Rect(0, 0, 0, 0)))\n")
                 data.write("self.inventory.items[" + str(acc) + "].number = " + str(item.number) + "\n")
                 acc += 1
-            data.write(":\n")
 
-            data.write("map\n")
+        with open("loading/save_map.txt", 'wt') as data:
             data.write("self.map_manager.current_map = '" + self.map_manager.current_map + "'\n")
             for m in self.map_manager.maps:
                 acc = 0
@@ -146,21 +175,13 @@ class Game:
                                    m + "'].items[" + str(acc) + "])\n")
                         self.map_manager.maps[m].group.remove(item)
                     acc += 1
-            data.write(":\n")
 
     def decrypt_saving(self, start):
-        starting = False
-        ending = False
-        with open("loading/save.txt") as data:
+        with open(f'loading/save_{start}.txt') as data:
             for line in data:
                 line = line.rstrip('\n')
-                if line == ':' and ending:
-                    break
-                if starting:
-                    exec(line)
-                    ending = True
-                if line == start:
-                    starting = True
+                exec(line)
+
 
     # interactions sur la carte actuelle
     def update(self):
@@ -280,11 +301,16 @@ class Game:
             self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 110))
             pygame.display.flip()
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+                elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_n:
                         starting = False
                     if event.key == pygame.K_s:
-                        if os.stat("./loading/save.txt").st_size > 0:
+                        if os.stat("./loading/save_player.txt").st_size > 0 and \
+                                os.stat("./loading/save_inventory.txt").st_size > 0 and\
+                                os.stat("./loading/save_map.txt").st_size > 0:
                             self.load_from_saved_game = True
                         starting = False
 
@@ -321,7 +347,8 @@ class Game:
                         self.close_open_inventory()
                     if event.key == pygame.K_w:
                         self.close_open_fight()
-                    if event.key == pygame.K_z or event.key == pygame.K_s or event.key == pygame.K_a or event.key == pygame.K_p:
+                    if event.key == pygame.K_z or event.key == pygame.K_s or\
+                            event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
                 # elif event.type == self.fight_event.type:
                 #    self.close_open_fight()

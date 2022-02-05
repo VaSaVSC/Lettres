@@ -1,0 +1,2 @@
+self.inventory.add_item(Item('pizza', False, pygame.Rect(0, 0, 0, 0)))
+self.inventory.items[0].number = 1
