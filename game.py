@@ -1,10 +1,8 @@
 import os
-import shelve
-
 import pygame
 
 from dialog import DialogBox
-from inventory import Inventory, use_item, Item
+from inventory import Inventory, use_item
 from map import MapManager
 from player import Player
 
@@ -68,22 +66,12 @@ class Game:
         self.player = Player(self.fight_event)
         if from_save:
             self.decrypt_saving("player")
-        """self.player = Player(self.fight_event)
-        if from_save:
-            self.player = self.decrypt_saving("player")
-        else:
-            self.player = Player(self.fight_event)"""
 
     def load_inventory(self, from_save):
         self.inventory = Inventory()
         self.load_items()
         if from_save:
             self.decrypt_saving("inventory")
-        """if from_save:
-            self.inventory = self.decrypt_saving("inventory")
-        else:
-            self.inventory = Inventory()
-        self.load_items()"""
 
     def load_items(self):
         with open("loading/items.txt") as data:
@@ -117,25 +105,6 @@ class Game:
             self.map_manager.tp_player(from_save=from_save)
         else:
             self.map_manager.tp_player()
-        """if from_save:
-            self.map_manager = self.decrypt_saving("map")
-            self.map_manager.tp_player(from_save=from_save)
-        else:
-            self.map_manager = MapManager(self.screen, self.player, self.inventory)
-            self.map_manager.tp_player()"""
-
-    """def save(self):
-        save = shelve.open("savegame")
-        save["player"] = self.player
-        save["inventory"] = self.inventory
-        save["map"] = self.map_manager
-        save.close()
-
-    def decrypt_saving(self, start):
-        save = shelve.open("savegame")
-        x = save[start]
-        save.close()
-        return x"""
 
     def save(self):
         with open("loading/save_player.txt", 'wt') as data:
