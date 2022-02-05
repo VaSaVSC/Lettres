@@ -245,8 +245,19 @@ class Game:
 
     # méthodes relatives aux combats
     def show_fight(self):
+        acc = 0
+        go_down = True
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
+            self.screen.blit(self.player.fight_image, (50, 200 + acc))
+            if acc + 200 >= 275:
+                go_down = False
+            if acc <= 0:
+                go_down = True
+            if go_down:
+                acc += 0.3
+            else:
+                acc -= 0.3
             pygame.display.flip()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

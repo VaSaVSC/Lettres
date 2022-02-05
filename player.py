@@ -67,6 +67,8 @@ class Player(Entity):
         self.level = 1
         self.xp_needed_to_level_up = 10
         self.status = None
+        self.fight_image = pygame.image.load("./fight_sprites/gob.png")
+        self.fight_image = pygame.transform.scale(self.fight_image, (350, 350))
 
     def set_stats(self):
         self.stats.hp += self.base_stats.hp
