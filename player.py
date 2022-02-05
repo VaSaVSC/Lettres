@@ -60,23 +60,24 @@ class Player(Entity):
         self.name = "player"
         self.event = event
         self.stats = Stats(10, 5, 0, 3, 2, 99, 5)
-        self.fight_stats = self.stats
+        self.fight_stats = Stats(10, 5, 0, 3, 2, 99, 5)
+        self.base_stats = Stats(10, 5, 0, 3, 2, 99, 5)
         self.attacks = []
         self.xp = 0
         self.level = 1
         self.xp_needed_to_level_up = 10
         self.status = None
 
-    def set_stats(self, hp, ad, ap, armor, rm, chance, speed):
-        self.stats.hp += hp
-        self.stats.ad += ad
-        self.stats.ap += ap
-        self.stats.armor += armor
-        self.stats.rm += rm
-        self.stats.chance -= chance
+    def set_stats(self):
+        self.stats.hp += self.base_stats.hp
+        self.stats.ad += self.base_stats.ad
+        self.stats.ap += self.base_stats.ap
+        self.stats.armor += self.base_stats.armor
+        self.stats.rm += self.base_stats.rm
+        self.stats.chance -= self.base_stats.chance
         if self.stats.chance < 2:
             self.stats.chance = 2
-        self.stats.speed += speed
+        self.stats.speed += self.base_stats.speed
 
     def fight_event(self):
         pygame.event.post(self.event)
