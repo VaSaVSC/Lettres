@@ -41,7 +41,7 @@ def use_item(item, player):
             player.life -= player.life
         elif rd.randint(0, 100) < 20:
             player.life = player.max_life
-        elif rd.randint(0, 10) == 2:
+        elif rd.randint(0, 10) <= 2:
             player.life -= 1
         else:
             if player.life < player.max_life:
@@ -53,6 +53,7 @@ def use_item(item, player):
         return 1
     if item.name == "null":
         return 1
+
 
 class Inventory(pygame.sprite.Sprite):
 

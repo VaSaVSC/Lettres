@@ -1,5 +1,6 @@
 import os
 import pygame
+import time
 
 from dialog import DialogBox
 from inventory import Inventory, use_item, Item
@@ -18,7 +19,7 @@ class Game:
         self.screen = pygame.display.set_mode((800, 800))
         pygame.display.set_caption("Gobzer vs Calvoche")
 
-        # pygame.mixer.music.load('./sound.mp3')
+        # pygame.mixer.music.load('./audio/sound.mp3')
         # pygame.mixer.music.play(-1) # -1 = infini
 
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
@@ -63,7 +64,80 @@ class Game:
         self.can_handle_fight_input = False
         self.quit_while_fighting = False
 
-    # le chargement du joueur, des cartes et de l'inventaire
+        self.key_timeout = dict()
+
+
+    # le jeu tourne --------------------------------------------------------------
+    def run(self):
+
+        starting = True
+        while starting:
+            self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
+            n = self.font.render(self.intro1, False, (0, 0, 0))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 140))
+            n = self.font.render(self.intro2, False, (0, 0, 0))
+            self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 110))
+            pygame.display.flip()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    return
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_n:
+                        starting = False
+                    if event.key == pygame.K_s:
+                        if os.stat("./loading/save_player.txt").st_size > 0 and \
+                                os.stat("./loading/save_map.txt").st_size > 0:
+                            self.load_from_saved_game = True
+                        starting = False
+
+        self.load_player(self.load_from_saved_game)
+
+        self.load_inventory(self.load_from_saved_game)
+
+        self.load_maps(self.load_from_saved_game)
+
+        # pour les fps (ici 60)
+        clock = pygame.time.Clock()
+
+        running = True
+        while running:
+
+            self.player.save_location()
+            self.handle_input()
+            self.update()
+            self.map_manager.draw()
+            self.dialog_box.render(self.screen)
+            self.life_update()
+            self.show_inventory()
+            self.show_fight()
+            if self.quit_while_fighting:
+                break
+            pygame.display.flip()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.map_manager.check_pnj_collisions(self.dialog_box)
+                        self.map_manager.check_interactive_obj_collisions(self.dialog_box)
+                    if event.key == pygame.K_e:
+                        self.close_open_inventory()
+                    if event.key == pygame.K_w:
+                        self.close_open_fight()
+                        self.map_manager.launch_fight()
+                    if event.key == pygame.K_z or event.key == pygame.K_s or\
+                            event.key == pygame.K_a or event.key == pygame.K_p:
+                        self.handle_inventory_input(event.key)
+                # elif event.type == self.fight_event.type:
+                  #  self.close_open_fight()
+
+            clock.tick(60)
+
+        pygame.quit()
+
+    # le chargement du joueur, des cartes et de l'inventaire -----------------------------------------------
     def load_player(self, from_save):
         self.player = Player(self.fight_event)
         if from_save:
@@ -153,7 +227,7 @@ class Game:
                 line = line.rstrip('\n')
                 exec(line)
 
-    # interactions sur la carte actuelle
+    # interactions sur la carte actuelle ----------------------------------------------------------
     def update(self):
         if self.can_handle_input:
             self.map_manager.update()
@@ -179,7 +253,7 @@ class Game:
         for i in range(self.player.life):
             self.screen.blit(self.hair, (50 + i*48, 30))
 
-    # méthodes relatives à l'inventaire
+    # méthodes relatives à l'inventaire ----------------------------------------------------
     def handle_inventory_input(self, pressed):
         if self.can_handle_inventory_input:
 
@@ -244,7 +318,7 @@ class Game:
             self.can_handle_input = False
             self.can_handle_inventory_input = True
 
-    # méthodes relatives aux combats
+    # méthodes relatives aux combats ------------------------------------------------------------------
     def show_fight(self):
         acc = 0
         go_down = True
@@ -257,6 +331,10 @@ class Game:
             if self.map_manager.fight.fight_index == 0:
                 n = self.font_fight.render(self.map_manager.fight.monster.spawn_sentence, False, (0, 0, 0))
                 self.screen.blit(n, (self.X_POS, self.Y_POS + 120))
+            elif self.map_manager.fight.fight_index == 1:
+                n = self.font_fight.render("Que faire?", False, (0, 0, 0))
+                self.screen.blit(n, (self.X_POS, self.Y_POS + 120))
+
             if acc + 200 >= 275:
                 go_down = False
             if acc <= 0:
@@ -272,8 +350,10 @@ class Game:
                     return
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and not lock_space:
-                        self.map_manager.fight.fight_index += 1
-                        lock_space = True
+                        if self.map_manager.fight.fight_index == 0:
+                            self.key_timeout[event.key] = 0
+                        if self.can_be_pressed(event.key, 500):
+                            self.map_manager.fight.fight_index += 1
 
     def close_open_fight(self):
         if self.fighting:
@@ -285,72 +365,9 @@ class Game:
             self.can_handle_input = False
             self.can_handle_fight_input = True
 
-    # le jeu tourne
-    def run(self):
-
-        starting = True
-        while starting:
-            self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
-            n = self.font.render(self.intro1, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 140))
-            n = self.font.render(self.intro2, False, (0, 0, 0))
-            self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 110))
-            pygame.display.flip()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    return
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_n:
-                        starting = False
-                    if event.key == pygame.K_s:
-                        if os.stat("./loading/save_player.txt").st_size > 0 and \
-                                os.stat("./loading/save_map.txt").st_size > 0:
-                            self.load_from_saved_game = True
-                        starting = False
-
-        self.load_player(self.load_from_saved_game)
-
-        self.load_inventory(self.load_from_saved_game)
-
-        self.load_maps(self.load_from_saved_game)
-
-        # pour les fps (ici 60)
-        clock = pygame.time.Clock()
-
-        running = True
-        while running:
-
-            self.player.save_location()
-            self.handle_input()
-            self.update()
-            self.map_manager.draw()
-            self.dialog_box.render(self.screen)
-            self.life_update()
-            self.show_inventory()
-            self.show_fight()
-            if self.quit_while_fighting:
-                break
-            pygame.display.flip()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        self.map_manager.check_pnj_collisions(self.dialog_box)
-                        self.map_manager.check_interactive_obj_collisions(self.dialog_box)
-                    if event.key == pygame.K_e:
-                        self.close_open_inventory()
-                    if event.key == pygame.K_w:
-                        self.close_open_fight()
-                        self.map_manager.launch_fight()
-                    if event.key == pygame.K_z or event.key == pygame.K_s or\
-                            event.key == pygame.K_a or event.key == pygame.K_p:
-                        self.handle_inventory_input(event.key)
-                # elif event.type == self.fight_event.type:
-                  #  self.close_open_fight()
-
-            clock.tick(60)
-
-        pygame.quit()
+    def can_be_pressed(self, key, timeout):
+        current_time = pygame.time.get_ticks()
+        if self.key_timeout[key] > current_time:
+            return False
+        self.key_timeout[key] = current_time + timeout
+        return True
