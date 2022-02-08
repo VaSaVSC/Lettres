@@ -246,8 +246,9 @@ class MapManager:
                 self.launch_fight()
 
     def launch_fight(self):
-        rand = rd.randint(0, len(self.monsters) - 1)
-        monster = self.monsters[rand]
+        rand = rd.randint(0, len(self.get_map().monsters) - 1)
+        m = self.get_map().monsters[rand]
+        monster = self.monsters[m]
         monster.level = self.get_map().level
         monster.real_stats()
         self.fight = Fight(self.player, monster)

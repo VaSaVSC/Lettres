@@ -22,6 +22,7 @@ class Game:
         # pygame.mixer.music.play(-1) # -1 = infini
 
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
+        self.font_fight = pygame.font.Font("./dialogs/dialog_font.ttf", 20)
         self.box = pygame.image.load("./dialogs/dialog_box.png")
         self.dialog_box = DialogBox(self.box)
         self.box = pygame.transform.scale(self.box, (750, 200))
@@ -247,9 +248,15 @@ class Game:
     def show_fight(self):
         acc = 0
         go_down = True
+        lock_space = False
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
+            # self.screen.blit(self.map_manager.fight.monster.image, (425, 20 + acc))
+            self.screen.blit(self.player.fight_image, (425, 20 + acc))
+            if self.map_manager.fight.fight_index == 0:
+                n = self.font_fight.render(self.map_manager.fight.monster.spawn_sentence, False, (0, 0, 0))
+                self.screen.blit(n, (self.X_POS, self.Y_POS + 120))
             if acc + 200 >= 275:
                 go_down = False
             if acc <= 0:
@@ -263,6 +270,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.quit_while_fighting = True
                     return
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE and not lock_space:
+                        self.map_manager.fight.fight_index += 1
+                        lock_space = True
 
     def close_open_fight(self):
         if self.fighting:
@@ -334,11 +345,12 @@ class Game:
                         self.close_open_inventory()
                     if event.key == pygame.K_w:
                         self.close_open_fight()
+                        self.map_manager.launch_fight()
                     if event.key == pygame.K_z or event.key == pygame.K_s or\
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
-                elif event.type == self.fight_event.type:
-                    self.close_open_fight()
+                # elif event.type == self.fight_event.type:
+                  #  self.close_open_fight()
 
             clock.tick(60)
 

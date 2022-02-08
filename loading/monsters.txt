@@ -1,7 +1,11 @@
 attacks = {"test1", "test2", "test3", "test4"}
-colin = Monster("colin", 1, attacks, "Phacolin")
+colin = Monster("colin", 0, attacks, "Phacolin")
 colin.set_stats(15, 3, 0, 15, 15, 95, 5)
 colin.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 colin.real_stats()
+colin.spawn_sentence = "Un Phacolin sauvage apparaît!"
+colin.loose_sentence = "Le Phacolin vous a écrasé!"
+colin.win_sentence = "Vous avez vaincu le Phacolin!"
 self.monsters["colin"] = colin
+
 
