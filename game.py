@@ -2,7 +2,7 @@ import os
 import pygame
 
 from dialog import DialogBox
-from inventory import Inventory, use_item
+from inventory import Inventory, use_item, Item
 from map import MapManager
 from player import Player
 
@@ -305,7 +305,6 @@ class Game:
                         starting = False
                     if event.key == pygame.K_s:
                         if os.stat("./loading/save_player.txt").st_size > 0 and \
-                                os.stat("./loading/save_inventory.txt").st_size > 0 and\
                                 os.stat("./loading/save_map.txt").st_size > 0:
                             self.load_from_saved_game = True
                         starting = False
