@@ -15,3 +15,8 @@ pizza:
 Bout de pizza;
 Un joli morceau de pizza
 4 fromages.
+
+robe:
+Jolie robe;
+Parfaite pour une soirée
+mondaine.

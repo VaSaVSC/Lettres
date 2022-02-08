@@ -11,3 +11,6 @@ Vous avez trouvez du vide !
 
 claude:
 Jui tout plein :§
+
+robe:
+Vous trouvez une robe !
