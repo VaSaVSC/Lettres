@@ -193,13 +193,13 @@ class Game:
 
             if pressed == pygame.K_a:
                 if len(self.inventory.items) > 0 and self.inventory.items[self.inventory_index].number > 0:
-                    use_item(self.inventory.items[self.inventory_index], self.player)
-                    if self.inventory.items[self.inventory_index].number == 1 and \
-                            self.inventory_index == len(self.inventory.items) - 1:
-                        self.inventory_index -= 1
-                        self.inventory.remove_item(self.inventory.items[self.inventory_index + 1])
-                    else:
-                        self.inventory.remove_item(self.inventory.items[self.inventory_index])
+                    if use_item(self.inventory.items[self.inventory_index], self.player) == 1:
+                        if self.inventory.items[self.inventory_index].number == 1 and \
+                                self.inventory_index == len(self.inventory.items) - 1:
+                            self.inventory_index -= 1
+                            self.inventory.remove_item(self.inventory.items[self.inventory_index + 1])
+                        else:
+                            self.inventory.remove_item(self.inventory.items[self.inventory_index])
                 if self.inventory_index == -1:
                     self.inventory_index = 0
 

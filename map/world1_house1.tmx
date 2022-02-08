@@ -105,9 +105,9 @@
   <object id="22" name="old_carapils" type="item1" x="80.931" y="112.14" width="14.2819" height="14.8109"/>
  </objectgroup>
  <objectgroup id="5" name="PNJPaths">
-  <object id="17" name="andreas_path1" x="159.746" y="111.61" width="15.3399" height="15.3399"/>
-  <object id="18" name="andreas_path2" x="271.886" y="111.081" width="15.3399" height="15.8688"/>
-  <object id="19" name="andreas_path3" x="272.415" y="223.222" width="14.2819" height="16.3978"/>
-  <object id="20" name="andreas_path4" x="160.275" y="223.75" width="14.8109" height="15.8688"/>
+  <object id="17" name="nu_path1" x="159.746" y="111.61" width="15.3399" height="15.3399"/>
+  <object id="18" name="nu_path2" x="271.886" y="111.081" width="15.3399" height="15.8688"/>
+  <object id="19" name="nu_path3" x="272.415" y="223.222" width="14.2819" height="16.3978"/>
+  <object id="20" name="nu_path4" x="160.275" y="223.75" width="14.8109" height="15.8688"/>
  </objectgroup>
 </map>

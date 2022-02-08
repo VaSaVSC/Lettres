@@ -46,8 +46,13 @@ def use_item(item, player):
         else:
             if player.life < player.max_life:
                 player.life += 1
-        return
-
+        return 1
+    if item.name == "robe":
+        return 0
+    if item.name == "pizza":
+        return 1
+    if item.name == "null":
+        return 1
 
 class Inventory(pygame.sprite.Sprite):
 

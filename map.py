@@ -83,7 +83,7 @@ class MapManager:
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
                    dest="world1", dest_point="w1_h1_exitP")
         ],  pnjs=[
-            PNJ("andreas", nb_points=4, speed=2)
+            PNJ("nu", nb_points=4, speed=2)
         ])
 
         self.tp_pnjs()

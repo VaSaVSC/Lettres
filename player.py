@@ -93,6 +93,8 @@ class Player(Entity):
 
 
 def refactor(name):
+    if name == "nu":
+        name = "andreas"
     name = name[0].upper() + name[1:]
     return name
 
