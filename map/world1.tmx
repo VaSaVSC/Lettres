@@ -3,7 +3,6 @@
  <tileset firstgid="1" source="background.tsx"/>
  <tileset firstgid="721" source="house.tsx"/>
  <tileset firstgid="1496" source="dungeon.tsx"/>
- <tileset firstgid="1752" source="../../jeu1/nature.tsx"/>
  <layer id="7" name="Grass" width="50" height="50">
   <data encoding="csv">
 323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,323,324,
