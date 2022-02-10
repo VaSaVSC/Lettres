@@ -59,9 +59,9 @@ class Player(Entity):
         super().__init__("player", 0, 0, 5)
         self.name = "player"
         self.event = event
-        self.stats = Stats(10, 5, 0, 3, 2, 99, 5)
-        self.fight_stats = Stats(10, 5, 0, 3, 2, 99, 5)
-        self.base_stats = Stats(10, 5, 0, 3, 2, 99, 5)
+        self.stats = Stats(10, 5, 0, 3, 2, 99, 6)
+        self.fight_stats = Stats(10, 5, 0, 3, 2, 99, 6)
+        self.base_stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.attacks = []
         self.xp = 0
         self.level = 1

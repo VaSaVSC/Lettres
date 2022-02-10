@@ -1,11 +1,16 @@
 import os
 import pygame
-import time
+import random as rd
 
 from dialog import DialogBox
 from inventory import Inventory, use_item, Item
 from map import MapManager
 from player import Player
+
+
+def use_attack(attack, source, target):
+    if attack == "test":
+        target.stats.hp -= source.stats.ad/2
 
 
 class Game:
@@ -23,7 +28,8 @@ class Game:
         # pygame.mixer.music.play(-1) # -1 = infini
 
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
-        self.font_fight = pygame.font.Font("./dialogs/dialog_font.ttf", 20)
+        self.font_fight = pygame.font.Font("./dialogs/dialog_font.ttf", 18)
+        self.font_fight2 = pygame.font.Font("./dialogs/dialog_font.ttf", 30)
         self.box = pygame.image.load("./dialogs/dialog_box.png")
         self.dialog_box = DialogBox(self.box)
         self.box = pygame.transform.scale(self.box, (750, 200))
@@ -43,7 +49,7 @@ class Game:
 
         self.state = None
 
-        self.man_inventory1 = "E = quitter"
+        self.man_inventory1 = "E = quitter l'inventaire"
         self.man_inventory2 = "A = utiliser item"
         self.man_inventory3 = "Z/S = item précédent/suivant"
         self.man_inventory4 = "P = sauvegarde"
@@ -51,6 +57,8 @@ class Game:
 
         self.fight = pygame.image.load("./ath_assets/fight_background.png")
         self.fight = pygame.transform.scale(self.fight, (800, 800))
+        self.fight_buttons = pygame.image.load("./ath_assets/buttons.png")
+        self.fight_buttons = pygame.transform.scale(self.fight_buttons, (700, 100))
 
         self.hair = pygame.image.load("./ath_assets/meche.png")
         self.hair = pygame.transform.scale(self.hair, (64, 64))
@@ -65,7 +73,6 @@ class Game:
         self.quit_while_fighting = False
 
         self.key_timeout = dict()
-
 
     # le jeu tourne --------------------------------------------------------------
     def run(self):
@@ -122,12 +129,12 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         self.map_manager.check_pnj_collisions(self.dialog_box)
                         self.map_manager.check_interactive_obj_collisions(self.dialog_box)
-                    if event.key == pygame.K_e:
+                    elif event.key == pygame.K_e:
                         self.close_open_inventory()
-                    if event.key == pygame.K_w:
-                        self.close_open_fight()
+                    elif event.key == pygame.K_w:
                         self.map_manager.launch_fight()
-                    if event.key == pygame.K_z or event.key == pygame.K_s or\
+                        self.close_open_fight()
+                    elif event.key == pygame.K_z or event.key == pygame.K_s or\
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
                 # elif event.type == self.fight_event.type:
@@ -328,13 +335,34 @@ class Game:
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
             # self.screen.blit(self.map_manager.fight.monster.image, (425, 20 + acc))
             self.screen.blit(self.player.fight_image, (425, 20 + acc))
+            n = self.font_fight.render("Gobzer    HP: " + str(self.player.stats.hp) + "    LVL: " +
+                                       str(self.player.xp), False, (0, 0, 0))
+            self.screen.blit(n, (460, 515))
+            n = self.font_fight.render(self.map_manager.fight.monster.refact_name + "    HP: " +
+                                       str(int(self.map_manager.fight.monster.stats.hp)) + "    LVL: " +
+                                       str(self.map_manager.fight.monster.level), False, (0, 0, 0))
+            self.screen.blit(n, (15, 123))
             if self.map_manager.fight.fight_index == 0:
-                n = self.font_fight.render(self.map_manager.fight.monster.spawn_sentence, False, (0, 0, 0))
-                self.screen.blit(n, (self.X_POS, self.Y_POS + 120))
+                n = self.font_fight2.render(self.map_manager.fight.monster.spawn_sentence, False, (0, 0, 0))
+                self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
             elif self.map_manager.fight.fight_index == 1:
-                n = self.font_fight.render("Que faire?", False, (0, 0, 0))
-                self.screen.blit(n, (self.X_POS, self.Y_POS + 120))
-
+                self.screen.blit(self.fight_buttons, (self.X_POS + 5, self.Y_POS + 75))
+            elif self.map_manager.fight.fight_index == 2:
+                print("les attaques")
+            elif self.map_manager.fight.fight_index == 3:
+                print("les items")
+            elif self.map_manager.fight.fight_index == 4:
+                t0 = pygame.time.get_ticks()
+                if self.map_manager.fight.player_can_attack:
+                    use_attack("test", self.map_manager.fight.player, self.map_manager.fight.monster)
+                    while pygame.time.get_ticks() - t0 < 800:
+                        print("wait")
+                    use_attack("test", self.map_manager.fight.monster, self.map_manager.fight.player)
+                else:
+                    use_attack("test", self.map_manager.fight.player, self.map_manager.fight.monster)
+                    while pygame.time.get_ticks() - t0 < 800:
+                        print("wait")
+                    use_attack("test", self.map_manager.fight.monster, self.map_manager.fight.player)
             if acc + 200 >= 275:
                 go_down = False
             if acc <= 0:
@@ -354,6 +382,19 @@ class Game:
                             self.key_timeout[event.key] = 0
                         if self.can_be_pressed(event.key, 500):
                             self.map_manager.fight.fight_index += 1
+                    elif self.map_manager.fight.fight_index == 1 and \
+                        (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e):
+                        if event.key == pygame.K_a:
+                            self.map_manager.fight.fight_index = 2
+                        elif event.key == pygame.K_z:
+                            self.map_manager.fight.fight_index = 3
+                        else:
+                            escape_chance = pow(5/6, self.map_manager.fight.monster.level)
+                            if rd.randint(100, 150)*escape_chance > 70:
+                                self.player.base_stats()
+                                self.close_open_fight()
+                            else:
+                                self.map_manager.fight.fight_index = 1
 
     def close_open_fight(self):
         if self.fighting:
@@ -371,3 +412,4 @@ class Game:
             return False
         self.key_timeout[key] = current_time + timeout
         return True
+

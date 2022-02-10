@@ -15,9 +15,6 @@ class Fight:
             self.player_can_attack = True
         else:
             self.player_can_attack = False
-        while self.player.hp != 0 or self.monster.hp != 0:
-            print("mdrr")
-        self.player.base_stats()
 
     def dmg_blocked(self, resistance):
         return (sqrt(resistance) * 7) / 100

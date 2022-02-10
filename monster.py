@@ -68,3 +68,7 @@ class Monster(Stats, StatsGrowth):
             return {1, 2}
         else:
             return {level, level + 1, level + 2}
+
+    def attacks(self):
+        rand = rd.randint(1, 4)
+        return self.attacks[rand]
