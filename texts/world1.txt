@@ -1,4 +1,4 @@
-paul:
+paul0:
 Salut, moi c'est PAUL.
 Je suis une belle salope.
 Et toi?
@@ -9,7 +9,7 @@ Vous avez trouvez une vieille Cara !
 null:
 Vous avez trouvez du vide !
 
-claude:
+claude0:
 Jui tout plein :§
 
 robe:

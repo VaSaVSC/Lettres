@@ -93,8 +93,6 @@ class Player(Entity):
 
 
 def refactor(name):
-    if name == "nu":
-        name = "andreas"
     name = name[0].upper() + name[1:]
     return name
 
@@ -111,7 +109,7 @@ class PNJ(Entity):
         self.base_speed = speed
         self.points = []
         self.current_point = 0
-        self.mode = 0
+        self.mode = "0"
         self.random_move = random_move
 
     def move(self):

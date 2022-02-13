@@ -85,7 +85,7 @@ class MapManager:
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
                    dest="world1", dest_point="w1_h1_exitP")
         ],  pnjs=[
-            PNJ("nu", nb_points=4, speed=2)
+            PNJ("andreas", nb_points=4, speed=2)
         ])
 
         self.register_map("dungeon", portals=[
@@ -181,7 +181,7 @@ class MapManager:
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
         group.add(self.player)
         for pnj in pnjs:
-            pnj.dialog = texts[pnj.name]
+            pnj.dialog = texts[pnj.name + pnj.mode]
             group.add(pnj)
         for i in items:
             i.dialog = texts[i.name]
@@ -201,6 +201,18 @@ class MapManager:
         for sprite in self.get_group().sprites():
             if type(sprite) == PNJ and sprite.feet.colliderect(self.player.rect):
                 dialog_box.execute(sprite.refact_name, False, sprite.dialog)
+                if self.get_map().pnjs[0].name == "andreas" and self.inventory.contains("robe"): #quete de la robe
+                    self.get_map().pnjs[0].mode = 1
+                    self.get_map().pnjs[0].sprite_sheet = pygame.image.load(f"./sprites/andreas1.png")
+                    self.get_map().pnjs[0].images = {
+                        'down': self.get_map().pnjs[0].get_images(0),
+                        'left': self.get_map().pnjs[0].get_images(32),
+                        'right': self.get_map().pnjs[0].get_images(64),
+                        'up': self.get_map().pnjs[0].get_images(96)
+                    }
+                    for i in self.inventory.items:
+                        if i.name == "robe":
+                            self.inventory.remove_item(i)
             if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False

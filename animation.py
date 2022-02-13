@@ -3,9 +3,10 @@ import pygame
 
 class AnimateSprite(pygame.sprite.Sprite):
 
-    def __init__(self, name):
+    def __init__(self, name, mode=0):
         super().__init__()
-        self.sprite_sheet = pygame.image.load(f"./sprites/{name}.png")
+        self.mode = mode
+        self.sprite_sheet = pygame.image.load(f"./sprites/{name}{mode}.png")
         self.animation_index = 0
         self.animation_bool = True
         self.speed = 3

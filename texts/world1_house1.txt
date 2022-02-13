@@ -1,6 +1,10 @@
-nu:
+andreas0:
 Salut je suis nu :o
 Trouve moi de quoi m'habiller!
+
+andreas1:
+Merci !
+je suis toute belle maintenant :)
 
 old_carapils:
 Vous avez trouvez une vieille Cara !

@@ -88,3 +88,9 @@ class Inventory(pygame.sprite.Sprite):
         item.number -= 1
         if item.number == 0:
             self.items.remove(item)
+
+    def contains(self, name):
+        for i in self.items:
+            if i.name == name:
+                return True
+        return False
