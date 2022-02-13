@@ -73,7 +73,9 @@ class MapManager:
             Portal(origin="world1", origin_point="w1_h1_enter",
                    dest="world1_house1", dest_point="w1_h1_enterP"),
             Portal(origin="world1", origin_point="s_w1_enter",
-                   dest="start", dest_point="s_w1_enterP")
+                   dest="start", dest_point="s_w1_enterP"),
+            Portal(origin="world1", origin_point="w1_d_enter",
+                   dest="dungeon", dest_point="d_w1_enterP")
         ],  pnjs=[
             PNJ("paul", nb_points=4, speed=1),
             PNJ("claude", nb_points=1, speed=2, random_move=True)
@@ -84,6 +86,11 @@ class MapManager:
                    dest="world1", dest_point="w1_h1_exitP")
         ],  pnjs=[
             PNJ("nu", nb_points=4, speed=2)
+        ])
+
+        self.register_map("dungeon", portals=[
+            Portal(origin='dungeon', origin_point="d_w1_exit",
+                   dest="world1", dest_point="w1_d_exitP")
         ])
 
         self.tp_pnjs()
@@ -158,11 +165,11 @@ class MapManager:
             if check_type(obj.type):
                 interactive_obj.append(Obj(obj.name, obj.type, texts[obj.name], obj.x, obj.y, obj.width, obj.height))
             # items directement présents sur la carte
-            if obj.type == "item1":
-                items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height)))
+            if obj.type == "item1" or obj.type == "coffre":
+                items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
             # items qui apparaîtront suite à la complétion d'une quête
             if obj.type == "item2":
-                items.append(Item(obj.name, False, pygame.Rect(obj.x, obj.y, obj.width, obj.height)))
+                items.append(Item(obj.name, False, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
 
         # charger les monstres disponibles sur cette carte
         monsters = []

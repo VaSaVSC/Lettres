@@ -4,8 +4,9 @@ import random as rd
 
 class Item(pygame.sprite.Sprite):
 
-    def __init__(self, name, should_appear, rect):
+    def __init__(self, name, should_appear, rect, type):
         super().__init__()
+        self.type = type
         self.name = name
         self.refact_name = ""
         self.info = []
@@ -18,7 +19,10 @@ class Item(pygame.sprite.Sprite):
         self.tp_spawn()
         self.old_position = self.position.copy()
         self.feet = pygame.Rect(rect.x, rect.y, rect.width*0.5, 12)
-        self.image = pygame.image.load("./items/item.png")
+        if self.type == "item1" or self.type == "item2":
+            self.image = pygame.image.load("./items/item.png")
+        elif self.type == "coffre":
+            self.image = pygame.image.load("./items/coffre.png")
         self.image = pygame.transform.scale(self.image, (32, 32))
         self.image.set_colorkey([0, 0, 0])
         self.number = 0
