@@ -202,7 +202,7 @@ class MapManager:
             if type(sprite) == PNJ and sprite.feet.colliderect(self.player.rect):
                 dialog_box.execute(sprite.refact_name, False, sprite.dialog)
                 if self.get_map().pnjs[0].name == "andreas" and self.inventory.contains("robe"): #quete de la robe
-                    self.get_map().pnjs[0].mode = 1
+                    self.get_map().pnjs[0].mode = "1"
                     self.get_map().pnjs[0].sprite_sheet = pygame.image.load(f"./sprites/andreas1.png")
                     self.get_map().pnjs[0].images = {
                         'down': self.get_map().pnjs[0].get_images(0),
@@ -210,6 +210,7 @@ class MapManager:
                         'right': self.get_map().pnjs[0].get_images(64),
                         'up': self.get_map().pnjs[0].get_images(96)
                     }
+                    self.get_map().pnjs[0].dialog = self.get_map().texts[self.get_map().pnjs[0].name + self.get_map().pnjs[0].mode]
                     for i in self.inventory.items:
                         if i.name == "robe":
                             self.inventory.remove_item(i)
