@@ -62,7 +62,7 @@ class Player(Entity):
         self.stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.fight_stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.base_stats = Stats(10, 5, 0, 3, 2, 99, 6)
-        self.attacks = []
+        self.attacks = ["test"]
         self.xp = 0
         self.level = 1
         self.xp_needed_to_level_up = 10
@@ -84,7 +84,7 @@ class Player(Entity):
     def fight_event(self):
         pygame.event.post(self.event)
 
-    def base_stats(self):
+    def base_stats_(self):
         self.fight_stats = self.stats
         self.status = None
 

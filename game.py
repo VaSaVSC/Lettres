@@ -333,6 +333,7 @@ class Game:
     def show_fight(self):
         acc = 0
         go_down = True
+        atk_index = 0
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
@@ -354,29 +355,35 @@ class Game:
                 self.screen.blit(self.atk_bg, (150, 150))
                 acc1 = 0
                 for atk in self.player.attacks:
-                    n = self.font_fight.render(atk, False, (0, 0, 0))
+                    n = self.font_fight2.render(str(atk_index+1) + " = " + atk, False, (0, 0, 0))
                     self.screen.blit(n, (170, 170 + acc1))
                     acc1 += 30
+                n = self.font_fight2.render("B = retour", False, (0, 0, 0))
+                self.screen.blit(n, (170, 600))
             elif self.map_manager.fight.fight_index == 3:
                 self.screen.blit(self.atk_bg, (150, 150))
                 acc1 = 0
                 for item in self.inventory.items:
                     if item.fight_item:
-                        n = self.font_fight.render(item.refact_name, False, (0, 0, 0))
+                        n = self.font_fight2.render(item.refact_name, False, (0, 0, 0))
                         self.screen.blit(n, (170, 170 + acc1))
                         acc1 += 30
+                n = self.font_fight2.render("B = retour", False, (0, 0, 0))
+                self.screen.blit(n, (170, 600))
             elif self.map_manager.fight.fight_index == 4:
                 t0 = pygame.time.get_ticks()
                 if self.map_manager.fight.player_can_attack:
-                    use_attack("test", self.map_manager.fight.player, self.map_manager.fight.monster)
+                    use_attack(self.player.attacks[atk_index],
+                               self.map_manager.fight.player, self.map_manager.fight.monster)
                     while pygame.time.get_ticks() - t0 < 800:
-                        print("wait")
+                        pass
                     use_attack("test", self.map_manager.fight.monster, self.map_manager.fight.player)
                 else:
-                    use_attack("test", self.map_manager.fight.player, self.map_manager.fight.monster)
-                    while pygame.time.get_ticks() - t0 < 800:
-                        print("wait")
                     use_attack("test", self.map_manager.fight.monster, self.map_manager.fight.player)
+                    while pygame.time.get_ticks() - t0 < 800:
+                        pass
+                    use_attack(self.player.attacks[atk_index],
+                               self.map_manager.fight.player, self.map_manager.fight.monster)
                 self.map_manager.fight.fight_index = 1
             if acc + 200 >= 275:
                 go_down = False
@@ -397,20 +404,35 @@ class Game:
                     elif self.map_manager.fight.fight_index == 1 and \
                         (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e or
                             event.key == pygame.K_b):
-                        if event.key == pygame.K_a:
+                        if event.key == pygame.K_b:
+                            self.map_manager.fight.fight_index = 1
+                        elif event.key == pygame.K_a:
                             self.map_manager.fight.fight_index = 2
                         elif event.key == pygame.K_z:
                             self.map_manager.fight.fight_index = 3
                         else:
                             escape_chance = pow(5/6, self.map_manager.fight.monster.level)
                             if rd.randint(100, 150)*escape_chance > 70:
-                                self.player.base_stats()
+                                self.player.base_stats_()
                                 self.close_open_fight()
                             else:
                                 self.map_manager.fight.fight_index = 1
                     elif pygame.K_1 <= event.key <= pygame.K_4 or event.key == pygame.K_b:
                         if event.key == pygame.K_b:
                             self.map_manager.fight.fight_index = 1
+                        else:
+                            if event.key == pygame.K_1:
+                                atk_index = 0
+                            elif event.key == pygame.K_2:
+                                atk_index = 1
+                            elif event.key == pygame.K_3:
+                                atk_index = 2
+                            else:
+                                atk_index = 3
+                            self.map_manager.fight.fight_index = 4
+            if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
+                self.player.base_stats_()
+                self.close_open_fight()
 
     def close_open_fight(self):
         if self.fighting:
