@@ -184,6 +184,9 @@ class MapManager:
             # items qui apparaîtront suite à la complétion d'une quête
             if obj.type == "item2":
                 items.append(Item(obj.name, False, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
+            # items utilisables en combat, et directement présents sur la carte
+            if obj.type == "item3":
+                items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
 
         # charger les monstres disponibles sur cette carte
         monsters = []

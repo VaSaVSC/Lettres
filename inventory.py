@@ -14,12 +14,15 @@ class Item(pygame.sprite.Sprite):
         self.should_appear = should_appear
         self.is_carried = False
         self.can_be_carried = False
+        self.fight_item = False
+        if self.type == "item3":
+            self.fight_item = True
         self.rect = rect
         self.position = [0, 0]
         self.tp_spawn()
         self.old_position = self.position.copy()
         self.feet = pygame.Rect(rect.x, rect.y, rect.width*0.5, 12)
-        if self.type == "item1" or self.type == "item2":
+        if self.type == "item1" or self.type == "item2" or self.type == "item3":
             self.image = pygame.image.load("./items/item.png")
         elif self.type == "coffre":
             self.image = pygame.image.load("./items/coffre.png")

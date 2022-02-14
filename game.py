@@ -59,6 +59,7 @@ class Game:
         self.fight = pygame.transform.scale(self.fight, (800, 800))
         self.fight_buttons = pygame.image.load("./ath_assets/buttons.png")
         self.fight_buttons = pygame.transform.scale(self.fight_buttons, (700, 100))
+        self.atk_bg = pygame.image.load("./ath_assets/atk_bg.jpg")
 
         self.hair = pygame.image.load("./ath_assets/meche.png")
         self.hair = pygame.transform.scale(self.hair, (64, 64))
@@ -204,7 +205,8 @@ class Game:
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
             for item in self.inventory.items:
-                data.write("self.inventory.add_item(Item('" + item.name + "', False, pygame.Rect(0, 0, 0, 0)))\n")
+                data.write("self.inventory.add_item(Item('" + item.name + "', False, pygame.Rect(0, 0, 0, 0), " +
+                           item.type + "))\n")
                 data.write("self.inventory.items[" + str(acc) + "].number = " + str(item.number) + "\n")
                 acc += 1
 
@@ -349,9 +351,20 @@ class Game:
             elif self.map_manager.fight.fight_index == 1:
                 self.screen.blit(self.fight_buttons, (self.X_POS + 5, self.Y_POS + 75))
             elif self.map_manager.fight.fight_index == 2:
-                print("les attaques")
+                self.screen.blit(self.atk_bg, (150, 150))
+                acc1 = 0
+                for atk in self.player.attacks:
+                    n = self.font_fight.render(atk, False, (0, 0, 0))
+                    self.screen.blit(n, (170, 170 + acc1))
+                    acc1 += 30
             elif self.map_manager.fight.fight_index == 3:
-                print("les items")
+                self.screen.blit(self.atk_bg, (150, 150))
+                acc1 = 0
+                for item in self.inventory.items:
+                    if item.fight_item:
+                        n = self.font_fight.render(item.refact_name, False, (0, 0, 0))
+                        self.screen.blit(n, (170, 170 + acc1))
+                        acc1 += 30
             elif self.map_manager.fight.fight_index == 4:
                 t0 = pygame.time.get_ticks()
                 if self.map_manager.fight.player_can_attack:
@@ -381,12 +394,9 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE and self.map_manager.fight.fight_index < 1:
                         self.map_manager.fight.fight_index = 1
-                        """if self.map_manager.fight.fight_index == 0:
-                            self.key_timeout[event.key] = 0
-                        if self.can_be_pressed(event.key, 500):
-                            self.map_manager.fight.fight_index += 1"""
                     elif self.map_manager.fight.fight_index == 1 and \
-                        (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e):
+                        (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e or
+                            event.key == pygame.K_b):
                         if event.key == pygame.K_a:
                             self.map_manager.fight.fight_index = 2
                         elif event.key == pygame.K_z:
@@ -398,6 +408,9 @@ class Game:
                                 self.close_open_fight()
                             else:
                                 self.map_manager.fight.fight_index = 1
+                    elif pygame.K_1 <= event.key <= pygame.K_4 or event.key == pygame.K_b:
+                        if event.key == pygame.K_b:
+                            self.map_manager.fight.fight_index = 1
 
     def close_open_fight(self):
         if self.fighting:

@@ -13,7 +13,7 @@ chose d'intéressant...
 
 pizza:
 Bout de pizza;
-Un joli morceau de pizza
+Un grand morceau de pizza
 4 fromages.
 
 robe:
