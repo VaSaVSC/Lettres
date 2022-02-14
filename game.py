@@ -205,8 +205,8 @@ class Game:
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
             for item in self.inventory.items:
-                data.write("self.inventory.add_item(Item('" + item.name + "', False, pygame.Rect(0, 0, 0, 0), " +
-                           item.type + "))\n")
+                data.write("self.inventory.add_item(Item('" + item.name + "', False, pygame.Rect(0, 0, 0, 0), '" +
+                           item.type + "'))\n")
                 data.write("self.inventory.items[" + str(acc) + "].number = " + str(item.number) + "\n")
                 acc += 1
 
