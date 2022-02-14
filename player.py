@@ -186,3 +186,13 @@ class PNJ(Entity):
             point = tmx_data.get_object_by_name(f"{self.name}_path{num}")
             rect = pygame.Rect(point.x, point.y, point.width, point.height)
             self.points.append(rect)
+
+    def change_sprite(self, texts):
+        self.sprite_sheet = pygame.image.load(f"./sprites/{self.name}{self.mode}.png")
+        self.images = {
+            'down': self.get_images(0),
+            'left': self.get_images(32),
+            'right': self.get_images(64),
+            'up': self.get_images(96)
+        }
+        self.dialog = texts[self.name + self.mode]

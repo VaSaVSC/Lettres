@@ -213,9 +213,11 @@ class Game:
             for m in self.map_manager.maps:
                 acc = 0
                 for pnj in self.map_manager.maps[m].pnjs:
-                    if pnj.mode != 0:
+                    if pnj.mode != '0':
                         data.write("self.map_manager.maps['" + m + "'].pnjs[" +
-                                   str(acc) + "].mode = " + str(pnj.mode) + "\n")
+                                   str(acc) + "].mode = '" + pnj.mode + "'\n")
+                        data.write("self.map_manager.maps['" + m + "'].pnjs[" +
+                                   str(acc) + "].change_sprite(self.map_manager.maps['" + m + "'].texts)\n")
                     acc += 1
                 acc = 0
                 for item in self.map_manager.maps[m].items:
@@ -329,7 +331,6 @@ class Game:
     def show_fight(self):
         acc = 0
         go_down = True
-        lock_space = False
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
@@ -363,6 +364,7 @@ class Game:
                     while pygame.time.get_ticks() - t0 < 800:
                         print("wait")
                     use_attack("test", self.map_manager.fight.monster, self.map_manager.fight.player)
+                self.map_manager.fight.fight_index = 1
             if acc + 200 >= 275:
                 go_down = False
             if acc <= 0:
@@ -377,11 +379,12 @@ class Game:
                     self.quit_while_fighting = True
                     return
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE and not lock_space:
-                        if self.map_manager.fight.fight_index == 0:
+                    if event.key == pygame.K_SPACE and self.map_manager.fight.fight_index < 1:
+                        self.map_manager.fight.fight_index = 1
+                        """if self.map_manager.fight.fight_index == 0:
                             self.key_timeout[event.key] = 0
                         if self.can_be_pressed(event.key, 500):
-                            self.map_manager.fight.fight_index += 1
+                            self.map_manager.fight.fight_index += 1"""
                     elif self.map_manager.fight.fight_index == 1 and \
                         (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e):
                         if event.key == pygame.K_a:
