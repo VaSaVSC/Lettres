@@ -1,3 +1,4 @@
-self.map_manager.current_map = 'world1'
-self.map_manager.maps['start'].items[0].should_appear = False
-self.map_manager.maps['start'].group.remove(self.map_manager.maps['start'].items[0])
+self.map_manager.current_map = 'ice_world'
+self.map_manager.maps['world1'].pnjs[0].mode = 0
+self.map_manager.maps['world1'].pnjs[1].mode = 0
+self.map_manager.maps['world1_house1'].pnjs[0].mode = 0

@@ -75,7 +75,9 @@ class MapManager:
             Portal(origin="world1", origin_point="s_w1_enter",
                    dest="start", dest_point="s_w1_enterP"),
             Portal(origin="world1", origin_point="w1_d_enter",
-                   dest="dungeon", dest_point="d_w1_enterP")
+                   dest="dungeon", dest_point="d_w1_enterP"),
+            Portal(origin="world1", origin_point="w1_des_enter",
+                   dest="desert", dest_point="des_w1_enterP")
         ],  pnjs=[
             PNJ("paul", nb_points=4, speed=1),
             PNJ("claude", nb_points=1, speed=2, random_move=True)
@@ -93,9 +95,21 @@ class MapManager:
                    dest="world1", dest_point="w1_d_exitP")
         ])
 
+        self.register_map("desert", portals=[
+            Portal(origin='desert', origin_point="des_w1_exit",
+                   dest="world1", dest_point="w1_des_exitP"),
+            Portal(origin='desert', origin_point="des_i_enter",
+                   dest="ice_world", dest_point="i_des_enterP")
+        ])
+
+        self.register_map("ice_world", portals=[
+            Portal(origin='ice_world', origin_point="i_des_exit",
+                   dest="desert", dest_point="des_i_exitP")
+        ])
+
         self.tp_pnjs()
 
-    def register_map(self, name, portals=[], pnjs=[], level=0):
+    def register_map(self, name, portals=[], pnjs=[], level=0, default_layer=4):
 
         # charger les textes
         texts = dict()
@@ -178,7 +192,7 @@ class MapManager:
                 monsters.append(monster)
 
         # groupes de calques
-        group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
+        group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=default_layer)
         group.add(self.player)
         for pnj in pnjs:
             pnj.dialog = texts[pnj.name + pnj.mode]

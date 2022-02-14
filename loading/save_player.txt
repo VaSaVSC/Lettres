@@ -1,4 +1,4 @@
-self.player.position = [85.54849999999999, 375.498]
+self.player.position = [353.333, 76.67000000000007]
 self.player.life = 5
 self.player.stats.hp = 10
 self.player.stats.ad = 5
@@ -6,4 +6,4 @@ self.player.stats.ap = 0
 self.player.stats.armor = 3
 self.player.stats.rm = 2
 self.player.stats.chance = 99
-self.player.stats.speed = 5
+self.player.stats.speed = 6
