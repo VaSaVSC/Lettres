@@ -337,8 +337,7 @@ class Game:
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
-            # self.screen.blit(self.map_manager.fight.monster.image, (425, 20 + acc))
-            self.screen.blit(self.player.fight_image, (425, 20 + acc))
+            self.screen.blit(self.map_manager.fight.monster.image, (425, 20 + acc))
             n = self.font_fight.render("Gobzer    HP: " + str(self.player.stats.hp) + "    LVL: " +
                                        str(self.player.xp), False, (0, 0, 0))
             self.screen.blit(n, (460, 515))
