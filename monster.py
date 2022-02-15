@@ -42,8 +42,8 @@ class Monster(Stats, StatsGrowth):
         self.level = level
         self.level_range = self.monster_level_range(level)
         self.attacks = attacks
-        # self.image = pygame.image.load(f'./fight_sprites/{name}.png')
-        # self.image = pygame.transform.scale(self.image, (350, 350))
+        self.image = pygame.image.load(f'./fight_sprites/{name}.png')
+        self.image = pygame.transform.scale(self.image, (350, 350))
         self.spawn_sentence = ""
         self.loose_sentence = ""
         self.win_sentence = ""
