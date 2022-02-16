@@ -62,6 +62,8 @@ class MapManager:
         self.load_monsters()
         self.fight = None
 
+        self.clock = pygame.time.get_ticks()
+
         self.current_map = "start"
 
         self.register_map("start", portals=[
@@ -221,14 +223,6 @@ class MapManager:
                 if self.get_map().pnjs[0].name == "andreas" and self.inventory.contains("robe"): #quete de la robe
                     self.get_map().pnjs[0].mode = "1"
                     self.get_map().pnjs[0].change_sprite(self.get_map().texts)
-                    """self.get_map().pnjs[0].sprite_sheet = pygame.image.load(f"./sprites/andreas1.png")
-                    self.get_map().pnjs[0].images = {
-                        'down': self.get_map().pnjs[0].get_images(0),
-                        'left': self.get_map().pnjs[0].get_images(32),
-                        'right': self.get_map().pnjs[0].get_images(64),
-                        'up': self.get_map().pnjs[0].get_images(96)
-                    }
-                    self.get_map().pnjs[0].dialog = self.get_map().texts[self.get_map().pnjs[0].name + self.get_map().pnjs[0].mode]"""
                     for i in self.inventory.items:
                         if i.name == "robe":
                             self.inventory.remove_item(i)
@@ -278,8 +272,9 @@ class MapManager:
         if self.player.feet.collidelist(self.get_map().collide) > -1:
             self.player.move_back()
 
-        if self.player.feet.collidelist(self.get_map().fight_zone) > -1:
-            rand = rd.randint(1,10)
+        if self.player.feet.collidelist(self.get_map().fight_zone) > -1 and pygame.time.get_ticks() - self.clock > 2000:
+            rand = rd.randint(1, 10)
+            self.clock = pygame.time.get_ticks()
             if rand > 8:
                 self.launch_fight()
 

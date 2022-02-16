@@ -8,4 +8,22 @@ colin.loose_sentence = "Le Phacolin vous a écrasé!"
 colin.win_sentence = "Vous avez vaincu le Phacolin!"
 self.monsters["colin"] = colin
 
+attacks = {"test1", "test2", "test3", "test4"}
+vigne = Monster("vigne", 0, attacks, "La Vigne")
+vigne.set_stats(15, 3, 0, 15, 15, 95, 5)
+vigne.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+vigne.real_stats()
+vigne.spawn_sentence = "Une Vigne sauvage apparaît!"
+vigne.loose_sentence = "La Vigne vous a dégusté!"
+vigne.win_sentence = "Vous avez vaincu la Vigne!"
+self.monsters["vigne"] = vigne
 
+attacks = {"test1", "test2", "test3", "test4"}
+jouff = Monster("jouff", 0, attacks, "Joffrais")
+jouff.set_stats(15, 3, 0, 15, 15, 95, 5)
+jouff.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+jouff.real_stats()
+jouff.spawn_sentence = "Un type très frais apparaît!"
+jouff.loose_sentence = "Le type était trop frais pour vous!"
+jouff.win_sentence = "Vous avez vaincu le type frais!"
+self.monsters["jouff"] = jouff

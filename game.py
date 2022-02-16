@@ -138,8 +138,8 @@ class Game:
                     elif event.key == pygame.K_z or event.key == pygame.K_s or\
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
-                # elif event.type == self.fight_event.type:
-                  #  self.close_open_fight()
+                elif event.type == self.fight_event.type:
+                    self.close_open_fight()
 
             clock.tick(60)
 
@@ -438,6 +438,7 @@ class Game:
             self.fighting = False
             self.can_handle_input = True
             self.can_handle_fight_input = False
+            self.map_manager.clock += 2000
         else:
             self.fighting = True
             self.can_handle_input = False
