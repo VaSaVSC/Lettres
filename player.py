@@ -1,5 +1,6 @@
 import pygame
 import random as rd
+from copy import deepcopy
 
 from animation import AnimateSprite
 from monster import Stats
@@ -85,7 +86,7 @@ class Player(Entity):
         pygame.event.post(self.event)
 
     def base_stats_(self):
-        self.fight_stats = self.stats
+        self.stats = deepcopy(self.fight_stats)
         self.status = None
 
     def xp_needed(self):

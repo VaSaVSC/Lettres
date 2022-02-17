@@ -28,7 +28,7 @@ class Game:
         # pygame.mixer.music.play(-1) # -1 = infini
 
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
-        self.font_fight = pygame.font.Font("./dialogs/dialog_font.ttf", 18)
+        self.font_fight = pygame.font.Font("./dialogs/dialog_font.ttf", 17)
         self.font_fight2 = pygame.font.Font("./dialogs/dialog_font.ttf", 30)
         self.box = pygame.image.load("./dialogs/dialog_box.png")
         self.dialog_box = DialogBox(self.box)

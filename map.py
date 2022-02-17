@@ -1,4 +1,5 @@
 import fnmatch
+from copy import deepcopy
 from dataclasses import dataclass
 import pygame
 import pytmx
@@ -111,7 +112,7 @@ class MapManager:
 
         self.tp_pnjs()
 
-    def register_map(self, name, portals=[], pnjs=[], level=0, default_layer=4):
+    def register_map(self, name, portals=[], pnjs=[], level=0, default_layer=5):
 
         # charger les textes
         texts = dict()
@@ -274,8 +275,8 @@ class MapManager:
 
         if self.player.feet.collidelist(self.get_map().fight_zone) > -1 and pygame.time.get_ticks() - self.clock > 2000:
             rand = rd.randint(1, 10)
-            self.clock = pygame.time.get_ticks()
             if rand > 8:
+                self.clock = pygame.time.get_ticks()
                 self.launch_fight()
 
     def launch_fight(self):
@@ -284,6 +285,7 @@ class MapManager:
         monster = self.monsters[m]
         monster.level = self.get_map().level
         monster.real_stats()
+        self.player.fight_stats = deepcopy(self.player.stats)
         self.fight = Fight(self.player, monster)
         self.player.fight_event()
 
