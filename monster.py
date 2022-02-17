@@ -1,3 +1,4 @@
+from copy import deepcopy
 from dataclasses import dataclass
 
 import pygame.image
@@ -39,6 +40,7 @@ class Monster(Stats, StatsGrowth):
         self.refact_name = refact_name
         self.stats = None
         self.stats_g = None
+        self.fight_stats = None
         self.level = level
         self.level_range = self.monster_level_range(level)
         self.attacks = attacks
@@ -50,6 +52,7 @@ class Monster(Stats, StatsGrowth):
 
     def set_stats(self, hp, ad, ap, armor, rm, chance, speed):
         self.stats = Stats(hp, ad, ap, armor, rm, chance, speed)
+        self.fight_stats = deepcopy(self.stats)
 
     def set_stats_g(self, hp, ad, ap, armor, rm, chance, speed):
         self.stats_g = StatsGrowth(hp, ad, ap, armor, rm, chance, speed)
@@ -62,6 +65,9 @@ class Monster(Stats, StatsGrowth):
                        self.stats.rm + random_factor(self.stats_g.rm_growth * self.level),
                        self.stats.chance - random_factor(self.stats_g.chance_growth * self.level),
                        self.stats.speed + random_factor(self.stats_g.speed_growth * self.level))
+
+    def base_stats_(self):
+        self.stats = deepcopy(self.fight_stats)
 
     def monster_level_range(self, level):
         if level == 1:

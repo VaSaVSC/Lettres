@@ -413,6 +413,7 @@ class Game:
                             escape_chance = pow(5/6, self.map_manager.fight.monster.level)
                             if rd.randint(100, 150)*escape_chance > 70:
                                 self.player.base_stats_()
+                                self.map_manager.fight.monster.base_stats_()
                                 self.close_open_fight()
                             else:
                                 self.map_manager.fight.fight_index = 1
@@ -431,6 +432,7 @@ class Game:
                             self.map_manager.fight.fight_index = 4
             if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
                 self.player.base_stats_()
+                self.map_manager.fight.monster.base_stats_()
                 self.close_open_fight()
 
     def close_open_fight(self):
