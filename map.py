@@ -80,7 +80,9 @@ class MapManager:
             Portal(origin="world1", origin_point="w1_d_enter",
                    dest="dungeon", dest_point="d_w1_enterP"),
             Portal(origin="world1", origin_point="w1_des_enter",
-                   dest="desert", dest_point="des_w1_enterP")
+                   dest="desert", dest_point="des_w1_enterP"),
+            Portal(origin="world1", origin_point="w1_paki_enter",
+                   dest="paki", dest_point="paki_wi_enterP")
         ],  pnjs=[
             PNJ("paul", nb_points=4, speed=1),
             PNJ("claude", nb_points=1, speed=2, random_move=True)
@@ -103,12 +105,23 @@ class MapManager:
                    dest="world1", dest_point="w1_des_exitP"),
             Portal(origin='desert', origin_point="des_i_enter",
                    dest="ice_world", dest_point="i_des_enterP")
-        ])
+        ], pnjs=[
+            PNJ("chloé", nb_points=1, speed=0)
+        ], default_layer=3)
 
         self.register_map("ice_world", portals=[
             Portal(origin='ice_world', origin_point="i_des_exit",
                    dest="desert", dest_point="des_i_exitP")
-        ])
+        ], pnjs=[
+            PNJ("frans", nb_points=1, speed=0)
+        ], default_layer=3)
+
+        self.register_map("paki", portals=[
+            Portal(origin='paki', origin_point="paki_w1_exit",
+                   dest="world1", dest_point="w1_paki_exitP")
+        ], pnjs=[
+            PNJ("achille", nb_points=1, speed=0)
+        ], default_layer=3)
 
         self.tp_pnjs()
 
