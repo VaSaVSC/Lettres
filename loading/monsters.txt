@@ -147,3 +147,83 @@ loris.spawn_sentence = "Un LorisJTM sauvage apparaît!"
 loris.loose_sentence = "Le LorisJTM vous a bolossé!"
 loris.win_sentence = "Vous avez vaincu le LorisJTM!"
 self.monsters["loris"] = loris
+
+attacks = {"test1", "test2", "test3", "test4"}
+math = Monster("mathflam", 0, attacks, "Mathflam")
+math.set_stats(15, 3, 0, 15, 15, 95, 5)
+math.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+math.real_stats()
+math.spawn_sentence = "Une Mathflam sauvage apparaît!"
+math.loose_sentence = "La Mathflam vous a bolossé!"
+math.win_sentence = "Vous avez vaincu le Mathflam!"
+self.monsters["math"] = math
+
+attacks = {"test1", "test2", "test3", "test4"}
+mav = Monster("mav", 0, attacks, "Maverick & Morty")
+mav.set_stats(15, 3, 0, 15, 15, 95, 5)
+mav.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+mav.real_stats()
+mav.spawn_sentence = "Des Maverick & Morty apparaîssent!"
+mav.loose_sentence = "Les Maverick & Morty vous ont bolossé!"
+mav.win_sentence = "Vous avez vaincu les Maverick & Morty!"
+self.monsters["mav"] = mav
+
+attacks = {"test1", "test2", "test3", "test4"}
+melu = Monster("melu", 0, attacks, "Mélustucru")
+melu.set_stats(15, 3, 0, 15, 15, 95, 5)
+melu.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+melu.real_stats()
+melu.spawn_sentence = "Une Mélustucru sauvage apparaît!"
+melu.loose_sentence = "La Mélustucru vous a bolossé!"
+melu.win_sentence = "Vous avez vaincu le Mélustucru!"
+self.monsters["melu"] = melu
+
+attacks = {"test1", "test2", "test3", "test4"}
+nizet = Monster("nizet", 0, attacks, "Dégarnizet")
+nizet.set_stats(15, 3, 0, 15, 15, 95, 5)
+nizet.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+nizet.real_stats()
+nizet.spawn_sentence = "Un Dégarnizet sauvage apparaît!"
+nizet.loose_sentence = "Le Dégarnizet vous a bolossé!"
+nizet.win_sentence = "Vous avez vaincu le Dégarnizet!"
+self.monsters["nizet"] = nizet
+
+attacks = {"test1", "test2", "test3", "test4"}
+playmobile = Monster("playmobile", 0, attacks, "Playmobile")
+playmobile.set_stats(15, 3, 0, 15, 15, 95, 5)
+playmobile.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+playmobile.real_stats()
+playmobile.spawn_sentence = "Un Playmobile fromager sauvage apparaît!"
+playmobile.loose_sentence = "Le Playmobile fromager vous a bolossé!"
+playmobile.win_sentence = "Vous avez vaincu le Playmobile fromager!"
+self.monsters["playmobile"] = playmobile
+
+attacks = {"test1", "test2", "test3", "test4"}
+pringle = Monster("pringle", 0, attacks, "Pring's gle")
+pringle.set_stats(15, 3, 0, 15, 15, 95, 5)
+pringle.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+pringle.real_stats()
+pringle.spawn_sentence = "Un Pring's gle sauvage apparaît!"
+pringle.loose_sentence = "Le Pring's gle fromager vous a bolossé!"
+pringle.win_sentence = "Vous avez vaincu le Pring's gle!"
+self.monsters["pringle"] = pringle
+
+attacks = {"test1", "test2", "test3", "test4"}
+taco = Monster("taco", 0, attacks, "Amateur2Bière")
+taco.set_stats(15, 3, 0, 15, 15, 95, 5)
+taco.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+taco.real_stats()
+taco.spawn_sentence = "Un Amateur2Bière sauvage apparaît!"
+taco.loose_sentence = "Le Amateur2Bière vous a bolossé!"
+taco.win_sentence = "Vous avez vaincu le Amateur2Bière!"
+self.monsters["taco"] = taco
+
+attacks = {"test1", "test2", "test3", "test4"}
+zoz = Monster("zoz", 0, attacks, "Zoz")
+zoz.set_stats(15, 3, 0, 15, 15, 95, 5)
+zoz.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+zoz.real_stats()
+zoz.spawn_sentence = "Une Zoz sauvage apparaît!"
+zoz.loose_sentence = "La Zoz vous a bolossé!"
+zoz.win_sentence = "Vous avez vaincu le Zoz!"
+self.monsters["zoz"] = zoz
