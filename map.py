@@ -128,7 +128,7 @@ class MapManager:
         self.register_map("plage", portals=[
             Portal(origin='plage', origin_point="plage_w1_exit",
                    dest="world1", dest_point="w1_plage_exitP")
-        ])
+        ], default_layer=2)
 
         self.tp_pnjs()
 
