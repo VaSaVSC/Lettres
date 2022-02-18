@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="173">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="176">
  <tileset firstgid="1" source="dungeon.tsx"/>
  <tileset firstgid="257" source="asset_dungeon.tsx"/>
  <layer id="1" name="background" width="100" height="100">
@@ -330,6 +330,9 @@
   <object id="166" name="null" type="coffre" x="385.333" y="1008" width="20" height="25.3333"/>
   <object id="167" name="null" type="coffre" x="896.833" y="863.5" width="13.8333" height="14.3333"/>
   <object id="169" name="null" type="coffre" x="1014.67" y="710.667" width="20" height="23.3333"/>
+  <object id="173" name="darkgob_path1" x="497.333" y="998.667" width="28" height="41.3333"/>
+  <object id="174" name="adèle_path1" x="1417.33" y="1234.67" width="14.6667" height="17.3333"/>
+  <object id="175" name="zoz_path1" x="1120" y="246.667" width="25.3333" height="34.6667"/>
  </objectgroup>
  <objectgroup id="4" name="Collision">
   <object id="2" type="collisions" x="0" y="4.28571" width="1601.43" height="27.1429"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="90" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="71">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="90" height="70" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="73">
  <tileset firstgid="1" source="ice.tsx"/>
  <tileset firstgid="721" source="house.tsx"/>
  <tileset firstgid="1496" source="background.tsx"/>
@@ -590,6 +590,10 @@
  </objectgroup>
  <objectgroup id="10" name="PNJ">
   <object id="70" name="frans_path1" x="336.25" y="353.75" width="15" height="21"/>
+  <object id="71" name="i_bar_exitP" x="1277.5" y="299.75">
+   <point/>
+  </object>
+  <object id="72" name="i_bar_enter" x="1268.5" y="228" width="22" height="23"/>
  </objectgroup>
  <objectgroup id="7" name="portail">
   <object id="60" name="i_des_exit" x="218.667" y="1096" width="90" height="23.3333"/>
