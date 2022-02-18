@@ -62,7 +62,7 @@
  </layer>
  <objectgroup id="5" name="portail">
   <object id="1" name="paki_w1_exit" x="34.1274" y="130.305" width="27.9224" height="17.2361"/>
-  <object id="2" name="paki_wi_enterP" x="103.416" y="108.587">
+  <object id="2" name="paki_w1_enterP" x="103.416" y="108.587">
    <point/>
   </object>
  </objectgroup>

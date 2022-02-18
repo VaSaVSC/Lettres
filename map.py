@@ -82,7 +82,9 @@ class MapManager:
             Portal(origin="world1", origin_point="w1_des_enter",
                    dest="desert", dest_point="des_w1_enterP"),
             Portal(origin="world1", origin_point="w1_paki_enter",
-                   dest="paki", dest_point="paki_wi_enterP")
+                   dest="paki", dest_point="paki_w1_enterP"),
+            Portal(origin="world1", origin_point="w1_plage_enter",
+                   dest="plage", dest_point="plage_w1_enterP")
         ],  pnjs=[
             PNJ("paul", nb_points=4, speed=1),
             PNJ("claude", nb_points=1, speed=2, random_move=True)
@@ -122,6 +124,11 @@ class MapManager:
         ], pnjs=[
             PNJ("achille", nb_points=1, speed=0)
         ], default_layer=3)
+
+        self.register_map("plage", portals=[
+            Portal(origin='plage', origin_point="plage_w1_exit",
+                   dest="world1", dest_point="w1_plage_exitP")
+        ])
 
         self.tp_pnjs()
 
