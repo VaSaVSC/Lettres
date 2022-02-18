@@ -11,7 +11,7 @@ class Fight:
         self.fight_index = 0
 
     def fight(self):
-        if self.monster.speed <= self.player.stats.speed:
+        if self.monster.stats.speed <= self.player.stats.speed:
             self.player_can_attack = True
         else:
             self.player_can_attack = False

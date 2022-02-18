@@ -33,7 +33,7 @@ def random_factor(growing):
     return floor(rand/10 * growing)
 
 
-class Monster(Stats, StatsGrowth):
+class Monster:
 
     def __init__(self, name, level, attacks, refact_name):
         self.name = name
