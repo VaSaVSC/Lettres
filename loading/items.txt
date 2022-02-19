@@ -72,3 +72,12 @@ Foreuse;
 A utiliser avant
 le tournevis.
 
+sachet:
+Sachet;
+Ce sachet à l'air bien rempli.
+
+trésor:
+Trésor;
+Il faudrait l'ajouter
+à mon portefeuille.
+

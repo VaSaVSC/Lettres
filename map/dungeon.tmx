@@ -315,21 +315,21 @@
 </data>
  </layer>
  <objectgroup id="5" name="objets">
-  <object id="153" name="null" type="coffre" x="38.6667" y="1507.17" width="14.3333" height="18.5"/>
+  <object id="153" name="sachet" type="coffre" x="38.6667" y="1507.17" width="14.3333" height="18.5"/>
   <object id="155" name="null" type="coffre" x="236.5" y="1508.33" width="15.3333" height="20"/>
   <object id="156" name="null" type="coffre" x="121.667" y="1183.5" width="17.3333" height="19.5"/>
-  <object id="157" name="null" type="coffre" x="25" y="584.833" width="17.1667" height="17.3333"/>
+  <object id="157" name="trésor" type="coffre" x="25" y="584.833" width="17.1667" height="17.3333"/>
   <object id="158" name="null" type="coffre" x="135.333" y="256" width="14.8333" height="16.8333"/>
-  <object id="159" name="null" type="coffre" x="28.6667" y="68.6667" width="20" height="22"/>
+  <object id="159" name="sachet" type="coffre" x="28.6667" y="68.6667" width="20" height="22"/>
   <object id="160" name="null" type="coffre" x="938" y="1320.67" width="18.6667" height="22.6667"/>
-  <object id="161" name="null" type="coffre" x="1562" y="1472" width="22" height="24"/>
+  <object id="161" name="trésor" type="coffre" x="1562" y="1472" width="22" height="24"/>
   <object id="162" name="null" type="coffre" x="1288.67" y="383.333" width="18" height="22.6667"/>
-  <object id="163" name="null" type="coffre" x="1565.33" y="52.6667" width="20" height="26"/>
-  <object id="164" name="null" type="coffre" x="724" y="143.333" width="20" height="26"/>
-  <object id="165" name="null" type="coffre" x="387.333" y="376.667" width="20" height="25.3333"/>
+  <object id="163" name="trésor" type="coffre" x="1565.33" y="52.6667" width="20" height="26"/>
+  <object id="164" name="sachet" type="coffre" x="724" y="143.333" width="20" height="26"/>
+  <object id="165" name="sachet" type="coffre" x="387.333" y="376.667" width="20" height="25.3333"/>
   <object id="166" name="null" type="coffre" x="385.333" y="1008" width="20" height="25.3333"/>
-  <object id="167" name="null" type="coffre" x="896.833" y="863.5" width="13.8333" height="14.3333"/>
-  <object id="169" name="null" type="coffre" x="1014.67" y="710.667" width="20" height="23.3333"/>
+  <object id="167" name="trésor" type="coffre" x="896.833" y="863.5" width="13.8333" height="14.3333"/>
+  <object id="169" name="sachet" type="coffre" x="1014.67" y="710.667" width="20" height="23.3333"/>
   <object id="173" name="darkgob_path1" x="497.333" y="998.667" width="28" height="41.3333"/>
   <object id="174" name="adèle_path1" x="1417.33" y="1234.67" width="14.6667" height="17.3333"/>
   <object id="175" name="zoz_path1" x="1120" y="246.667" width="25.3333" height="34.6667"/>

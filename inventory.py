@@ -60,6 +60,12 @@ def use_item(item, player):
         return 1
     if item.name == "null":
         return 1
+    if item.name == "sachet":
+        player.gold += rd.randint(0, 10)
+        return 1
+    if item.name == "trésor":
+        player.gold += rd.randint(15, 40)
+        return 1
 
 
 class Inventory(pygame.sprite.Sprite):

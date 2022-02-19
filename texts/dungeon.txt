@@ -9,3 +9,9 @@ ahaha
 
 adèle0:
 ahahah
+
+sachet:
+Gling Gling ce sachet à l'air bien rempli.
+
+trésor:
+Waw un trésor qui brille.

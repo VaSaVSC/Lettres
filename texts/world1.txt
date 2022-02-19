@@ -17,3 +17,6 @@ Vous trouvez une robe !
 
 télécommande:
 Waw une télécomande !
+
+sachet:
+Gling Gling ce sachet à l'air bien rempli.
