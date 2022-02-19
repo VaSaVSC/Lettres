@@ -14,3 +14,6 @@ Jui tout plein :§
 
 robe:
 Vous trouvez une robe !
+
+télécommande:
+Waw une télécomande !

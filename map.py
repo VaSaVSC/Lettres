@@ -41,7 +41,7 @@ class Map:
     monsters: List[Monster]
 
 
-type_list = {'panel'}
+type_list = {'panel', 'TV'}
 
 
 def check_type(type_t):
@@ -58,6 +58,7 @@ class MapManager:
         self.screen = screen
         self.player = player
         self.inventory = inventory
+        self.inventory_display = pygame.image.load("./ath_assets/inventory.png")
 
         self.monsters = dict()
         self.load_monsters()
@@ -261,12 +262,15 @@ class MapManager:
                     for i in self.inventory.items:
                         if i.name == "robe":
                             self.inventory.remove_item(i)
+                if self.get_map().pnjs[0].name == "achille":
+                    return 1
             if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False
                 sprite.is_carried = True
                 self.inventory.add_item(sprite)
                 self.get_group().remove(sprite)
+        return 0
 
     def check_interactive_obj_collisions(self, dialog_box):
         for obj in self.get_map().interactive_obj:

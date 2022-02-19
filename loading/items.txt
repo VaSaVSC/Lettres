@@ -20,3 +20,55 @@ robe:
 Jolie robe;
 Parfaite pour une soirée
 mondaine.
+
+télécommande:
+Télécommande;
+Il y a plein de boutons
+sur ce truc.
+
+lotion:
+Lotion;
+Peut faire repousser
+les cheveux avec
+un peu de chance.
+
+pastis:
+Pastis;
+Beurk c'est dégeu.
+
+potion:
+Potion;
+Gloup Gloup redonne
+de la vie au monstres.
+
+tournevis:
+Tournevis;
+Parfait pour tourner
+des vis.
+
+citron:
+Citron frais;
+Miam !
+Très utile pour les
+Morjitos.
+
+anguille:
+Anguille;
+C'est une anguille.
+
+slip:
+Slip sale;
+Bho si on le retourne
+on peut encore l'utiliser
+une fois.
+
+presse:
+Presse-ail;
+Mmmmmmhm l'ail c'est
+trop bon.
+
+foreuse:
+Foreuse;
+A utiliser avant
+le tournevis.
+

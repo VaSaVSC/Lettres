@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="72">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="73">
  <tileset firstgid="1" source="background.tsx"/>
  <tileset firstgid="721" source="house.tsx"/>
  <tileset firstgid="1496" source="dungeon.tsx"/>
@@ -433,6 +433,7 @@
   <object id="71" name="w1_plage_exitP" x="187.333" y="746.667">
    <point/>
   </object>
+  <object id="72" name="télécommande" type="item1" x="166" y="231.333" width="14.6667" height="16"/>
  </objectgroup>
  <objectgroup id="13" name="PNJPaths">
   <object id="31" name="paul_path1" x="97" y="433" width="13.5" height="14"/>
