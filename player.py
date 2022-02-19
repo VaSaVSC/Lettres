@@ -63,7 +63,7 @@ class Player(Entity):
         self.stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.fight_stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.base_stats = Stats(10, 5, 0, 3, 2, 99, 6)
-        self.attacks = ["Quichon tactique", "Sieste stratégique", "Lancer de gobelet"]
+        self.attacks = ["Quichon tactique", "Sieste stratégique", "Lancer de gobelet", "Jus du Coq"]
         self.xp = 0
         self.level = 1
         self.xp_needed_to_level_up = 10
