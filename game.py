@@ -59,7 +59,10 @@ class Game:
 
         self.hair = pygame.image.load("./ath_assets/meche.png")
         self.hair = pygame.transform.scale(self.hair, (64, 64))
+        self.gob = pygame.image.load("./sprites/gob5.png")
+        self.gob = pygame.transform.scale(self.gob, (64, 64))
         self.death_bg = pygame.image.load("./ath_assets/death_bg.jpg")
+        self.wasted = pygame.image.load("./ath_assets/wasted.png")
         self.calvoche = AnimateSprite("calvoche", change_dim=True, width=135, height=165)
         self.calv1 = self.calvoche.get_image(0, 82, h=40)
         self.calv1 = pygame.transform.scale(self.calv1, (64, 80))
@@ -278,7 +281,7 @@ class Game:
             clock = 0
             while dead:
                 self.screen.blit(self.death_bg, (0, 0))
-                self.screen.blit(self.player_sprite, (100, 200))
+                self.screen.blit(self.gob, (100, 200))
                 if index == 0:
                     self.screen.blit(self.calv1, (600 - acc, 200))
                     if clock >= 100:
@@ -290,13 +293,14 @@ class Game:
                         index = 0
                         clock = 0
                 clock += 5
-                acc += 0.6
+                acc += 0.5
                 if 600 - acc <= 100:
-                    # blit le WASTED
                     dead = False
                 pygame.display.flip()
             wait_for_action = True
             while wait_for_action:
+                self.screen.blit(self.death_bg, (0, 0))
+                self.screen.blit(self.wasted, (163, 100))
                 self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
                 n = self.font.render(self.intro1, False, (0, 0, 0))
                 self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 140))
@@ -306,13 +310,16 @@ class Game:
                 self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 80))
                 pygame.display.flip()
                 for event in pygame.event.get():
-                    if event.type == pygame.QUIT or event.key == pygame.K_q:
+                    if event.type == pygame.QUIT:
                         pygame.quit()
                         return
                     elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_n:
+                        if event.key == pygame.K_q:
+                            pygame.quit()
+                            return
+                        elif event.key == pygame.K_n:
                             wait_for_action = False
-                        if event.key == pygame.K_s:
+                        elif event.key == pygame.K_s:
                             if os.stat("./loading/save_player.txt").st_size > 0 and \
                                     os.stat("./loading/save_map.txt").st_size > 0:
                                 self.load_from_saved_game = True
