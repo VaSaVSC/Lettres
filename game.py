@@ -145,14 +145,13 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         if self.map_manager.check_pnj_collisions(self.dialog_box) == 1:
                             self.close_open_store()
+                        self.map_manager.check_interactive_obj_collisions(self.dialog_box)
                     elif event.key == pygame.K_0 or event.key == pygame.K_1 or \
                             event.key == pygame.K_2 or event.key == pygame.K_3 or \
                             event.key == pygame.K_4 or event.key == pygame.K_5 or \
                             event.key == pygame.K_6 or event.key == pygame.K_7 or \
                             event.key == pygame.K_8 or event.key == pygame.K_9:
                         self.handle_store_input(event.key)
-
-                        self.map_manager.check_interactive_obj_collisions(self.dialog_box)
                     elif event.key == pygame.K_e and self.store_opened == False:
                         self.close_open_inventory()
                     elif event.key == pygame.K_w:
