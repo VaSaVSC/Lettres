@@ -268,8 +268,6 @@ class Game:
             elif pressed[pygame.K_RIGHT] or pressed[pygame.K_d]:
                 self.dialog_box.reading = False
                 self.player.move_right()
-            elif pressed[pygame.K_k]:
-                self.player.life -= 1
 
     def life_update(self):
         for i in range(self.player.life):

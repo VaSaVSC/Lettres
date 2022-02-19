@@ -1,2 +1,5 @@
 frans0:
 Chuuuuuuuuut ! Je pêche !
+
+panel:
+Zone de pêche, respectez le calme ambiant!
