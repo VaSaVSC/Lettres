@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="9">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="10">
  <tileset firstgid="1" source="house.tsx"/>
  <layer id="2" name="background" width="10" height="10">
   <data encoding="csv">
@@ -65,6 +65,7 @@
   <object id="2" name="paki_w1_enterP" x="103.416" y="108.587">
    <point/>
   </object>
+  <object id="9" type="collisions" x="88.2487" y="33.438" width="21.7175" height="22.4069"/>
  </objectgroup>
  <objectgroup id="7" name="collision">
   <object id="4" type="collisions" x="-0.344721" y="-0.344721" width="15.8572" height="160.64"/>
