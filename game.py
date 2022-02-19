@@ -2,15 +2,11 @@ import os
 import pygame
 import random as rd
 
+from Lettres.animation import AnimateSprite
 from dialog import DialogBox
 from inventory import Inventory, use_item, Item
 from map import MapManager
 from player import Player
-
-
-def use_attack(attack, source, target):
-    if attack == "test":
-        target.stats.hp -= source.stats.ad / 2
 
 
 class Game:
@@ -28,13 +24,14 @@ class Game:
 
         self.font = pygame.font.Font("./dialogs/dialog_font.ttf", 15)
         self.font_fight = pygame.font.Font("./dialogs/dialog_font.ttf", 17)
-        self.font_fight2 = pygame.font.Font("./dialogs/dialog_font.ttf", 30)
+        self.font_fight2 = pygame.font.Font("./dialogs/dialog_font.ttf", 25)
         self.box = pygame.image.load("./dialogs/dialog_box.png")
         self.dialog_box = DialogBox(self.box)
         self.box = pygame.transform.scale(self.box, (750, 200))
 
         self.intro1 = "N = nouvelle partie"
         self.intro2 = "S = charger le jeu depuis la dernière sauvegarde"
+        self.intro3 = "Q = quitter le jeu"
 
         self.load_from_saved_game = False
 
@@ -62,6 +59,15 @@ class Game:
 
         self.hair = pygame.image.load("./ath_assets/meche.png")
         self.hair = pygame.transform.scale(self.hair, (64, 64))
+        self.death_bg = pygame.image.load("./ath_assets/death_bg.jpg")
+        self.calvoche = AnimateSprite("calvoche", change_dim=True, width=135, height=165)
+        self.calv1 = self.calvoche.get_image(0, 82, h=40)
+        self.calv1 = pygame.transform.scale(self.calv1, (64, 80))
+        self.calv1.set_colorkey([0, 0, 0])
+        self.calv2 = self.calvoche.get_image(37, 82, h=40)
+        self.calv2 = pygame.transform.scale(self.calv2, (64, 80))
+        self.calv2.set_colorkey([0, 0, 0])
+        self.player_sprite = None
 
         self.inventory_display = pygame.image.load("./ath_assets/inventory.png")
         self.inventory_display = pygame.transform.scale(self.inventory_display, (700, 350))
@@ -75,10 +81,10 @@ class Game:
         self.key_timeout = dict()
 
     # le jeu tourne --------------------------------------------------------------
-    def run(self):
+    def run(self, was_dead=False):
 
         starting = True
-        while starting:
+        while starting and not was_dead:
             self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
             n = self.font.render(self.intro1, False, (0, 0, 0))
             self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 140))
@@ -147,6 +153,7 @@ class Game:
     # le chargement du joueur, des cartes et de l'inventaire -----------------------------------------------
     def load_player(self, from_save):
         self.player = Player(self.fight_event)
+        self.player_sprite = pygame.transform.scale(self.player.images["right"][1], (64, 64))
         if from_save:
             self.decrypt_saving("player")
 
@@ -258,10 +265,59 @@ class Game:
             elif pressed[pygame.K_RIGHT] or pressed[pygame.K_d]:
                 self.dialog_box.reading = False
                 self.player.move_right()
+            elif pressed[pygame.K_k]:
+                self.player.life -= 1
 
     def life_update(self):
         for i in range(self.player.life):
             self.screen.blit(self.hair, (50 + i * 48, 30))
+        if self.player.life == 0:
+            dead = True
+            acc = 0
+            index = 0
+            clock = 0
+            while dead:
+                self.screen.blit(self.death_bg, (0, 0))
+                self.screen.blit(self.player_sprite, (100, 200))
+                if index == 0:
+                    self.screen.blit(self.calv1, (600 - acc, 200))
+                    if clock >= 100:
+                        index += 1
+                        clock = 0
+                else:
+                    self.screen.blit(self.calv2, (600 - acc, 200))
+                    if clock >= 100:
+                        index = 0
+                        clock = 0
+                clock += 5
+                acc += 0.6
+                if 600 - acc <= 100:
+                    # blit le WASTED
+                    dead = False
+                pygame.display.flip()
+            wait_for_action = True
+            while wait_for_action:
+                self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
+                n = self.font.render(self.intro1, False, (0, 0, 0))
+                self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 140))
+                n = self.font.render(self.intro2, False, (0, 0, 0))
+                self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 110))
+                n = self.font.render(self.intro3, False, (0, 0, 0))
+                self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 80))
+                pygame.display.flip()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT or event.key == pygame.K_q:
+                        pygame.quit()
+                        return
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_n:
+                            wait_for_action = False
+                        if event.key == pygame.K_s:
+                            if os.stat("./loading/save_player.txt").st_size > 0 and \
+                                    os.stat("./loading/save_map.txt").st_size > 0:
+                                self.load_from_saved_game = True
+                            wait_for_action = False
+                        self.run(was_dead=True)
 
     # méthodes relatives à l'inventaire ----------------------------------------------------
     def handle_inventory_input(self, pressed):
@@ -355,10 +411,12 @@ class Game:
             elif self.map_manager.fight.fight_index == 2:
                 self.screen.blit(self.atk_bg, (150, 150))
                 acc1 = 0
+                acc3 = 1
                 for atk in self.player.attacks:
-                    n = self.font_fight2.render(str(atk_index + 1) + " = " + atk, False, (0, 0, 0))
+                    n = self.font_fight2.render(str(acc3) + " = " + atk, False, (0, 0, 0))
                     self.screen.blit(n, (170, 170 + acc1))
-                    acc1 += 30
+                    acc1 += 50
+                    acc3 += 1
                 n = self.font_fight2.render("B = retour", False, (0, 0, 0))
                 self.screen.blit(n, (170, 600))
             elif self.map_manager.fight.fight_index == 3:
@@ -368,20 +426,23 @@ class Game:
                     if item.fight_item:
                         n = self.font_fight2.render(item.refact_name, False, (0, 0, 0))
                         self.screen.blit(n, (170, 170 + acc1))
-                        acc1 += 30
+                        acc1 += 50
                 n = self.font_fight2.render("B = retour", False, (0, 0, 0))
                 self.screen.blit(n, (170, 600))
             elif self.map_manager.fight.fight_index == 4:
+                self.map_manager.fight.fight()
                 if self.map_manager.fight.player_can_attack:
                     if acc2 == 0:
-                        use_attack(self.player.attacks[atk_index],
-                                   self.map_manager.fight.player, self.map_manager.fight.monster)
+                        self.map_manager.fight.use_attack(self.player.attacks[atk_index],
+                                                          self.map_manager.fight.player, self.map_manager.fight.monster)
                         acc2 = 1
                     if not attack:
-                        n = self.font_fight2.render("Vous utilisez " + self.player.attacks[atk_index], False, (0, 0, 0))
+                        n = self.font_fight2.render("Vous utilisez l'attaque " +
+                                                    self.player.attacks[atk_index], False, (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                     if pygame.time.get_ticks() - t0 > 2000 and not attack:
-                        use_attack("test", self.map_manager.fight.monster, self.map_manager.fight.player)
+                        self.map_manager.fight.use_attack("test", self.map_manager.fight.monster,
+                                                          self.map_manager.fight.player)
                         attack = True
                     if attack:
                         n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
@@ -393,18 +454,20 @@ class Game:
                         self.map_manager.fight.fight_index = 1
                 else:
                     if acc2 == 0:
-                        use_attack("test", self.map_manager.fight.monster, self.map_manager.fight.player)
+                        self.map_manager.fight.use_attack("test", self.map_manager.fight.monster,
+                                                          self.map_manager.fight.player)
                         acc2 = 1
                     if not attack:
                         n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
                                                     self.player.attacks[atk_index], False, (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                     if pygame.time.get_ticks() - t0 > 2000 and not attack:
-                        use_attack(self.player.attacks[atk_index],
-                                   self.map_manager.fight.player, self.map_manager.fight.monster)
+                        self.map_manager.fight.use_attack(self.player.attacks[atk_index],
+                                                          self.map_manager.fight.player, self.map_manager.fight.monster)
                         attack = True
                     if attack:
-                        n = self.font_fight2.render("Vous utilisez " + self.player.attacks[atk_index], False, (0, 0, 0))
+                        n = self.font_fight2.render("Vous utilisez l'attaque " +
+                                                    self.player.attacks[atk_index], False, (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                     if pygame.time.get_ticks() - t0 > 4000:
                         acc2 = 0
@@ -461,6 +524,8 @@ class Game:
             if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
                 self.player.base_stats_()
                 self.map_manager.fight.monster.base_stats_()
+                if self.player.stats.hp <= 0:
+                    self.player.life -= 1
                 self.close_open_fight()
 
     def close_open_fight(self):
@@ -468,7 +533,7 @@ class Game:
             self.fighting = False
             self.can_handle_input = True
             self.can_handle_fight_input = False
-            self.map_manager.clock += 2000
+            self.map_manager.clock = pygame.time.get_ticks()
         else:
             self.fighting = True
             self.can_handle_input = False

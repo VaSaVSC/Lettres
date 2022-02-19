@@ -1,5 +1,6 @@
 from math import sqrt
-import pygame
+import numpy as np
+import random as rd
 
 
 class Fight:
@@ -18,3 +19,28 @@ class Fight:
 
     def dmg_blocked(self, resistance):
         return (sqrt(resistance) * 7) / 100
+
+    def use_attack(self, attack, source, target):
+        print(attack)
+        if attack == "Quichon tactique":
+            n = np.round_(source.stats.ap / 3 * self.dmg_blocked(target.stats.rm))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n
+            source.stats.hp += (source.fight_stats.hp - source.stats.hp) / 4
+        elif attack == "Sieste startégique":
+            source.status = None
+            source.stats.hp = source.fight_stats.hp
+        elif attack == "Lancer de gobelet":
+            n = np.round_(source.stats.ad / 3 * self.dmg_blocked(target.stats.armor))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n
+        elif attack == "Jus du Coq":
+            n = np.round_(source.stats.ap / 2 * self.dmg_blocked(target.stats.rm))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n
+            rand = rd.randint(0,10)
+            if rand > 6:
+                target.status = "poison"

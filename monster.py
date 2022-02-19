@@ -41,6 +41,7 @@ class Monster:
         self.stats = None
         self.stats_g = None
         self.fight_stats = None
+        self.status = ""
         self.level = level
         self.level_range = self.monster_level_range(level)
         self.attacks = attacks
@@ -68,6 +69,7 @@ class Monster:
 
     def base_stats_(self):
         self.stats = deepcopy(self.fight_stats)
+        self.status = ""
 
     def monster_level_range(self, level):
         if level == 1:

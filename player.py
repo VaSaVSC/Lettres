@@ -63,11 +63,11 @@ class Player(Entity):
         self.stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.fight_stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.base_stats = Stats(10, 5, 0, 3, 2, 99, 6)
-        self.attacks = ["test"]
+        self.attacks = ["Quichon tactique", "Sieste stratégique", "Lancer de gobelet"]
         self.xp = 0
         self.level = 1
         self.xp_needed_to_level_up = 10
-        self.status = None
+        self.status = ""
         self.fight_image = pygame.image.load("./fight_sprites/gob.png")
         self.fight_image = pygame.transform.scale(self.fight_image, (350, 350))
 
@@ -87,7 +87,7 @@ class Player(Entity):
 
     def base_stats_(self):
         self.stats = deepcopy(self.fight_stats)
-        self.status = None
+        self.status = ""
 
     def xp_needed(self):
         self.xp_needed_to_level_up += 2 * self.level

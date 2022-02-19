@@ -3,10 +3,12 @@ import pygame
 
 class AnimateSprite(pygame.sprite.Sprite):
 
-    def __init__(self, name, mode=0):
+    def __init__(self, name, mode=0, change_dim=False, width=0,  height=0):
         super().__init__()
         self.mode = mode
         self.sprite_sheet = pygame.image.load(f"./sprites/{name}{mode}.png")
+        if change_dim:
+            self.sprite_sheet = pygame.transform.scale(self.sprite_sheet, (width, height))
         self.animation_index = 0
         self.animation_bool = True
         self.speed = 3
@@ -47,7 +49,7 @@ class AnimateSprite(pygame.sprite.Sprite):
 
         return images
 
-    def get_image(self, x, y):
-        image = pygame.Surface([32, 32])
-        image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
+    def get_image(self, x, y, w=32, h=32):
+        image = pygame.Surface([w, h])
+        image.blit(self.sprite_sheet, (0, 0), (x, y, w, h))
         return image
