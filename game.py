@@ -398,6 +398,11 @@ class Game:
         atk_index = 0
         t0 = pygame.time.get_ticks()
         attack = False
+        status = False
+        status1 = False
+        status2 = False
+        first = None
+        second = None
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
@@ -438,47 +443,41 @@ class Game:
             elif self.map_manager.fight.fight_index == 4:
                 self.map_manager.fight.fight()
                 if self.map_manager.fight.player_can_attack:
-                    if acc2 == 0:
-                        self.map_manager.fight.use_attack(self.player.attacks[atk_index],
-                                                          self.map_manager.fight.player, self.map_manager.fight.monster)
-                        acc2 = 1
-                    if not attack:
-                        n = self.font_fight2.render("Vous utilisez l'attaque " +
-                                                    self.player.attacks[atk_index], False, (0, 0, 0))
-                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                    if pygame.time.get_ticks() - t0 > 2000 and not attack:
-                        self.map_manager.fight.use_attack("test", self.map_manager.fight.monster,
-                                                          self.map_manager.fight.player)
-                        attack = True
-                    if attack:
-                        n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
-                                                    self.player.attacks[atk_index], False, (0, 0, 0))
-                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                    if pygame.time.get_ticks() - t0 > 4000:
-                        acc2 = 0
-                        attack = False
-                        self.map_manager.fight.fight_index = 1
+                    first = self.player
+                    second = self.map_manager.fight.monster
                 else:
-                    if acc2 == 0:
-                        self.map_manager.fight.use_attack("test", self.map_manager.fight.monster,
-                                                          self.map_manager.fight.player)
-                        acc2 = 1
-                    if not attack:
-                        n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
-                                                    self.player.attacks[atk_index], False, (0, 0, 0))
-                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                    if pygame.time.get_ticks() - t0 > 2000 and not attack:
-                        self.map_manager.fight.use_attack(self.player.attacks[atk_index],
-                                                          self.map_manager.fight.player, self.map_manager.fight.monster)
-                        attack = True
-                    if attack:
-                        n = self.font_fight2.render("Vous utilisez l'attaque " +
-                                                    self.player.attacks[atk_index], False, (0, 0, 0))
-                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                    if pygame.time.get_ticks() - t0 > 4000:
-                        acc2 = 0
-                        attack = False
-                        self.map_manager.fight.fight_index = 1
+                    first = self.map_manager.fight.monster
+                    second = self.player
+                if acc2 == 0 and status1:
+                    self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
+                    acc2 = 1
+                if not attack and status1:
+                    n = self.font_fight2.render("Vous utilisez l'attaque " +
+                                                self.player.attacks[atk_index] + ".", False, (0, 0, 0))
+                    self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1:
+                    self.map_manager.fight.use_attack("test", second, first)
+                    attack = True
+                if attack and status1:
+                    n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
+                                                self.player.attacks[atk_index] + ".", False, (0, 0, 0))
+                    self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                if pygame.time.get_ticks() - t0 > 4000:
+                    acc2 = 0
+                    attack = False
+                    if status1 and status2:
+                        if poisoned(self.map_manager.fight.monster) or poisoned(self.player) or \
+                                burned(self.map_manager.fight.monster) or burned(self.player):
+                            status = True
+                        status1 = False
+                    elif not status1 and status2:
+                        status2 = False
+                if not status1 and not status2 and status:
+                    n = self.font_fight2.render("Le poison ou la brûlure agit.", False, (0, 0, 0))
+                    self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                if pygame.time.get_ticks() - t0 > 5000:
+                    self.map_manager.fight.fight_index = 1
+
             if acc + 200 >= 275:
                 go_down = False
             if acc <= 0:
@@ -527,6 +526,9 @@ class Game:
                                 atk_index = 3
                             self.map_manager.fight.fight_index = 4
                             t0 = pygame.time.get_ticks()
+                            status = False
+                            status1 = True
+                            status2 = True
             if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
                 self.player.base_stats_()
                 self.map_manager.fight.monster.base_stats_()
