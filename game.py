@@ -82,6 +82,11 @@ class Game:
         self.can_handle_fight_input = False
         self.quit_while_fighting = False
 
+        self.store_display = pygame.image.load("./ath_assets/magasin.png")
+        self.store_display = pygame.transform.scale(self.store_display, (700, 650))
+        self.store_opened = False
+        self.can_handle_store_input = False
+
         self.key_timeout = dict()
 
     # le jeu tourne --------------------------------------------------------------
@@ -128,6 +133,7 @@ class Game:
             self.life_update()
             self.show_inventory()
             self.show_fight()
+            self.show_store()
             if self.quit_while_fighting:
                 break
             pygame.display.flip()
@@ -137,9 +143,17 @@ class Game:
                     running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
-                        self.map_manager.check_pnj_collisions(self.dialog_box)
+                        if self.map_manager.check_pnj_collisions(self.dialog_box) == 1:
+                            self.close_open_store()
+                    elif event.key == pygame.K_0 or event.key == pygame.K_1 or \
+                            event.key == pygame.K_2 or event.key == pygame.K_3 or \
+                            event.key == pygame.K_4 or event.key == pygame.K_5 or \
+                            event.key == pygame.K_6 or event.key == pygame.K_7 or \
+                            event.key == pygame.K_8 or event.key == pygame.K_9:
+                        self.handle_store_input(event.key)
+
                         self.map_manager.check_interactive_obj_collisions(self.dialog_box)
-                    elif event.key == pygame.K_e:
+                    elif event.key == pygame.K_e and self.store_opened == False:
                         self.close_open_inventory()
                     elif event.key == pygame.K_w:
                         self.map_manager.launch_fight()
@@ -389,6 +403,86 @@ class Game:
             self.inventory_opened = True
             self.can_handle_input = False
             self.can_handle_inventory_input = True
+
+    def close_open_store(self):
+        if self.store_opened:
+            self.store_opened = False
+            self.can_handle_input = True
+            self.can_handle_store_input = False
+        else:
+            self.can_handle_inventory_input = False
+            self.store_opened = True
+            self.can_handle_input = False
+            self.can_handle_store_input = True
+
+    def show_store(self):
+        if self.store_opened:
+            self.screen.blit(self.store_display, (50, 0))
+            n = self.font.render("0   Lotion de repousse       20$", False, (0, 0, 0))
+            self.screen.blit(n, (85, 60))
+            n = self.font.render("1   Pastis                               10$", False, (0, 0, 0))
+            self.screen.blit(n, (85, 185))
+            n = self.font.render("2   Potion                              13$", False, (0, 0, 0))
+            self.screen.blit(n, (85, 305))
+            n = self.font.render("3   Vieille Cara                     13$", False, (0, 0, 0))
+            self.screen.blit(n, (85, 425))
+            n = self.font.render("4   Tournevis                       11$", False, (0, 0, 0))
+            self.screen.blit(n, (85, 540))
+            n = self.font.render("5   Citron                              20$", False, (0, 0, 0))
+            self.screen.blit(n, (435, 60))
+            n = self.font.render("6   Anguille                           10$", False, (0, 0, 0))
+            self.screen.blit(n, (435, 185))
+            n = self.font.render("7   Slip sale                          13$", False, (0, 0, 0))
+            self.screen.blit(n, (435, 305))
+            n = self.font.render("8   Presse-Ail                       13$", False, (0, 0, 0))
+            self.screen.blit(n, (435, 425))
+            n = self.font.render("9   Foreuse                           11$", False, (0, 0, 0))
+            self.screen.blit(n, (435, 540))
+            # if len(self.inventory.items) > 0:
+            #    self.blit_inventory(self.inventory_index)
+
+    def handle_store_input(self, pressed):
+        if self.can_handle_store_input:
+
+            if pressed == pygame.K_0:
+                pastis = Item("lotion", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_1:
+                pastis = Item("pastis", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_2:
+                pastis = Item("potion", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_3:
+                pastis = Item("old_carapils", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_4:
+                pastis = Item("tournevis", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_5:
+                pastis = Item("citron", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_6:
+                pastis = Item("anguille", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_7:
+                pastis = Item("slip", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_8:
+                pastis = Item("presse", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
+
+            if pressed == pygame.K_9:
+                pastis = Item("foreuse", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                self.inventory.add_item(pastis)
 
     # méthodes relatives aux combats ------------------------------------------------------------------
     def show_fight(self):
