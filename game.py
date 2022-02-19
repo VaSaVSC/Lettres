@@ -89,6 +89,10 @@ class Game:
 
         self.key_timeout = dict()
 
+        self.coin = pygame.image.load("./ath_assets/coin.png")
+        self.coin = pygame.transform.scale(self.coin, (50, 50))
+
+
     # le jeu tourne --------------------------------------------------------------
     def run(self, was_dead=False):
 
@@ -131,6 +135,7 @@ class Game:
             self.map_manager.draw()
             self.dialog_box.render(self.screen)
             self.life_update()
+            self.gold_update()
             self.show_inventory()
             self.show_fight()
             self.show_store()
@@ -282,6 +287,12 @@ class Game:
             elif pressed[pygame.K_RIGHT] or pressed[pygame.K_d]:
                 self.dialog_box.reading = False
                 self.player.move_right()
+
+    def gold_update(self):
+        self.screen.blit(self.coin, (700, 30))
+        gold = str(self.player.gold)
+        n = self.font.render(gold, False, "#c6c704")
+        self.screen.blit(n, (650, 50))
 
     def life_update(self):
         for i in range(self.player.life):
@@ -437,51 +448,66 @@ class Game:
             self.screen.blit(n, (435, 425))
             n = self.font.render("9   Foreuse                           11$", False, (0, 0, 0))
             self.screen.blit(n, (435, 540))
+
+            self.screen.blit(self.coin, (670, 596))
+            gold = str(self.player.gold)
+            n = self.font.render(gold, False, "#c6c704")
+            self.screen.blit(n, (630, 614))
             # if len(self.inventory.items) > 0:
             #    self.blit_inventory(self.inventory_index)
 
     def handle_store_input(self, pressed):
         if self.can_handle_store_input:
 
-            if pressed == pygame.K_0:
+            if pressed == pygame.K_0 and self.player.gold >= 20:
                 pastis = Item("lotion", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 20
 
-            if pressed == pygame.K_1:
+            if pressed == pygame.K_1 and self.player.gold >= 10:
                 pastis = Item("pastis", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 10
 
-            if pressed == pygame.K_2:
+            if pressed == pygame.K_2 and self.player.gold >= 13:
                 pastis = Item("potion", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 13
 
-            if pressed == pygame.K_3:
+            if pressed == pygame.K_3 and self.player.gold >= 13:
                 pastis = Item("old_carapils", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 13
 
-            if pressed == pygame.K_4:
+            if pressed == pygame.K_4 and self.player.gold >= 11:
                 pastis = Item("tournevis", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 11
 
-            if pressed == pygame.K_5:
+            if pressed == pygame.K_5 and self.player.gold >= 20:
                 pastis = Item("citron", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 20
 
-            if pressed == pygame.K_6:
+            if pressed == pygame.K_6 and self.player.gold >= 10:
                 pastis = Item("anguille", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 10
 
-            if pressed == pygame.K_7:
+            if pressed == pygame.K_7 and self.player.gold >= 13:
                 pastis = Item("slip", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 13
 
-            if pressed == pygame.K_8:
+            if pressed == pygame.K_8 and self.player.gold >= 13:
                 pastis = Item("presse", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 13
 
-            if pressed == pygame.K_9:
+            if pressed == pygame.K_9 and self.player.gold >= 11:
                 pastis = Item("foreuse", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
+                self.player.gold -= 11
 
     # méthodes relatives aux combats ------------------------------------------------------------------
     def show_fight(self):
