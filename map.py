@@ -355,13 +355,6 @@ class MapManager:
                 pnj.load_points(map_data.tmx_data)
                 pnj.tp_spawn()
 
-    """def tp_items(self):
-        for i in self.get_map().items:
-            if i.should_appear:
-                i.tp_spawn()
-            else:
-                i.position = [None] * 2"""
-
     def draw(self):
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)

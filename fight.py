@@ -3,6 +3,26 @@ import numpy as np
 import random as rd
 
 
+def poisoned(target):
+    if target.status == "poison":
+        n = target.fight_stats.hp / 10
+        if n < 1:
+            n = 1
+        target.stats.hp -= n
+        return True
+    return False
+
+
+def burned(target):
+    if target.status == "burn":
+        n = target.fight_stats.hp / 15
+        if n < 1:
+            n = 1
+        target.stats.hp -= n
+        return True
+    return False
+
+
 class Fight:
 
     def __init__(self, player, monster):
@@ -21,9 +41,8 @@ class Fight:
         return (sqrt(resistance) * 7) / 100
 
     def use_attack(self, attack, source, target):
-        print(attack)
         if attack == "Quichon tactique":
-            n = np.round_(source.stats.ap / 3 * self.dmg_blocked(target.stats.rm))
+            n = int(np.floor(source.stats.ap / 3 * self.dmg_blocked(target.stats.rm)))
             if n < 1:
                 n = 1
             target.stats.hp -= n
@@ -32,15 +51,15 @@ class Fight:
             source.status = None
             source.stats.hp = source.fight_stats.hp
         elif attack == "Lancer de gobelet":
-            n = np.round_(source.stats.ad / 3 * self.dmg_blocked(target.stats.armor))
+            n = int(np.floor(source.stats.ad / 3 * self.dmg_blocked(target.stats.armor)))
             if n < 1:
                 n = 1
             target.stats.hp -= n
         elif attack == "Jus du Coq":
-            n = np.round_(source.stats.ap / 2 * self.dmg_blocked(target.stats.rm))
+            n = int(np.floor(source.stats.ap / 2 * self.dmg_blocked(target.stats.rm)))
             if n < 1:
                 n = 1
             target.stats.hp -= n
-            rand = rd.randint(0,10)
+            rand = rd.randint(0, 10)
             if rand > 6:
                 target.status = "poison"
