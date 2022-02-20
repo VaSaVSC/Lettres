@@ -713,14 +713,16 @@ class Game:
                     self.player.life -= 1
                 else:
                     n = self.map_manager.fight.monster.level - self.player.level
-                    self.player.xp += self.map_manager.fight.monster.level*2 + n
+                    if self.map_manager.fight.monster.level*2 + n <= 0:
+                        self.player.xp += 1
+                        self.player.gold += 1
+                    else:
+                        self.player.xp += self.map_manager.fight.monster.level*2 + n
+                        self.player.gold += self.map_manager.fight.monster.level * 2 + n
                     if self.player.xp >= self.player.xp_needed_to_level_up:
                         self.player.level += 1
                         self.player.set_stats()
                         self.player.xp_needed()
-                    print(self.map_manager.fight.monster.name)
-                    self.player.gold += self.map_manager.fight.monster.level*2 + n
-                print(self.player.xp)
                 self.close_open_fight()
 
     def close_open_fight(self):

@@ -49,7 +49,7 @@ class Fight:
                 target.stats.hp -= n
                 source.stats.hp += (source.fight_stats.hp - source.stats.hp) / 4
             elif attack == "Sieste startégique":
-                source.status = None
+                source.status = ""
                 source.stats.hp = source.fight_stats.hp
             elif attack == "Lancer de gobelet":
                 n = int(np.floor(source.stats.ad / 3 * self.dmg_blocked(target.stats.armor)))
@@ -136,6 +136,8 @@ class Fight:
             else:
                 target.stats.ad -= 10
             target.stats.armor -= 5
+            if target.stats.armor <= 0:
+                target.stats.armor = 1
         elif attack == "Pils chaude":
             source.stats.armor += 5
             source.stats.rm += 5
