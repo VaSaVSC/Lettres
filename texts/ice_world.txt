@@ -3,3 +3,7 @@ Chuuuuuuuuut ! Je pêche !
 
 panel:
 Zone de pêche, respectez le calme ambiant!
+
+diamant:
+Ho un diamant !
+Il était bien caché.

@@ -315,19 +315,19 @@ class Game:
         self.screen.blit(self.coin, (700, 30))
         gold = str(self.player.gold)
         n = self.font_fight2.render(gold, False, "#c6c704")
-        self.screen.blit(n, (645, 40))
+        self.screen.blit(n, (640, 40))
 
     def parch_update(self):
         self.screen.blit(self.parch, (700, 90))
         parch = str(self.player.parch)
         n = self.font_fight2.render(parch, False, "#baac49")
-        self.screen.blit(n, (645, 100))
+        self.screen.blit(n, (640, 100))
 
     def xp_update(self):
         self.screen.blit(self.xp, (700, 150))
         xp = str(self.player.xp)
         n = self.font_fight2.render(xp, False, "#469ca9")
-        self.screen.blit(n, (645, 160))
+        self.screen.blit(n, (640, 160))
 
     def life_update(self):
         for i in range(self.player.life):
@@ -490,15 +490,13 @@ class Game:
             self.screen.blit(n, (435, 305))
             n = self.font.render("8   Presse-Ail                       13$", False, (0, 0, 0))
             self.screen.blit(n, (435, 425))
-            n = self.font.render("9   Foreuse                           11$", False, (0, 0, 0))
+            n = self.font.render("9   Monocyle                        500$", False, (0, 0, 0))
             self.screen.blit(n, (435, 540))
 
             self.screen.blit(self.coin, (670, 596))
             gold = str(self.player.gold)
             n = self.font_fight2.render(gold, False, "#c6c704")
-            self.screen.blit(n, (625, 605))
-            # if len(self.inventory.items) > 0:
-            #    self.blit_inventory(self.inventory_index)
+            self.screen.blit(n, (610, 605))
 
     def handle_store_input(self, pressed):
         if self.can_handle_store_input:
@@ -549,9 +547,9 @@ class Game:
                 self.player.gold -= 13
 
             if pressed == pygame.K_9 and self.player.gold >= 11:
-                pastis = Item("foreuse", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                pastis = Item("monocycle", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
-                self.player.gold -= 11
+                self.player.gold -= 500
 
     # TV---------------------------------------------------------------
 

@@ -85,3 +85,8 @@ monocycle:
 Monocycle;
 Pour aller plus vite.
 
+diamant:
+Diamant;
+Waw un diamant ça vaut
+500$
+

@@ -61,16 +61,19 @@ def use_item(item, player):
     if item.name == "null":
         return 1
     if item.name == "sachet":
-        player.gold += rd.randint(0, 10)
+        player.gold += rd.randint(1, 10)
         return 1
     if item.name == "trésor":
         player.gold += rd.randint(15, 40)
+        return 1
+    if item.name == "diamant":
+        player.gold += 500
         return 1
     if item.name == "monocycle":
         if player.mono == False:
             player.name = "gobmono"
             player.mono_switch()
-            player.speed = 8
+            player.speed = 7
             player.mono = True
         else:
             player.name = "gob"

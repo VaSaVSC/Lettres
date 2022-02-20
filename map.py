@@ -262,6 +262,7 @@ class MapManager:
                     for i in self.inventory.items:
                         if i.name == "robe":
                             self.inventory.remove_item(i)
+                    self.player.parch += 1
                 if self.get_map().pnjs[0].name == "achille":
                     return 1
                 if sprite.name == "d":
