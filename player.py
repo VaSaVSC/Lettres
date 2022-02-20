@@ -57,8 +57,8 @@ class Entity(AnimateSprite):
 class Player(Entity):
 
     def __init__(self, event):
-        super().__init__("player", 0, 0, 5)
-        self.name = "player"
+        super().__init__("gob", 0, 0, 5)
+        self.name = "gob"
         self.event = event
         self.stats = Stats(10, 5, 0, 3, 2, 99, 6)
         self.fight_stats = Stats(10, 5, 0, 3, 2, 99, 6)
@@ -71,6 +71,7 @@ class Player(Entity):
         self.fight_image = pygame.image.load("./fight_sprites/gob.png")
         self.fight_image = pygame.transform.scale(self.fight_image, (350, 350))
         self.gold = 50
+        self.mono = False
 
     def set_stats(self):
         self.stats.hp += self.base_stats.hp
@@ -92,6 +93,15 @@ class Player(Entity):
 
     def xp_needed(self):
         self.xp_needed_to_level_up += 2 * self.level
+
+    def mono_switch(self):
+        self.sprite_sheet = pygame.image.load(f"./sprites/{self.name}{self.mode}.png")
+        self.images = {
+            'down': self.get_images(0),
+            'left': self.get_images(32),
+            'right': self.get_images(64),
+            'up': self.get_images(96)
+        }
 
 
 def refactor(name):

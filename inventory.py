@@ -66,6 +66,18 @@ def use_item(item, player):
     if item.name == "trésor":
         player.gold += rd.randint(15, 40)
         return 1
+    if item.name == "monocycle":
+        if player.mono == False:
+            player.name = "gobmono"
+            player.mono_switch()
+            player.speed = 8
+            player.mono = True
+        else:
+            player.name = "gob"
+            player.mono_switch()
+            player.speed = 3
+            player.mono = False
+        return 0
 
 
 class Inventory(pygame.sprite.Sprite):

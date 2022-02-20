@@ -81,3 +81,7 @@ Trésor;
 Il faudrait l'ajouter
 à mon portefeuille.
 
+monocycle:
+Monocycle;
+Pour aller plus vite.
+

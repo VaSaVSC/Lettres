@@ -20,3 +20,6 @@ Waw une télécomande !
 
 sachet:
 Gling Gling ce sachet à l'air bien rempli.
+
+monocycle:
+Ho un vélo à une roue !
