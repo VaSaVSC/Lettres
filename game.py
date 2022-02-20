@@ -228,6 +228,10 @@ class Game:
             data.write("self.player.stats.rm = " + str(self.player.stats.rm) + "\n")
             data.write("self.player.stats.chance = " + str(self.player.stats.chance) + "\n")
             data.write("self.player.stats.speed = " + str(self.player.stats.speed) + "\n")
+            data.write("self.player.gold = " + str(self.player.gold) + "\n")
+            data.write("self.player.level = " + str(self.player.level) + "\n")
+            data.write("self.player.xp = " + str(self.player.xp) + "\n")
+            data.write("self.player.xp_needed_to_level_up = " + str(self.player.xp_needed_to_level_up) + "\n")
 
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
