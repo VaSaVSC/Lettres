@@ -92,7 +92,6 @@ class Game:
         self.coin = pygame.image.load("./ath_assets/coin.png")
         self.coin = pygame.transform.scale(self.coin, (50, 50))
 
-
     # le jeu tourne --------------------------------------------------------------
     def run(self, was_dead=False):
 
@@ -291,8 +290,8 @@ class Game:
     def gold_update(self):
         self.screen.blit(self.coin, (700, 30))
         gold = str(self.player.gold)
-        n = self.font.render(gold, False, "#c6c704")
-        self.screen.blit(n, (650, 50))
+        n = self.font_fight2.render(gold, False, "#c6c704")
+        self.screen.blit(n, (650, 40))
 
     def life_update(self):
         for i in range(self.player.life):
@@ -526,16 +525,40 @@ class Game:
         status2 = False
         first = None
         second = None
+        color_status_player = (0, 0, 0)
+        color_status_monster = (0, 0, 0)
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
             self.screen.blit(self.map_manager.fight.monster.image, (425, 20 + acc))
+            if self.player.status != "":
+                if self.player.status == "poison":
+                    color_status_player = (148, 0, 211)
+                elif self.player.status == "burn":
+                    color_status_player = (255, 140, 0)
+                elif self.player.status == "freeze":
+                    color_status_player = (135, 206, 250)
+                elif self.player.status == "sleep":
+                    color_status_player = (192, 192, 192)
+                else:
+                    color_status_player = (255, 255, 0)
+            if self.map_manager.fight.monster.status != "":
+                if self.map_manager.fight.monster.status == "poison":
+                    color_status_monster = (148, 0, 211)
+                elif self.map_manager.fight.monster.status == "burn":
+                    color_status_monster = (255, 140, 0)
+                elif self.map_manager.fight.monster.status == "freeze":
+                    color_status_monster = (135, 206, 250)
+                elif self.map_manager.fight.monster.status == "sleep":
+                    color_status_monster = (192, 192, 192)
+                else:
+                    color_status_monster = (255, 255, 0)
             n = self.font_fight.render("Gobzer    HP: " + str(self.player.stats.hp) + "    LVL: " +
-                                       str(self.player.xp), False, (0, 0, 0))
+                                       str(self.player.level), False, color_status_player)
             self.screen.blit(n, (460, 515))
             n = self.font_fight.render(self.map_manager.fight.monster.refact_name + "    HP: " +
                                        str(int(self.map_manager.fight.monster.stats.hp)) + "    LVL: " +
-                                       str(self.map_manager.fight.monster.level), False, (0, 0, 0))
+                                       str(self.map_manager.fight.monster.level), False, color_status_monster)
             self.screen.blit(n, (15, 123))
             if self.map_manager.fight.fight_index == 0:
                 n = self.font_fight2.render(self.map_manager.fight.monster.spawn_sentence, False, (0, 0, 0))
@@ -571,20 +594,36 @@ class Game:
                 else:
                     first = self.map_manager.fight.monster
                     second = self.player
-                if acc2 == 0 and status1:
-                    self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
+                if acc2 == 0 and status1 and first.status != "sleep":
+                    if first == self.player:
+                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
+                    else:
+                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, first, second)
                     acc2 = 1
                 if not attack and status1:
-                    n = self.font_fight2.render("Vous utilisez l'attaque " +
-                                                self.player.attacks[atk_index] + ".", False, (0, 0, 0))
-                    self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1:
-                    self.map_manager.fight.use_attack("test", second, first)
+                    if first == self.player:
+                        n = self.font_fight2.render("Vous utilisez l'attaque " +
+                                                    self.player.attacks[atk_index] + ".", False, (0, 0, 0))
+                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                    else:
+                        n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
+                                                    self.map_manager.fight.monster.attack_chosen + ".", False, (0, 0, 0))
+                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and second.status != "sleep":
+                    if first == self.player:
+                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, first, second)
+                    else:
+                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
                     attack = True
                 if attack and status1:
-                    n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
-                                                self.player.attacks[atk_index] + ".", False, (0, 0, 0))
-                    self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                    if first == self.player:
+                        n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
+                                                    self.map_manager.fight.monster.attack_chosen + ".", False, (0, 0, 0))
+                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                    else:
+                        n = self.font_fight2.render("Vous utilisez l'attaque " +
+                                                    self.player.attacks[atk_index] + ".", False, (0, 0, 0))
+                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 4000:
                     acc2 = 0
                     attack = False
@@ -599,6 +638,14 @@ class Game:
                     n = self.font_fight2.render("Le poison ou la brûlure agit.", False, (0, 0, 0))
                     self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 5000:
+                    if self.player.status == "sleep" and self.player.sleep > 0:
+                        self.player.sleep -= 1
+                        if self.player.sleep == 0:
+                            self.player.status = ""
+                    if self.map_manager.fight.monster.status == "sleep" and self.map_manager.fight.monster.sleep > 0:
+                        self.map_manager.fight.monster.sleep -= 1
+                        if self.map_manager.fight.monster.sleep == 0:
+                            self.map_manager.fight.monster.status = ""
                     self.map_manager.fight.fight_index = 1
 
             if acc + 200 >= 275:
@@ -652,11 +699,21 @@ class Game:
                             status = False
                             status1 = True
                             status2 = True
+                            self.map_manager.fight.monster.choose_attack()
             if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
                 self.player.base_stats_()
                 self.map_manager.fight.monster.base_stats_()
                 if self.player.stats.hp <= 0:
                     self.player.life -= 1
+                else:
+                    n = self.map_manager.fight.monster.level - self.player.level
+                    self.player.xp += self.map_manager.fight.monster.level*2 + n
+                    if self.player.xp >= self.player.xp_needed_to_level_up:
+                        self.player.level += 1
+                        self.player.set_stats()
+                        self.player.xp_needed()
+                    self.player.gold += self.map_manager.fight.monster.level*2 + n
+                print(self.player.xp)
                 self.close_open_fight()
 
     def close_open_fight(self):

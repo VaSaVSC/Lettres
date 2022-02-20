@@ -62,4 +62,13 @@ class Fight:
             target.stats.hp -= n
             rand = rd.randint(0, 10)
             if rand > 6:
-                target.status = "poison"
+                if target.status != "":
+                    target.status = "poison"
+        elif attack == "Eyes contact":
+            if target.status != "" and rd.randint(1, 10) > 3:
+                target.status = "paralyzed"
+                target.stats.speed /= 2
+        elif attack == "Affond de trop" and rd.randint(1, 10) > 4:
+            if target.status != "":
+                target.status = "sleep"
+                target.sleep = rd.randint(1, 3)

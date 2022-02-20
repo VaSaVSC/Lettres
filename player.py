@@ -73,6 +73,7 @@ class Player(Entity):
         self.fight_image = pygame.transform.scale(self.fight_image, (350, 350))
         self.gold = 50
         self.mono = False
+        self.sleep = 0
 
     def set_stats(self):
         self.stats.hp += self.base_stats.hp

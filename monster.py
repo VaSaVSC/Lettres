@@ -50,6 +50,8 @@ class Monster:
         self.spawn_sentence = ""
         self.loose_sentence = ""
         self.win_sentence = ""
+        self.sleep = 0
+        self.attack_chosen = ""
 
     def set_stats(self, hp, ad, ap, armor, rm, chance, speed):
         self.stats = Stats(hp, ad, ap, armor, rm, chance, speed)
@@ -59,13 +61,13 @@ class Monster:
         self.stats_g = StatsGrowth(hp, ad, ap, armor, rm, chance, speed)
 
     def real_stats(self):
-        self.set_stats(self.stats.hp + random_factor(self.stats_g.hp_growth * self.level),
-                       self.stats.ad + random_factor(self.stats_g.ad_growth * self.level),
-                       self.stats.ap + random_factor(self.stats_g.ap_growth * self.level),
-                       self.stats.armor + random_factor(self.stats_g.armor_growth * self.level),
-                       self.stats.rm + random_factor(self.stats_g.rm_growth * self.level),
-                       self.stats.chance - random_factor(self.stats_g.chance_growth * self.level),
-                       self.stats.speed + random_factor(self.stats_g.speed_growth * self.level))
+        self.set_stats(self.stats.hp + random_factor(self.stats_g.hp_growth * (self.level-1)),
+                       self.stats.ad + random_factor(self.stats_g.ad_growth * (self.level-1)),
+                       self.stats.ap + random_factor(self.stats_g.ap_growth * (self.level-1)),
+                       self.stats.armor + random_factor(self.stats_g.armor_growth * (self.level-1)),
+                       self.stats.rm + random_factor(self.stats_g.rm_growth * (self.level-1)),
+                       self.stats.chance - random_factor(self.stats_g.chance_growth * (self.level-1)),
+                       self.stats.speed + random_factor(self.stats_g.speed_growth * (self.level-1)))
 
     def base_stats_(self):
         self.stats = deepcopy(self.fight_stats)
@@ -77,6 +79,6 @@ class Monster:
         else:
             return {level, level + 1, level + 2}
 
-    def attacks(self):
-        rand = rd.randint(1, 4)
-        return self.attacks[rand]
+    def choose_attack(self):
+        rand = rd.randint(0, 3)
+        self.attack_chosen = self.attacks[rand]

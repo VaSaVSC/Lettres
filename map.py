@@ -89,7 +89,7 @@ class MapManager:
         ],  pnjs=[
             PNJ("paul", nb_points=4, speed=1),
             PNJ("claude", nb_points=1, speed=2, random_move=True)
-        ])
+        ], level=1)
 
         self.register_map("world1_house1", portals=[
             Portal(origin='world1_house1', origin_point="w1_h1_exit",
@@ -105,7 +105,7 @@ class MapManager:
             PNJ("darkgob", nb_points=1, speed=0),
             PNJ("adèle", nb_points=1, speed=0),
             PNJ("zoz", nb_points=1, speed=0)
-        ], default_layer=3)
+        ], level=3, default_layer=3)
 
         self.register_map("desert", portals=[
             Portal(origin='desert', origin_point="des_w1_exit",
@@ -114,7 +114,7 @@ class MapManager:
                    dest="ice_world", dest_point="i_des_enterP")
         ], pnjs=[
             PNJ("chloé", nb_points=1, speed=0)
-        ], default_layer=3)
+        ], level=2, default_layer=3)
 
         self.register_map("ice_world", portals=[
             Portal(origin='ice_world', origin_point="i_des_exit",
@@ -123,7 +123,7 @@ class MapManager:
                    dest="bar", dest_point="bar_i_enterP")
         ], pnjs=[
             PNJ("frans", nb_points=1, speed=0)
-        ], default_layer=3)
+        ], level=3, default_layer=3)
 
         self.register_map("paki", portals=[
             Portal(origin='paki', origin_point="paki_w1_exit",
@@ -135,7 +135,7 @@ class MapManager:
         self.register_map("plage", portals=[
             Portal(origin='plage', origin_point="plage_w1_exit",
                    dest="world1", dest_point="w1_plage_exitP")
-        ])
+        ], level=1)
 
         self.register_map("bar", portals=[
             Portal(origin='bar', origin_point="bar_i_exit",
