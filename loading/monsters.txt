@@ -68,8 +68,8 @@ breendonck.loose_sentence = "Le Breendonck vous à gazé!"
 breendonck.win_sentence = "Vous avez vaincu le Breendonck!"
 self.monsters["breendonck"] = breendonck
 
-attacks = ["test1", "test2", "test3", "test4"]
-darkgob = Monster("darkgob", 0, attacks, "Darkgob")
+attacks = ["Non habes", "Non habes", "Non habes", "Non habes"]
+darkgob = Monster("darkgob", 4, attacks, "Darkgob")
 darkgob.set_stats(15, 3, 0, 15, 15, 95, 5)
 darkgob.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 darkgob.real_stats()
@@ -79,7 +79,7 @@ darkgob.win_sentence = "Vous avez vaincu le Darkgob!"
 self.monsters["darkgob"] = darkgob
 
 attacks = ["test1", "test2", "test3", "test4"]
-dèdèle = Monster("dèdèle", 0, attacks, "Dèdèle")
+dèdèle = Monster("dèdèle", 4, attacks, "Dèdèle")
 dèdèle.set_stats(15, 3, 0, 15, 15, 95, 5)
 dèdèle.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 dèdèle.real_stats()
@@ -219,7 +219,7 @@ taco.win_sentence = "Vous avez vaincu le Amateur2Bières!"
 self.monsters["taco"] = taco
 
 attacks = ["test1", "test2", "test3", "test4"]
-zoz = Monster("zoz", 0, attacks, "Zoz")
+zoz = Monster("zoz", 4, attacks, "Zoz")
 zoz.set_stats(15, 3, 0, 15, 15, 95, 5)
 zoz.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 zoz.real_stats()

@@ -68,7 +68,42 @@ class Fight:
             if target.status != "" and rd.randint(1, 10) > 3:
                 target.status = "paralyzed"
                 target.stats.speed /= 2
-        elif attack == "Affond de trop" and rd.randint(1, 10) > 4:
-            if target.status != "":
+        elif attack == "Affond de trop":
+            if target.status != "" and rd.randint(1, 10) > 4:
                 target.status = "sleep"
                 target.sleep = rd.randint(1, 3)
+        elif attack == "Bagarre en Carolo":
+            n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n
+            source.stats.hp -= n / 3
+        elif attack == "Glissade alcoolisée":
+            n = int(np.floor(source.stats.ad / 4 * self.dmg_blocked(target.stats.armor)))
+            if n < 1:
+                n = 1
+            source.stats.hp -= n
+            source.stats.ad *= 2
+        elif attack == "Non habes":
+            if rd.randint(1, 10) > 8:
+                target.stats.hp -= target.stats.hp
+        elif attack == "Bière trop froide":
+            n = int(np.floor(source.stats.ap / 4 * self.dmg_blocked(target.stats.armor)))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n
+            if target.status != "" and rd.randint(1, 10) > 3:
+                target.status = "freeze"
+                target.sleep = rd.randint(1, 3)
+        elif attack == "Dynamobaffe":
+            n = int(np.floor(source.stats.ad / 2 * self.dmg_blocked(target.stats.armor)))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n
+            if target.status != "" and rd.randint(1, 10) > 5:
+                target.status = "burn"
+        elif attack == "Patate de forain":
+            n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n

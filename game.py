@@ -638,11 +638,12 @@ class Game:
                     n = self.font_fight2.render("Le poison ou la brûlure agit.", False, (0, 0, 0))
                     self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 5000:
-                    if self.player.status == "sleep" and self.player.sleep > 0:
+                    if (self.player.status == "sleep" or self.player.status == "freeze") and self.player.sleep > 0:
                         self.player.sleep -= 1
                         if self.player.sleep == 0:
                             self.player.status = ""
-                    if self.map_manager.fight.monster.status == "sleep" and self.map_manager.fight.monster.sleep > 0:
+                    if (self.map_manager.fight.monster.status == "sleep" or self.map_manager.fight.monster.status == "freeze")\
+                            and self.map_manager.fight.monster.sleep > 0:
                         self.map_manager.fight.monster.sleep -= 1
                         if self.map_manager.fight.monster.sleep == 0:
                             self.map_manager.fight.monster.status = ""
@@ -665,11 +666,8 @@ class Game:
                     if event.key == pygame.K_SPACE and self.map_manager.fight.fight_index < 1:
                         self.map_manager.fight.fight_index = 1
                     elif self.map_manager.fight.fight_index == 1 and \
-                            (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e or
-                             event.key == pygame.K_b):
-                        if event.key == pygame.K_b:
-                            self.map_manager.fight.fight_index = 1
-                        elif event.key == pygame.K_a:
+                            (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e):
+                        if event.key == pygame.K_a:
                             self.map_manager.fight.fight_index = 2
                         elif event.key == pygame.K_z:
                             self.map_manager.fight.fight_index = 3
@@ -700,6 +698,10 @@ class Game:
                             status1 = True
                             status2 = True
                             self.map_manager.fight.monster.choose_attack()
+                    elif self.map_manager.fight.fight_index == 3 and \
+                            (pygame.K_1 <= event.key <= pygame.K_4 or event.key == pygame.K_b):
+                        if event.key == pygame.K_b:
+                            self.map_manager.fight.fight_index = 1
             if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
                 self.player.base_stats_()
                 self.map_manager.fight.monster.base_stats_()
@@ -712,6 +714,7 @@ class Game:
                         self.player.level += 1
                         self.player.set_stats()
                         self.player.xp_needed()
+                    print(self.map_manager.fight.monster.name)
                     self.player.gold += self.map_manager.fight.monster.level*2 + n
                 print(self.player.xp)
                 self.close_open_fight()
