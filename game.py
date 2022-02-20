@@ -334,6 +334,8 @@ class Game:
             self.player.mode = str(5 - self.player.life)
             self.player.change_sprite()
         if self.player.life == 0:
+            if self.inventory_opened:
+                self.close_open_inventory()
             self.player.mono_switch()
             dead = True
             acc = 0
