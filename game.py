@@ -546,6 +546,8 @@ class Game:
                     color_status_player = (192, 192, 192)
                 else:
                     color_status_player = (255, 255, 0)
+            else:
+                color_status_player = (0, 0, 0)
             if self.map_manager.fight.monster.status != "":
                 if self.map_manager.fight.monster.status == "poison":
                     color_status_monster = (148, 0, 211)
@@ -557,6 +559,8 @@ class Game:
                     color_status_monster = (192, 192, 192)
                 else:
                     color_status_monster = (255, 255, 0)
+            else:
+                color_status_monster = (0, 0, 0)
             n = self.font_fight.render("Gobzer    HP: " + str(self.player.stats.hp) + "    LVL: " +
                                        str(self.player.level), False, color_status_player)
             self.screen.blit(n, (460, 515))
@@ -598,7 +602,7 @@ class Game:
                 else:
                     first = self.map_manager.fight.monster
                     second = self.player
-                if acc2 == 0 and status1 and first.status != "sleep":
+                if acc2 == 0 and status1 and (first.status != "sleep" or first.status != "freeze"):
                     if first == self.player:
                         self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
                     else:
@@ -613,7 +617,7 @@ class Game:
                         n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
                                                     self.map_manager.fight.monster.attack_chosen + ".", False, (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and second.status != "sleep":
+                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and (second.status != "sleep" or second.status != "freeze"):
                     if first == self.player:
                         self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, second, first)
                     else:

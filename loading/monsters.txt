@@ -8,6 +8,7 @@ colin.loose_sentence = "Le Phacolin vous a écrasé!"
 colin.win_sentence = "Vous avez vaincu le Phacolin!"
 self.monsters["colin"] = colin
 
+
 attacks = ["Blanc de blanc", "Eyes contact", "Sieste startégique", "Lancer de gobelet"]
 vigne = Monster("vigne", 1, attacks, "La Vigne")
 vigne.set_stats(15, 5, 3, 10, 5, 95, 5)
