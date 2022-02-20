@@ -14,12 +14,13 @@ class Entity(AnimateSprite):
         self.image.set_colorkey([0, 0, 0])
         self.rect = self.image.get_rect()
         self.position = [x, y]
-        self.feet = pygame.Rect(0, 0, self.rect.width*0.5, 12)
+        self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
         self.old_position = self.position.copy()
         self.life = life
         self.max_life = life
 
-    def save_location(self): self.old_position = self.position.copy()
+    def save_location(self):
+        self.old_position = self.position.copy()
 
     def get_location(self):
         return self.position
@@ -103,6 +104,16 @@ class Player(Entity):
             'up': self.get_images(96)
         }
 
+    def change_sprite(self):
+        self.sprite_sheet = pygame.image.load(f"./sprites/{self.name}{self.mode}.png")
+        self.images = {
+            'down': self.get_images(0),
+            'left': self.get_images(32),
+            'right': self.get_images(64),
+            'up': self.get_images(96)
+        }
+        #self.dialog = texts[self.name + self.mode]
+
 
 def refactor(name):
     name = name[0].upper() + name[1:]
@@ -175,13 +186,13 @@ class PNJ(Entity):
 
     def pnj_collide(self, walls, collide, direction):
         if direction == "up":
-            feet = pygame.Rect(self.position[0], self.position[1] - self.speed, self.rect.width*0.5, 12)
+            feet = pygame.Rect(self.position[0], self.position[1] - self.speed, self.rect.width * 0.5, 12)
         elif direction == "down":
-            feet = pygame.Rect(self.position[0], self.position[1] + self.speed, self.rect.width*0.5, 12)
+            feet = pygame.Rect(self.position[0], self.position[1] + self.speed, self.rect.width * 0.5, 12)
         elif direction == "right":
-            feet = pygame.Rect(self.position[0] + self.speed, self.position[1], self.rect.width*0.5, 12)
+            feet = pygame.Rect(self.position[0] + self.speed, self.position[1], self.rect.width * 0.5, 12)
         else:
-            feet = pygame.Rect(self.position[0] - self.speed, self.position[1], self.rect.width*0.5, 12)
+            feet = pygame.Rect(self.position[0] - self.speed, self.position[1], self.rect.width * 0.5, 12)
         if feet.collidelist(walls) > -1 or feet.collidelist(collide) > -1:
             self.move_back()
             return False
@@ -194,7 +205,7 @@ class PNJ(Entity):
         self.save_location()
 
     def load_points(self, tmx_data):
-        for num in range(1, self.nb_points+1):
+        for num in range(1, self.nb_points + 1):
             point = tmx_data.get_object_by_name(f"{self.name}_path{num}")
             rect = pygame.Rect(point.x, point.y, point.width, point.height)
             self.points.append(rect)

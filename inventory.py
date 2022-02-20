@@ -78,6 +78,9 @@ def use_item(item, player):
             player.speed = 3
             player.mono = False
         return 0
+    if item.name == "pastis":
+        player.life -= 1
+        return 1
 
 
 class Inventory(pygame.sprite.Sprite):

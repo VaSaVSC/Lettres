@@ -297,7 +297,11 @@ class Game:
     def life_update(self):
         for i in range(self.player.life):
             self.screen.blit(self.hair, (50 + i * 48, 30))
+        if self.player.life != 0:
+            self.player.mode = str(5 - self.player.life)
+            self.player.change_sprite()
         if self.player.life == 0:
+            self.player.mono_switch()
             dead = True
             acc = 0
             index = 0
