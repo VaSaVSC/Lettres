@@ -41,69 +41,122 @@ class Fight:
         return (sqrt(resistance) * 7) / 100
 
     def use_attack(self, attack, source, target):
-        if attack == "Quichon tactique":
-            n = int(np.floor(source.stats.ap / 3 * self.dmg_blocked(target.stats.rm)))
-            if n < 1:
-                n = 1
-            target.stats.hp -= n
-            source.stats.hp += (source.fight_stats.hp - source.stats.hp) / 4
-        elif attack == "Sieste startégique":
-            source.status = None
-            source.stats.hp = source.fight_stats.hp
-        elif attack == "Lancer de gobelet":
-            n = int(np.floor(source.stats.ad / 3 * self.dmg_blocked(target.stats.armor)))
-            if n < 1:
-                n = 1
-            target.stats.hp -= n
-        elif attack == "Jus du Coq":
-            n = int(np.floor(source.stats.ap / 2 * self.dmg_blocked(target.stats.rm)))
-            if n < 1:
-                n = 1
-            target.stats.hp -= n
-            rand = rd.randint(0, 10)
-            if rand > 6:
-                if target.status != "":
-                    target.status = "poison"
-        elif attack == "Eyes contact":
-            if target.status != "" and rd.randint(1, 10) > 3:
-                target.status = "paralyzed"
-                target.stats.speed /= 2
-        elif attack == "Affond de trop":
-            if target.status != "" and rd.randint(1, 10) > 4:
-                target.status = "sleep"
-                target.sleep = rd.randint(1, 3)
-        elif attack == "Bagarre en Carolo":
-            n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
-            if n < 1:
-                n = 1
-            target.stats.hp -= n
-            source.stats.hp -= n / 3
-        elif attack == "Glissade alcoolisée":
-            n = int(np.floor(source.stats.ad / 4 * self.dmg_blocked(target.stats.armor)))
-            if n < 1:
-                n = 1
-            source.stats.hp -= n
-            source.stats.ad *= 2
-        elif attack == "Non habes":
-            if rd.randint(1, 10) > 8:
-                target.stats.hp -= target.stats.hp
-        elif attack == "Bière trop froide":
-            n = int(np.floor(source.stats.ap / 4 * self.dmg_blocked(target.stats.armor)))
-            if n < 1:
-                n = 1
-            target.stats.hp -= n
-            if target.status != "" and rd.randint(1, 10) > 3:
-                target.status = "freeze"
-                target.sleep = rd.randint(1, 3)
-        elif attack == "Dynamobaffe":
-            n = int(np.floor(source.stats.ad / 2 * self.dmg_blocked(target.stats.armor)))
-            if n < 1:
-                n = 1
-            target.stats.hp -= n
-            if target.status != "" and rd.randint(1, 10) > 5:
-                target.status = "burn"
-        elif attack == "Patate de forain":
-            n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
-            if n < 1:
-                n = 1
-            target.stats.hp -= n
+        if rd.randint(1, target.stats.chance) > 1:
+            if attack == "Quichon tactique":
+                n = int(np.floor(source.stats.ap / 3 * self.dmg_blocked(target.stats.rm)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+                source.stats.hp += (source.fight_stats.hp - source.stats.hp) / 4
+            elif attack == "Sieste startégique":
+                source.status = None
+                source.stats.hp = source.fight_stats.hp
+            elif attack == "Lancer de gobelet":
+                n = int(np.floor(source.stats.ad / 3 * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+            elif attack == "Jus du Coq":
+                n = int(np.floor(source.stats.ap / 2 * self.dmg_blocked(target.stats.rm)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+                if target.status == "" and rd.randint(0, 10) > 6:
+                    if target.status == "":
+                        target.status = "poison"
+            elif attack == "Eyes contact":
+                if target.status == "" and rd.randint(1, 10) > 3:
+                    target.status = "paralyzed"
+                    target.stats.speed /= 2
+            elif attack == "Affond de trop":
+                if target.status == "" and rd.randint(1, 10) > 4:
+                    target.status = "sleep"
+                    target.sleep = rd.randint(1, 3)
+            elif attack == "Bagarre en Carolo":
+                n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+                source.stats.hp -= n / 3
+            elif attack == "Glissade alcoolisée":
+                n = int(np.floor(source.stats.ad / 4 * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                source.stats.hp -= n
+                source.stats.ad *= 2
+            elif attack == "Non habes":
+                if rd.randint(1, 10) > 8:
+                    target.stats.hp -= target.stats.hp
+            elif attack == "Bière trop froide":
+                n = int(np.floor(source.stats.ap / 4 * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+                if target.status == "" and rd.randint(1, 10) > 3:
+                    target.status = "freeze"
+                    target.sleep = rd.randint(1, 3)
+            elif attack == "Dynamogifle":
+                n = int(np.floor(source.stats.ad / 2 * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+                if target.status != "" and rd.randint(1, 10) > 5:
+                    target.status = "burn"
+            elif attack == "Patate de forain":
+                n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+            elif attack == "Coma éthylique":
+                if target.status == "":
+                    target.status = "sleep"
+                    target.sleep = rd.randint(1, 3)
+            elif attack == "OH DJADJA":
+                n = int(np.floor(source.stats.ap * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+            elif attack == "Blanc de blanc":
+                n = int(np.floor(source.stats.ap / 4 * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+                if target.status == "" and rd.randint(0, 10) > 8:
+                    if target.status == "":
+                        target.status = "poison"
+
+            elif attack == "Balayette":
+                n = int(np.floor((source.stats.hp / 5 + source.stats.ad / 5) * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+        if attack == "Chante faux":
+            if target.stats.ad <= 10:
+                target.stats.ad = 1
+            else:
+                target.stats.ad -= 10
+            target.stats.armor -= 5
+        elif attack == "Pils chaude":
+            source.stats.armor += 5
+            source.stats.rm += 5
+        elif attack == "Spéciale tempérée":
+            source.stats.armor += 7
+            source.stats.rm += 7
+            source.stats.ap += 3
+        elif attack == "Une bonne Trappiste":
+            source.stats.armor += 10
+            source.stats.rm += 10
+            source.stats.ap += 3
+            source.stats.ad += 3
+        elif attack == "Billet de 10 par terre":
+            if source.stats.chance > 6:
+                source.stats.chance -= 5
+        elif attack == "Sol trop humide":
+            target.stats.speed -= 3
+        elif attack == "Bibitive":
+            source.stats.speed += 5
+            if source.stats.chance > 3:
+                source.stats.chance -= 2
+        elif attack == "Estafette":
+            source.stats.hp += 10
+            source.stats.ad += 5

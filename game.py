@@ -611,9 +611,9 @@ class Game:
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and second.status != "sleep":
                     if first == self.player:
-                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, first, second)
+                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, second, first)
                     else:
-                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
+                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], second, first)
                     attack = True
                 if attack and status1:
                     if first == self.player:
@@ -649,7 +649,7 @@ class Game:
                             self.map_manager.fight.monster.status = ""
                     self.map_manager.fight.fight_index = 1
 
-            if acc + 200 >= 275:
+            if acc + 200 >= 250:
                 go_down = False
             if acc <= 0:
                 go_down = True
