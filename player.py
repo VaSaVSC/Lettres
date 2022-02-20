@@ -74,6 +74,7 @@ class Player(Entity):
         self.gold = 50
         self.mono = False
         self.sleep = 0
+        self.parch = 0
 
     def set_stats(self):
         self.stats.hp += self.base_stats.hp

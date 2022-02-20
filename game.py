@@ -87,10 +87,21 @@ class Game:
         self.store_opened = False
         self.can_handle_store_input = False
 
+        self.TV_display = pygame.image.load("./ath_assets/plateau.png")
+        self.TV_display = pygame.transform.scale(self.TV_display, (750, 750))
+        self.TV_opened = False
+        self.TV_ok = False
+
         self.key_timeout = dict()
 
         self.coin = pygame.image.load("./ath_assets/coin.png")
         self.coin = pygame.transform.scale(self.coin, (50, 50))
+
+        self.parch = pygame.image.load("./ath_assets/parch.png")
+        self.parch = pygame.transform.scale(self.parch, (50, 50))
+
+        self.xp = pygame.image.load("./ath_assets/XP.png")
+        self.xp = pygame.transform.scale(self.xp, (50, 50))
 
     # le jeu tourne --------------------------------------------------------------
     def run(self, was_dead=False):
@@ -135,7 +146,10 @@ class Game:
             self.dialog_box.render(self.screen)
             self.life_update()
             self.gold_update()
+            self.parch_update()
+            self.xp_update()
             self.show_inventory()
+            self.show_TV()
             self.show_fight()
             self.show_store()
             if self.quit_while_fighting:
@@ -149,14 +163,18 @@ class Game:
                     if event.key == pygame.K_SPACE:
                         if self.map_manager.check_pnj_collisions(self.dialog_box) == 1:
                             self.close_open_store()
-                        self.map_manager.check_interactive_obj_collisions(self.dialog_box)
+                        if self.map_manager.check_interactive_obj_collisions(self.dialog_box) == 1:
+                            self.close_open_TV()
+                    elif event.key == pygame.K_EQUALS and self.TV_opened == True and self.TV_ok == False:
+                        self.player.parch += 1
+                        self.TV_ok = True
                     elif event.key == pygame.K_0 or event.key == pygame.K_1 or \
                             event.key == pygame.K_2 or event.key == pygame.K_3 or \
                             event.key == pygame.K_4 or event.key == pygame.K_5 or \
                             event.key == pygame.K_6 or event.key == pygame.K_7 or \
                             event.key == pygame.K_8 or event.key == pygame.K_9:
                         self.handle_store_input(event.key)
-                    elif event.key == pygame.K_e and self.store_opened == False:
+                    elif event.key == pygame.K_e and self.store_opened == False and self.TV_opened == False:
                         self.close_open_inventory()
                     elif event.key == pygame.K_w:
                         self.map_manager.launch_fight()
@@ -295,7 +313,19 @@ class Game:
         self.screen.blit(self.coin, (700, 30))
         gold = str(self.player.gold)
         n = self.font_fight2.render(gold, False, "#c6c704")
-        self.screen.blit(n, (650, 40))
+        self.screen.blit(n, (645, 40))
+
+    def parch_update(self):
+        self.screen.blit(self.parch, (700, 90))
+        parch = str(self.player.parch)
+        n = self.font_fight2.render(parch, False, "#baac49")
+        self.screen.blit(n, (645, 100))
+
+    def xp_update(self):
+        self.screen.blit(self.xp, (700, 150))
+        xp = str(self.player.xp)
+        n = self.font_fight2.render(xp, False, "#469ca9")
+        self.screen.blit(n, (645, 160))
 
     def life_update(self):
         for i in range(self.player.life):
@@ -349,6 +379,7 @@ class Game:
                             return
                         elif event.key == pygame.K_n:
                             wait_for_action = False
+                            self.load_from_saved_game = False
                         elif event.key == pygame.K_s:
                             if os.stat("./loading/save_player.txt").st_size > 0 and \
                                     os.stat("./loading/save_map.txt").st_size > 0:
@@ -421,6 +452,8 @@ class Game:
             self.can_handle_input = False
             self.can_handle_inventory_input = True
 
+    # -----magasin-------------------------------------------------------------------
+
     def close_open_store(self):
         if self.store_opened:
             self.store_opened = False
@@ -458,8 +491,8 @@ class Game:
 
             self.screen.blit(self.coin, (670, 596))
             gold = str(self.player.gold)
-            n = self.font.render(gold, False, "#c6c704")
-            self.screen.blit(n, (630, 614))
+            n = self.font_fight2.render(gold, False, "#c6c704")
+            self.screen.blit(n, (625, 605))
             # if len(self.inventory.items) > 0:
             #    self.blit_inventory(self.inventory_index)
 
@@ -515,6 +548,23 @@ class Game:
                 pastis = Item("foreuse", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
                 self.player.gold -= 11
+
+    # TV---------------------------------------------------------------
+
+    def close_open_TV(self):
+        if self.TV_opened:
+            self.TV_opened = False
+            self.can_handle_input = True
+            # self.can_handle_store_input = False
+        else:
+            self.can_handle_inventory_input = False
+            self.TV_opened = True
+            self.can_handle_input = False
+            # self.can_handle_store_input = True
+
+    def show_TV(self):
+        if self.TV_opened:
+            self.screen.blit(self.TV_display, (25, 25))
 
     # méthodes relatives aux combats ------------------------------------------------------------------
     def show_fight(self):
@@ -615,18 +665,20 @@ class Game:
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                     else:
                         n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
-                                                    self.map_manager.fight.monster.attack_chosen + ".", False, (0, 0, 0))
+                                                    self.map_manager.fight.monster.attack_chosen + ".", False,
+                                                    (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and (second.status != "sleep" or second.status != "freeze"):
+                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and second.status != "sleep":
                     if first == self.player:
-                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, second, first)
+                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, first, second)
                     else:
-                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], second, first)
+                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
                     attack = True
                 if attack and status1:
                     if first == self.player:
                         n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
-                                                    self.map_manager.fight.monster.attack_chosen + ".", False, (0, 0, 0))
+                                                    self.map_manager.fight.monster.attack_chosen + ".", False,
+                                                    (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                     else:
                         n = self.font_fight2.render("Vous utilisez l'attaque " +

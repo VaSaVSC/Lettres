@@ -11,3 +11,6 @@ Vous avez trouvez une vieille Cara !
 
 TV:
 La télé est éteinte...
+
+TV1:
+Bienvenue à "N'oubliez pas les paroles !!!"

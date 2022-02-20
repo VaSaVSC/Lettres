@@ -275,7 +275,10 @@ class MapManager:
     def check_interactive_obj_collisions(self, dialog_box):
         for obj in self.get_map().interactive_obj:
             if obj.rect.colliderect(self.player.rect):
-                dialog_box.execute(obj.refact_name, False, obj.dialog)
+                if obj.name == "TV" and self.inventory.contains("télécommande"):
+                    return 1
+                else:
+                    dialog_box.execute(obj.refact_name, False, obj.dialog)
 
     def check_collisions(self):
 
