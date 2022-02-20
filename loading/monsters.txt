@@ -80,14 +80,14 @@ darkgob.win_sentence = "Vous avez vaincu le Darkgob!"
 self.monsters["darkgob"] = darkgob
 
 attacks = ["test1", "test2", "test3", "test4"]
-dèdèle = Monster("dèdèle", 4, attacks, "Dèdèle")
-dèdèle.set_stats(15, 3, 0, 15, 15, 95, 5)
-dèdèle.set_stats_g(15, 3, 2, 15, 15, 5, 3)
-dèdèle.real_stats()
-dèdèle.spawn_sentence = "Un Darkgob sauvage apparaît!"
-dèdèle.loose_sentence = "Le Dèdèle vous à dèdèlé!"
-dèdèle.win_sentence = "Vous avez vaincu le Dèdèle!"
-self.monsters["dèdèle"] = dèdèle
+d = Monster("d", 4, attacks, "Dèdèle")
+d.set_stats(15, 3, 0, 15, 15, 95, 5)
+d.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+d.real_stats()
+d.spawn_sentence = "Une Dèdèle sauvage apparaît!"
+d.loose_sentence = "Le Dèdèle vous à dèdèlé!"
+d.win_sentence = "Vous avez vaincu le Dèdèle!"
+self.monsters["d"] = d
 
 attacks = ["test1", "test2", "test3", "test4"]
 elisa = Monster("elisa", 2, attacks, "Vieille")

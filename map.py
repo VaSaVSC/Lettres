@@ -103,7 +103,7 @@ class MapManager:
                    dest="world1", dest_point="w1_d_exitP")
         ], pnjs=[
             PNJ("darkgob", nb_points=1, speed=0),
-            PNJ("adèle", nb_points=1, speed=0),
+            PNJ("d", nb_points=1, speed=0),
             PNJ("zoz", nb_points=1, speed=0)
         ], level=3, default_layer=3)
 
@@ -264,6 +264,12 @@ class MapManager:
                             self.inventory.remove_item(i)
                 if self.get_map().pnjs[0].name == "achille":
                     return 1
+                if sprite.name == "d":
+                    self.launch_fight(monster_t="d")
+                elif sprite.name == "zoz":
+                    self.launch_fight(monster_t="zoz")
+                elif sprite.name == "darkgob":
+                    self.launch_fight(monster_t="darkgob")
             if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False
@@ -320,15 +326,24 @@ class MapManager:
                 self.clock = pygame.time.get_ticks()
                 self.launch_fight()
 
-    def launch_fight(self):
-        rand = rd.randint(0, len(self.get_map().monsters) - 1)
-        m = self.get_map().monsters[rand]
-        monster = self.monsters[m]
-        monster.level = self.get_map().level
-        monster.real_stats()
-        self.player.fight_stats = deepcopy(self.player.stats)
-        self.fight = Fight(self.player, monster)
-        self.player.fight_event()
+    def launch_fight(self, monster_t=""):
+        if monster_t == "":
+            rand = rd.randint(0, len(self.get_map().monsters) - 1)
+            m = self.get_map().monsters[rand]
+            monster = self.monsters[m]
+            monster.level = self.get_map().level
+            monster.real_stats()
+            self.player.fight_stats = deepcopy(self.player.stats)
+            self.fight = Fight(self.player, monster)
+            self.player.fight_event()
+        else:
+            monster = self.monsters[monster_t]
+            monster.level = self.get_map().level
+            monster.real_stats()
+            self.player.fight_stats = deepcopy(self.player.stats)
+            self.fight = Fight(self.player, monster)
+            self.player.fight_event()
+
 
     def tp_player(self, name="player", from_save=False):
         if not from_save:

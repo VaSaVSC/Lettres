@@ -250,6 +250,8 @@ class Game:
             data.write("self.player.level = " + str(self.player.level) + "\n")
             data.write("self.player.xp = " + str(self.player.xp) + "\n")
             data.write("self.player.xp_needed_to_level_up = " + str(self.player.xp_needed_to_level_up) + "\n")
+            data.write("self.player.parch = " + str(self.player.parch) + "\n")
+
 
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
@@ -583,6 +585,7 @@ class Game:
         second = None
         color_status_player = (0, 0, 0)
         color_status_monster = (0, 0, 0)
+        player_attack = True
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
             self.screen.blit(self.player.fight_image, (50, 200 + acc))
@@ -655,7 +658,7 @@ class Game:
                     first = self.map_manager.fight.monster
                     second = self.player
                 if acc2 == 0 and status1 and (first.status != "sleep" or first.status != "freeze"):
-                    if first == self.player:
+                    if first == self.player and player_attack:
                         self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
                     else:
                         self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, first, second)
@@ -672,9 +675,10 @@ class Game:
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and second.status != "sleep":
                     if first == self.player:
-                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, first, second)
+                        self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, second, first)
                     else:
-                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
+                        if player_attack:
+                            self.map_manager.fight.use_attack(self.player.attacks[atk_index], second, first)
                     attack = True
                 if attack and status1:
                     if first == self.player:
@@ -709,6 +713,7 @@ class Game:
                         self.map_manager.fight.monster.sleep -= 1
                         if self.map_manager.fight.monster.sleep == 0:
                             self.map_manager.fight.monster.status = ""
+                    player_attack = True
                     self.map_manager.fight.fight_index = 1
 
             if acc + 200 >= 250:
@@ -734,13 +739,15 @@ class Game:
                         elif event.key == pygame.K_z:
                             self.map_manager.fight.fight_index = 3
                         else:
-                            escape_chance = pow(5 / 6, self.map_manager.fight.monster.level)
-                            if rd.randint(100, 150) * escape_chance > 70:
+                            escape_chance = (5 / 6)**(self.map_manager.fight.monster.level+1)
+                            rand = rd.randint(100, 150)
+                            if rand * escape_chance > 75:
                                 self.player.base_stats_()
                                 self.map_manager.fight.monster.base_stats_()
                                 self.close_open_fight()
                             else:
-                                self.map_manager.fight.fight_index = 1
+                                player_attack = False
+                                self.map_manager.fight.fight_index = 4
                     elif self.map_manager.fight.fight_index == 2 and \
                             (pygame.K_1 <= event.key <= pygame.K_4 or event.key == pygame.K_b):
                         if event.key == pygame.K_b:

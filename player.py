@@ -67,7 +67,7 @@ class Player(Entity):
         self.attacks = ["Quichon tactique", "Sieste stratégique", "Lancer de gobelet", "Jus du Coq"]
         self.xp = 0
         self.level = 1
-        self.xp_needed_to_level_up = 10
+        self.xp_needed_to_level_up = 100
         self.status = ""
         self.fight_image = pygame.image.load("./fight_sprites/gob.png")
         self.fight_image = pygame.transform.scale(self.fight_image, (350, 350))
@@ -77,15 +77,15 @@ class Player(Entity):
         self.parch = 0
 
     def set_stats(self):
-        self.stats.hp += self.base_stats.hp
-        self.stats.ad += self.base_stats.ad
-        self.stats.ap += self.base_stats.ap
-        self.stats.armor += self.base_stats.armor
-        self.stats.rm += self.base_stats.rm
-        self.stats.chance -= self.base_stats.chance
+        self.stats.hp += 50
+        self.stats.ad += 15
+        self.stats.ap += 15
+        self.stats.armor += 12
+        self.stats.rm += 12
+        self.stats.chance -= 10
         if self.stats.chance < 2:
             self.stats.chance = 2
-        self.stats.speed += self.base_stats.speed
+        self.stats.speed += 10
 
     def fight_event(self):
         pygame.event.post(self.event)
@@ -95,7 +95,7 @@ class Player(Entity):
         self.status = ""
 
     def xp_needed(self):
-        self.xp_needed_to_level_up += 2 * self.level
+        self.xp_needed_to_level_up += 50
 
     def mono_switch(self):
         self.sprite_sheet = pygame.image.load(f"./sprites/{self.name}{self.mode}.png")
@@ -118,6 +118,8 @@ class Player(Entity):
 
 
 def refactor(name):
+    if name == "d":
+        return "Dèdèle"
     name = name[0].upper() + name[1:]
     return name
 
