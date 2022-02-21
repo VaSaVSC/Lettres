@@ -74,6 +74,8 @@ class Game:
         self.calv2 = pygame.transform.scale(self.calv2, (64, 80))
         self.calv2.set_colorkey([0, 0, 0])
         self.player_sprite = None
+        self.victory = pygame.image.load("./ath_assets/victory.png")
+        #self.victory = pygame.transform.scale(self.victory, ())
 
         self.inventory_display = pygame.image.load("./ath_assets/inventory.png")
         self.inventory_display = pygame.transform.scale(self.inventory_display, (700, 350))
@@ -406,24 +408,25 @@ class Game:
             victory = True
             while victory:
                 self.screen.blit(self.death_bg, (0, 0))
-                self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
+                self.screen.blit(self.victory, (163, 50))
+                self.screen.blit(self.box, (self.X_POS, self.Y_POS - 100))
                 n = self.font.render(self.intro3, False, (0, 0, 0))
-                self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 110))
+                self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 20))
                 pygame.display.flip()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
+                        """source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
                         dest = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").parent.absolute()
                         dest = dest.parent.absolute()
-                        shutil.move(str(source), str(dest))
+                        shutil.move(str(source), str(dest))"""
                         pygame.quit()
                         return
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_q:
-                            source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
+                            """source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
                             dest = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").parent.absolute()
                             dest = dest.parent.absolute()
-                            shutil.move(str(source), str(dest))
+                            shutil.move(str(source), str(dest))"""
                             pygame.quit()
                             return
 
