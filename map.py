@@ -297,6 +297,10 @@ class MapManager:
                         self.player.parch += 1
                 elif sprite.name == "quentin":
                     self.player.quent_ok = 1
+                elif sprite.name == "thib":
+                    if self.player.thib_ok == 0:
+                        self.player.parch += 1
+                        self.player.thib_ok = 1
             if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False

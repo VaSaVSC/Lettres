@@ -81,6 +81,7 @@ class Player(Entity):
         self.darkgob_ok = 0
         self.zoz_ok = 0
         self.quent_ok = 0
+        self.thib_ok = 0
 
     def set_stats(self):
         self.stats.hp += 50
