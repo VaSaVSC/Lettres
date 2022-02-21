@@ -75,6 +75,8 @@ class Player(Entity):
         self.mono = False
         self.sleep = 0
         self.parch = 0
+        self.TV_ok = 0
+        self.store_ok = 0
 
     def set_stats(self):
         self.stats.hp += 50

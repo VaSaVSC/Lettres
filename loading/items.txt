@@ -90,3 +90,7 @@ Diamant;
 Waw un diamant ça vaut
 500$
 
+parch:
+Parchemin;
+Ajoute-le à ta collection.
+

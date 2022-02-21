@@ -90,7 +90,6 @@ class Game:
         self.TV_display = pygame.image.load("./ath_assets/plateau.png")
         self.TV_display = pygame.transform.scale(self.TV_display, (750, 750))
         self.TV_opened = False
-        self.TV_ok = False
 
         self.key_timeout = dict()
 
@@ -165,9 +164,9 @@ class Game:
                             self.close_open_store()
                         if self.map_manager.check_interactive_obj_collisions(self.dialog_box) == 1:
                             self.close_open_TV()
-                    elif event.key == pygame.K_EQUALS and self.TV_opened == True and self.TV_ok == False:
+                    elif event.key == pygame.K_EQUALS and self.TV_opened == True and self.player.TV_ok == 0:
                         self.player.parch += 1
-                        self.TV_ok = True
+                        self.player.TV_ok += 1
                     elif event.key == pygame.K_0 or event.key == pygame.K_1 or \
                             event.key == pygame.K_2 or event.key == pygame.K_3 or \
                             event.key == pygame.K_4 or event.key == pygame.K_5 or \
@@ -251,6 +250,8 @@ class Game:
             data.write("self.player.xp = " + str(self.player.xp) + "\n")
             data.write("self.player.xp_needed_to_level_up = " + str(self.player.xp_needed_to_level_up) + "\n")
             data.write("self.player.parch = " + str(self.player.parch) + "\n")
+            data.write("self.player.TV_ok = " + str(self.player.TV_ok) + "\n")
+            data.write("self.player.store_ok = " + str(self.player.store_ok) + "\n")
 
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
@@ -479,7 +480,7 @@ class Game:
             self.screen.blit(n, (85, 305))
             n = self.font.render("3   Vieille Cara                     13$", False, (0, 0, 0))
             self.screen.blit(n, (85, 425))
-            n = self.font.render("4   Tournevis                       11$", False, (0, 0, 0))
+            n = self.font.render("4   Monocyle                        250$", False, (0, 0, 0))
             self.screen.blit(n, (85, 540))
             n = self.font.render("5   Citron                              20$", False, (0, 0, 0))
             self.screen.blit(n, (435, 60))
@@ -489,8 +490,9 @@ class Game:
             self.screen.blit(n, (435, 305))
             n = self.font.render("8   Presse-Ail                       13$", False, (0, 0, 0))
             self.screen.blit(n, (435, 425))
-            n = self.font.render("9   Monocyle                        500$", False, (0, 0, 0))
-            self.screen.blit(n, (435, 540))
+            if self.player.store_ok == 0:
+                n = self.font.render("9   Parchemin                      500$", False, (0, 0, 0))
+                self.screen.blit(n, (435, 540))
 
             self.screen.blit(self.coin, (670, 596))
             gold = str(self.player.gold)
@@ -520,10 +522,10 @@ class Game:
                 self.inventory.add_item(pastis)
                 self.player.gold -= 13
 
-            if pressed == pygame.K_4 and self.player.gold >= 11:
-                pastis = Item("tournevis", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+            if pressed == pygame.K_4 and self.player.gold >= 250:
+                pastis = Item("monocycle", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
-                self.player.gold -= 11
+                self.player.gold -= 250
 
             if pressed == pygame.K_5 and self.player.gold >= 20:
                 pastis = Item("citron", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
@@ -545,10 +547,12 @@ class Game:
                 self.inventory.add_item(pastis)
                 self.player.gold -= 13
 
-            if pressed == pygame.K_9 and self.player.gold >= 11:
-                pastis = Item("monocycle", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+            if pressed == pygame.K_9 and self.player.gold >= 500 and self.player.store_ok == 0:
+                pastis = Item("parch", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
                 self.player.gold -= 500
+                self.player.parch += 1
+                self.player.store_ok += 1
 
     # TV---------------------------------------------------------------
 
