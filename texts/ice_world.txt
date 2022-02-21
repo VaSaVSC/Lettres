@@ -13,3 +13,6 @@ Regarde derrière les arbres...
 
 richter:
 YESSSS!!!!!
+
+pizza:
+Vous trouvez un morceau de pizza !

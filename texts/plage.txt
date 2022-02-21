@@ -6,3 +6,6 @@ Rend mon argent!
 
 robe:
 Vous trouvez une robe !
+
+pizza:
+Vous trouvez un morceau de pizza !

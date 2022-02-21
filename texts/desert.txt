@@ -8,3 +8,6 @@ d'une porte fermée :(
 chloé1:
 En fait, elle sert à rien
 cette échelle...
+
+pizza:
+Vous trouvez un morceau de pizza !

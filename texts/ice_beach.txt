@@ -10,3 +10,6 @@ Fais le pour moi!
 
 prépuce:
 Ah...
+
+pizza:
+Vous trouvez un morceau de pizza !
