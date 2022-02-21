@@ -77,6 +77,9 @@ class Player(Entity):
         self.parch = 0
         self.TV_ok = 0
         self.store_ok = 0
+        self.d_ok = 0
+        self.darkgob_ok = 0
+        self.zoz_ok = 0
 
     def set_stats(self):
         self.stats.hp += 50

@@ -29,7 +29,7 @@ class StatsGrowth:
 
 
 def random_factor(growing):
-    rand = rd.randint(5, 20)
+    rand = rd.randint(5, 16)
     return floor(rand/10 * growing)
 
 

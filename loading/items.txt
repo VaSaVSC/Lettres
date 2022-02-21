@@ -94,3 +94,22 @@ parch:
 Parchemin;
 Ajoute-le à ta collection.
 
+terreriche:
+Terre riche;
+Une échelle au nom ambigu.
+Va voir près des bateaux!
+
+papier:
+Vieux papier;
+Dans un bar, il y a
+une échelle!
+
+presque:
+Un pas de bol;
+Pas de chance, mais askip
+les arbres froids cachent
+bien des choses.........
+
+richter:
+Richter;
+Enfin la bonne échelle!

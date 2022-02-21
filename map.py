@@ -41,7 +41,7 @@ class Map:
     monsters: List[Monster]
 
 
-type_list = {'panel', 'TV'}
+type_list = {'panel', 'TV', 'door'}
 
 
 def check_type(type_t):
@@ -111,7 +111,9 @@ class MapManager:
             Portal(origin='desert', origin_point="des_w1_exit",
                    dest="world1", dest_point="w1_des_exitP"),
             Portal(origin='desert', origin_point="des_i_enter",
-                   dest="ice_world", dest_point="i_des_enterP")
+                   dest="ice_world", dest_point="i_des_enterP"),
+            Portal(origin="desert", origin_point="des_ib_enter",
+                   dest="ice_beach", dest_point="des_ib_enterP")
         ], pnjs=[
             PNJ("chloé", nb_points=1, speed=0)
         ], level=2, default_layer=3)
@@ -144,6 +146,11 @@ class MapManager:
             PNJ("raph", nb_points=1, speed=0),
             PNJ("thib", nb_points=1, speed=0)
         ], default_layer=2)
+
+        self.register_map("ice_beach", portals=[
+            Portal(origin="ice_beach", origin_point="des_ib_exit",
+                   dest="desert", dest_point="des_ib_exitP")
+        ], level=2, default_layer=2)
 
         self.tp_pnjs()
 
@@ -271,6 +278,13 @@ class MapManager:
                     self.launch_fight(monster_t="zoz")
                 elif sprite.name == "darkgob":
                     self.launch_fight(monster_t="darkgob")
+                elif sprite.name == "chloé" and self.inventory.contains("richter"):
+                    sprite.mode = "1"
+                    for i in self.inventory.items:
+                        if i.name == "richter":
+                            self.inventory.remove_item(i)
+                    sprite.dialog = self.get_map().texts[sprite.name + sprite.mode]
+                    self.player.parch += 1
             if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False
@@ -332,14 +346,14 @@ class MapManager:
             rand = rd.randint(0, len(self.get_map().monsters) - 1)
             m = self.get_map().monsters[rand]
             monster = self.monsters[m]
-            monster.level = self.get_map().level
+            #monster.level = self.get_map().level
             monster.real_stats()
             self.player.fight_stats = deepcopy(self.player.stats)
             self.fight = Fight(self.player, monster)
             self.player.fight_event()
         else:
             monster = self.monsters[monster_t]
-            monster.level = self.get_map().level
+            #monster.level = self.get_map().level
             monster.real_stats()
             self.player.fight_stats = deepcopy(self.player.stats)
             self.fight = Fight(self.player, monster)

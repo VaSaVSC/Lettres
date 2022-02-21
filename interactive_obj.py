@@ -17,3 +17,5 @@ class Obj:
                 return "Panneau " + numb
             else:
                 return "Panneau"
+        elif self.type == "door":
+            return "Porte"

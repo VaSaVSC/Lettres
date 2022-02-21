@@ -252,6 +252,10 @@ class Game:
             data.write("self.player.parch = " + str(self.player.parch) + "\n")
             data.write("self.player.TV_ok = " + str(self.player.TV_ok) + "\n")
             data.write("self.player.store_ok = " + str(self.player.store_ok) + "\n")
+            data.write("self.player.d_ok = " + str(self.player.d_ok) + "\n")
+            data.write("self.player.darkgob_ok = " + str(self.player.darkgob_ok) + "\n")
+            data.write("self.player.zoz_ok = " + str(self.player.zoz_ok) + "\n")
+
 
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
@@ -812,6 +816,15 @@ class Game:
                         self.player.level += 1
                         self.player.set_stats()
                         self.player.xp_needed()
+                    if self.map_manager.fight.monster.name == "d" and self.player.d_ok == 0:
+                        self.player.d_ok = 1
+                        self.parch += 1
+                    elif self.map_manager.fight.monster.name == "darkgob" and self.player.darkgob_ok == 0:
+                        self.player.darkgob_ok = 1
+                        self.parch += 1
+                    elif self.map_manager.fight.monster.name == "zoz" and self.player.zoz_ok == 0:
+                        self.player.zoz_ok = 1
+                        self.parch += 1
                 self.close_open_fight()
 
     def close_open_fight(self):
