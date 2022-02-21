@@ -252,7 +252,6 @@ class Game:
             data.write("self.player.xp_needed_to_level_up = " + str(self.player.xp_needed_to_level_up) + "\n")
             data.write("self.player.parch = " + str(self.player.parch) + "\n")
 
-
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0
             for item in self.inventory.items:
@@ -405,7 +404,7 @@ class Game:
 
             if pressed == pygame.K_a:
                 if len(self.inventory.items) > 0 and self.inventory.items[self.inventory_index].number > 0:
-                    if use_item(self.inventory.items[self.inventory_index], self.player) == 1:
+                    if use_item(self.inventory.items[self.inventory_index], self.player, self.inventory) == 1:
                         if self.inventory.items[self.inventory_index].number == 1 and \
                                 self.inventory_index == len(self.inventory.items) - 1:
                             self.inventory_index -= 1
@@ -583,6 +582,12 @@ class Game:
         second = None
         color_status_player = (0, 0, 0)
         color_status_monster = (0, 0, 0)
+        genius = []
+        for item in self.inventory.items:
+            if item.fight_item:
+                genius.append(item)
+        while len(genius) != 9:
+            genius.append(None)
         player_attack = True
         while self.fighting:
             self.screen.blit(self.fight, (0, 0))
@@ -642,7 +647,7 @@ class Game:
                 acc1 = 0
                 for item in self.inventory.items:
                     if item.fight_item:
-                        n = self.font_fight2.render(item.refact_name, False, (0, 0, 0))
+                        n = self.font_fight2.render(item.refact_name + "     " + str(item.number), False, (0, 0, 0))
                         self.screen.blit(n, (170, 170 + acc1))
                         acc1 += 50
                 n = self.font_fight2.render("B = retour", False, (0, 0, 0))
@@ -656,22 +661,25 @@ class Game:
                     first = self.map_manager.fight.monster
                     second = self.player
                 if acc2 == 0 and status1 and (first.status != "sleep" or first.status != "freeze"):
-                    if first == self.player and player_attack:
-                        self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
+                    print("lol")
+                    if first == self.player:
+                        if player_attack:
+                            self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
                     else:
                         self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, first, second)
                     acc2 = 1
                 if not attack and status1:
                     if first == self.player:
-                        n = self.font_fight2.render("Vous utilisez l'attaque " +
-                                                    self.player.attacks[atk_index] + ".", False, (0, 0, 0))
-                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                        if player_attack:
+                            n = self.font_fight2.render("Vous utilisez l'attaque " +
+                                                        self.player.attacks[atk_index] + ".", False, (0, 0, 0))
+                            self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                     else:
                         n = self.font_fight2.render(self.map_manager.fight.monster.refact_name + " lance " +
                                                     self.map_manager.fight.monster.attack_chosen + ".", False,
                                                     (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and second.status != "sleep":
+                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and (second.status != "sleep" or second.status != "freeze"):
                     if first == self.player:
                         self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, second, first)
                     else:
@@ -685,9 +693,10 @@ class Game:
                                                     (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                     else:
-                        n = self.font_fight2.render("Vous utilisez l'attaque " +
-                                                    self.player.attacks[atk_index] + ".", False, (0, 0, 0))
-                        self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
+                        if player_attack:
+                            n = self.font_fight2.render("Vous utilisez l'attaque " +
+                                                        self.player.attacks[atk_index] + ".", False, (0, 0, 0))
+                            self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 4000:
                     acc2 = 0
                     attack = False
@@ -745,6 +754,11 @@ class Game:
                                 self.close_open_fight()
                             else:
                                 player_attack = False
+                                self.map_manager.fight.monster.choose_attack()
+                                t0 = pygame.time.get_ticks()
+                                status = False
+                                status1 = True
+                                status2 = True
                                 self.map_manager.fight.fight_index = 4
                     elif self.map_manager.fight.fight_index == 2 and \
                             (pygame.K_1 <= event.key <= pygame.K_4 or event.key == pygame.K_b):
@@ -766,9 +780,17 @@ class Game:
                             status2 = True
                             self.map_manager.fight.monster.choose_attack()
                     elif self.map_manager.fight.fight_index == 3 and \
-                            (pygame.K_1 <= event.key <= pygame.K_4 or event.key == pygame.K_b):
+                            (pygame.K_1 <= event.key <= pygame.K_9 or event.key == pygame.K_b):
                         if event.key == pygame.K_b:
                             self.map_manager.fight.fight_index = 1
+                        else:
+                            use_item(genius[event.key - 49], self.player, self.inventory)
+                            self.map_manager.fight.fight_index = 4
+                            t0 = pygame.time.get_ticks()
+                            status = False
+                            status1 = True
+                            status2 = True
+                            self.map_manager.fight.monster.choose_attack()
             if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
                 self.player.base_stats_()
                 self.map_manager.fight.monster.base_stats_()

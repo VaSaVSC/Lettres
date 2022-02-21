@@ -42,7 +42,7 @@ class Item(pygame.sprite.Sprite):
         self.feet.midbottom = self.rect.midbottom
 
 
-def use_item(item, player):
+def use_item(item, player, inventory):
     if item.name == "old_carapils":
         if rd.randint(0, 100) > 95:
             player.life -= player.life
@@ -57,6 +57,7 @@ def use_item(item, player):
     if item.name == "robe":
         return 0
     if item.name == "pizza":
+        inventory.remove_item(item)
         return 1
     if item.name == "null":
         return 1

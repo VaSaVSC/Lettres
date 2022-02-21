@@ -81,8 +81,8 @@ self.monsters["darkgob"] = darkgob
 
 attacks = ["test1", "test2", "test3", "test4"]
 d = Monster("d", 4, attacks, "Dèdèle")
-d.set_stats(15, 3, 0, 15, 15, 95, 5)
-d.set_stats_g(15, 3, 2, 15, 15, 5, 3)
+d.set_stats(15, 3, 0, 15, 15, 95, 1)
+d.set_stats_g(15, 3, 2, 15, 15, 5, 0)
 d.real_stats()
 d.spawn_sentence = "Une Dèdèle sauvage apparaît!"
 d.loose_sentence = "Le Dèdèle vous à dèdèlé!"
