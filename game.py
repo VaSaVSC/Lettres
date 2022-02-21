@@ -1,6 +1,8 @@
 import os
 import pygame
 import random as rd
+import shutil
+import pathlib
 
 from animation import AnimateSprite
 from fight import poisoned, burned
@@ -151,6 +153,7 @@ class Game:
             self.show_TV()
             self.show_fight()
             self.show_store()
+            self.check_victory()
             if self.quit_while_fighting:
                 break
             pygame.display.flip()
@@ -181,6 +184,8 @@ class Game:
                     elif event.key == pygame.K_z or event.key == pygame.K_s or \
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
+                    elif event.key == pygame.K_l:
+                        self.player.parch = 9
                 elif event.type == self.fight_event.type:
                     self.close_open_fight()
 
@@ -394,6 +399,32 @@ class Game:
                                 self.load_from_saved_game = True
                             wait_for_action = False
                         self.run(was_dead=True)
+
+    def check_victory(self):
+        if self.player.parch == 9:
+            victory = True
+            while victory:
+                self.screen.blit(self.death_bg, (0, 0))
+                self.screen.blit(self.box, (self.X_POS, self.Y_POS - 200))
+                n = self.font.render(self.intro3, False, (0, 0, 0))
+                self.screen.blit(n, (self.X_POS + 50, self.Y_POS - 110))
+                pygame.display.flip()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
+                        dest = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").parent.absolute()
+                        dest = dest.parent.absolute()
+                        shutil.move(str(source), str(dest))
+                        pygame.quit()
+                        return
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_q:
+                            source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
+                            dest = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").parent.absolute()
+                            dest = dest.parent.absolute()
+                            shutil.move(str(source), str(dest))
+                            pygame.quit()
+                            return
 
     # méthodes relatives à l'inventaire ----------------------------------------------------
     def handle_inventory_input(self, pressed):
@@ -669,7 +700,6 @@ class Game:
                     first = self.map_manager.fight.monster
                     second = self.player
                 if acc2 == 0 and status1 and (first.status != "sleep" or first.status != "freeze"):
-                    print("lol")
                     if first == self.player:
                         if player_attack:
                             self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)

@@ -412,7 +412,6 @@
   <object id="45" type="collisions" x="186" y="639.333" width="12.6667" height="13.3333"/>
   <object id="47" name="old_carapils" type="item1" x="689.333" y="720.667" width="14.6667" height="14.6667"/>
   <object id="48" name="null" type="item1" x="480.667" y="160" width="15.3333" height="15.3333"/>
-  <object id="58" name="robe" type="item1" x="256.698" y="734.512" width="14.4022" height="16.0966"/>
   <object id="59" type="collisions" x="559.667" y="28.6667" width="47.6667" height="35.3333"/>
   <object id="60" type="collisions" x="640" y="29.6667" width="48" height="34.6667"/>
   <object id="61" name="w1_d_enter" x="602" y="19" width="47.3333" height="25.6667"/>
@@ -433,9 +432,8 @@
   <object id="71" name="w1_plage_exitP" x="187.333" y="746.667">
    <point/>
   </object>
-  <object id="72" name="télécommande" type="item1" x="166" y="231.333" width="14.6667" height="16"/>
+  <object id="72" name="télécommande" type="item1" x="191.333" y="346" width="14.6667" height="16"/>
   <object id="73" name="sachet" type="item1" x="327.333" y="306.667" width="16" height="20.6667"/>
-  <object id="74" name="monocycle" type="item1" x="520.667" y="452" width="20.6667" height="22.6667"/>
  </objectgroup>
  <objectgroup id="13" name="PNJPaths">
   <object id="31" name="paul_path1" x="97" y="433" width="13.5" height="14"/>

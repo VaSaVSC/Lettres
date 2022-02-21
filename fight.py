@@ -82,7 +82,7 @@ class Fight:
                 source.stats.hp -= n
                 source.stats.ad *= 2
             elif attack == "Non habes":
-                if rd.randint(1, 10) > 8:
+                if rd.randint(1, 10) > 9:
                     target.stats.hp -= target.stats.hp
             elif attack == "Bière trop froide":
                 n = int(np.floor(source.stats.ap / 4 * self.dmg_blocked(target.stats.armor)))
@@ -121,9 +121,25 @@ class Fight:
                 if target.status == "" and rd.randint(0, 10) > 8:
                     if target.status == "":
                         target.status = "poison"
-
             elif attack == "Balayette":
                 n = int(np.floor((source.stats.hp / 5 + source.stats.ad / 5) * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+            elif attack == "Danse sur le podium":
+                n = int(np.floor(( source.stats.ap / 2) * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+            elif attack == "Je t'aime <3":
+                if source.stats.chance > 10:
+                    source.stats.chance -= 10
+                n = int(np.floor((source.stats.ap / 2) * self.dmg_blocked(target.stats.armor)))
+                if n < 1:
+                    n = 1
+                target.stats.hp -= n
+            elif attack == "Lance-caca":
+                n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
@@ -137,8 +153,6 @@ class Fight:
                 target.stats.armor = 1
         elif attack == "Sieste stratégique":
             source.status = ""
-            print(source.stats.hp)
-            print(source.fight_stats.hp)
             source.stats.hp = source.fight_stats.hp
         elif attack == "Pils chaude":
             source.stats.armor += 5
