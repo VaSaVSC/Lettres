@@ -113,3 +113,8 @@ bien des choses.........
 richter:
 Richter;
 Enfin la bonne échelle!
+
+prépuce:
+Petit prépuce;
+Heuuuuuu, pourquoi avoir ça
+sur soi???

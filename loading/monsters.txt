@@ -121,7 +121,7 @@ self.monsters["grosmoche"] = grosmoche
 
 attacks = ["Eyes contact", "Dynamogifle", "OH DJADJA", "Blanc de blanc"]
 jacobs = Monster("jacobs", 1, attacks, "Jacobite")
-jacobs.set_stats(15, 3, 8, 15, 15, 95, 5)
+jacobs.set_stats(15, 8, 8, 15, 15, 95, 5)
 jacobs.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 jacobs.real_stats()
 jacobs.spawn_sentence = "Une Jacobite sauvage apparaît!"

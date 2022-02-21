@@ -38,23 +38,25 @@ class Fight:
             self.player_can_attack = False
 
     def dmg_blocked(self, resistance):
-        return (sqrt(resistance) * 7) / 100
+        # return (sqrt(resistance) * 7) / 5
+        return 0
 
     def use_attack(self, attack, source, target):
+        n = 0
         if rd.randint(1, target.stats.chance) > 1:
             if attack == "Quichon tactique":
-                n = int(np.floor(source.stats.ap / 3 * self.dmg_blocked(target.stats.rm)))
+                n = int(np.floor(source.stats.ap / 3 - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
                 source.stats.hp += (source.fight_stats.hp - source.stats.hp) / 4
             elif attack == "Lancer de gobelet":
-                n = int(np.floor(source.stats.ad / 3 * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ad / 3 - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Jus du Coq":
-                n = int(np.floor(source.stats.ap / 2 * self.dmg_blocked(target.stats.rm)))
+                n = int(np.floor(source.stats.ap / 2 - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
@@ -70,13 +72,13 @@ class Fight:
                     target.status = "sleep"
                     target.sleep = rd.randint(1, 3)
             elif attack == "Bagarre en Carolo":
-                n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ad - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
                 source.stats.hp -= n / 3
             elif attack == "Glissade alcoolisée":
-                n = int(np.floor(source.stats.ad / 4 * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ad / 4 - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 source.stats.hp -= n
@@ -85,7 +87,7 @@ class Fight:
                 if rd.randint(1, 10) > 9:
                     target.stats.hp -= target.stats.hp
             elif attack == "Bière trop froide":
-                n = int(np.floor(source.stats.ap / 4 * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ap / 4 - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
@@ -93,14 +95,14 @@ class Fight:
                     target.status = "freeze"
                     target.sleep = rd.randint(1, 3)
             elif attack == "Dynamogifle":
-                n = int(np.floor(source.stats.ad / 2 * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ad / 2 - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
                 if target.status != "" and rd.randint(1, 10) > 5:
                     target.status = "burn"
             elif attack == "Patate de forain":
-                n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ad - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
@@ -109,12 +111,12 @@ class Fight:
                     target.status = "sleep"
                     target.sleep = rd.randint(1, 3)
             elif attack == "OH DJADJA":
-                n = int(np.floor(source.stats.ap * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ap - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Blanc de blanc":
-                n = int(np.floor(source.stats.ap / 4 * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ap / 4 - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
@@ -122,24 +124,24 @@ class Fight:
                     if target.status == "":
                         target.status = "poison"
             elif attack == "Balayette":
-                n = int(np.floor((source.stats.hp / 5 + source.stats.ad / 5) * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor((source.stats.hp / 5 + source.stats.ad / 5) - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Danse sur le podium":
-                n = int(np.floor(( source.stats.ap / 2) * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(( source.stats.ap / 2) - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Je t'aime <3":
                 if source.stats.chance > 10:
                     source.stats.chance -= 10
-                n = int(np.floor((source.stats.ap / 2) * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor((source.stats.ap / 2) - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Lance-caca":
-                n = int(np.floor(source.stats.ad * self.dmg_blocked(target.stats.armor)))
+                n = int(np.floor(source.stats.ad - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
@@ -178,3 +180,4 @@ class Fight:
         elif attack == "Estafette":
             source.stats.hp += 10
             source.stats.ad += 5
+        print(n)

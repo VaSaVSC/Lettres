@@ -296,7 +296,7 @@ class MapManager:
                         self.player.quent_ok = 2
                         self.player.parch += 1
                 elif sprite.name == "quentin":
-                    self.player.quent_ok == 1
+                    self.player.quent_ok = 1
             if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False

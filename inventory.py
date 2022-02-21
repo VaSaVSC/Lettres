@@ -58,6 +58,7 @@ def use_item(item, player, inventory):
         return 0
     if item.name == "pizza":
         inventory.remove_item(item)
+        player.stats.hp = player.fight_stats.hp
         return 1
     if item.name == "null":
         return 1
