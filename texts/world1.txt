@@ -12,9 +12,6 @@ Vous avez trouvez du vide !
 claude0:
 Jui tout plein :§
 
-robe:
-Vous trouvez une robe !
-
 télécommande:
 Waw une télécomande !
 

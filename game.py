@@ -260,7 +260,7 @@ class Game:
             data.write("self.player.d_ok = " + str(self.player.d_ok) + "\n")
             data.write("self.player.darkgob_ok = " + str(self.player.darkgob_ok) + "\n")
             data.write("self.player.zoz_ok = " + str(self.player.zoz_ok) + "\n")
-
+            data.write("self.player.quent_ok = " + str(self.player.quent_ok) + "\n")
 
         with open("loading/save_inventory.txt", 'wt') as data:
             acc = 0

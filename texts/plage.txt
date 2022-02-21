@@ -1,2 +1,8 @@
 papier:
 Pas d'échelle :§
+
+zelie0:
+Rend mon argent!
+
+robe:
+Vous trouvez une robe !

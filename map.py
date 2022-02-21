@@ -137,12 +137,15 @@ class MapManager:
         self.register_map("plage", portals=[
             Portal(origin='plage', origin_point="plage_w1_exit",
                    dest="world1", dest_point="w1_plage_exitP")
-        ], level=1)
+        ],  pnjs=[
+            PNJ("zelie", nb_points=1, speed=0)
+        ],
+            level=1)
 
         self.register_map("bar", portals=[
             Portal(origin='bar', origin_point="bar_i_exit",
                    dest="ice_world", dest_point="i_bar_exitP")
-        ], pnjs=[
+        ],  pnjs=[
             PNJ("raph", nb_points=1, speed=0),
             PNJ("thib", nb_points=1, speed=0)
         ], default_layer=2)
@@ -150,7 +153,9 @@ class MapManager:
         self.register_map("ice_beach", portals=[
             Portal(origin="ice_beach", origin_point="des_ib_exit",
                    dest="desert", dest_point="des_ib_exitP")
-        ], level=2, default_layer=2)
+        ],  pnjs=[
+            PNJ("quentin", nb_points=1, speed=1)
+        ],level=2, default_layer=2)
 
         self.tp_pnjs()
 
@@ -285,6 +290,13 @@ class MapManager:
                             self.inventory.remove_item(i)
                     sprite.dialog = self.get_map().texts[sprite.name + sprite.mode]
                     self.player.parch += 1
+                elif sprite.name == "zelie":
+                    self.player.gold -= 10
+                    if self.player.quent_ok == 1:
+                        self.player.quent_ok = 2
+                        self.player.parch += 1
+                elif sprite.name == "quentin":
+                    self.player.quent_ok == 1
             if type(sprite) == Item and sprite.can_be_carried:
                 dialog_box.execute(sprite.name, True, sprite.dialog)
                 sprite.should_appear = False
