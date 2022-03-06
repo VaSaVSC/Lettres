@@ -125,7 +125,7 @@ class MapManager:
                    dest="bar", dest_point="bar_i_enterP")
         ], pnjs=[
             PNJ("frans", nb_points=1, speed=0)
-        ], level=3, default_layer=3)
+        ], level=3, default_layer=4)
 
         self.register_map("paki", portals=[
             Portal(origin='paki', origin_point="paki_w1_exit",
@@ -155,7 +155,7 @@ class MapManager:
                    dest="desert", dest_point="des_ib_exitP")
         ],  pnjs=[
             PNJ("quentin", nb_points=1, speed=1)
-        ],level=2, default_layer=2)
+        ],level=2, default_layer=4)
 
         self.tp_pnjs()
 

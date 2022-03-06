@@ -186,8 +186,8 @@ class Game:
                     elif event.key == pygame.K_z or event.key == pygame.K_s or \
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
-                    elif event.key == pygame.K_l:
-                        self.player.parch = 9
+                    #elif event.key == pygame.K_l:
+                        #self.player.parch = 9
                 elif event.type == self.fight_event.type:
                     self.close_open_fight()
 
@@ -515,7 +515,7 @@ class Game:
             self.screen.blit(n, (85, 60))
             n = self.font.render("1   Pastis                               10$", False, (0, 0, 0))
             self.screen.blit(n, (85, 185))
-            n = self.font.render("2   Potion                              13$", False, (0, 0, 0))
+            n = self.font.render("2   Canne à pêche               50$", False, (0, 0, 0))
             self.screen.blit(n, (85, 305))
             n = self.font.render("3   Vieille Cara                     13$", False, (0, 0, 0))
             self.screen.blit(n, (85, 425))
@@ -552,9 +552,9 @@ class Game:
                 self.player.gold -= 10
 
             if pressed == pygame.K_2 and self.player.gold >= 13:
-                pastis = Item("potion", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                pastis = Item("canne", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
                 self.inventory.add_item(pastis)
-                self.player.gold -= 13
+                self.player.gold -= 50
 
             if pressed == pygame.K_3 and self.player.gold >= 13:
                 pastis = Item("old_carapils", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
@@ -852,13 +852,13 @@ class Game:
                         self.player.xp_needed()
                     if self.map_manager.fight.monster.name == "d" and self.player.d_ok == 0:
                         self.player.d_ok = 1
-                        self.parch += 1
+                        self.player.parch += 1
                     elif self.map_manager.fight.monster.name == "darkgob" and self.player.darkgob_ok == 0:
                         self.player.darkgob_ok = 1
-                        self.parch += 1
+                        self.player.parch += 1
                     elif self.map_manager.fight.monster.name == "zoz" and self.player.zoz_ok == 0:
                         self.player.zoz_ok = 1
-                        self.parch += 1
+                        self.player.parch += 1
                 self.close_open_fight()
 
     def close_open_fight(self):

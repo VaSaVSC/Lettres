@@ -94,6 +94,10 @@ parch:
 Parchemin;
 Ajoute-le à ta collection.
 
+canne:
+Canne à pêche;
+Objet super utile
+
 terreriche:
 Terre riche;
 Une échelle au nom ambigu.
