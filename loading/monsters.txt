@@ -9,7 +9,7 @@ colin.win_sentence = "Vous avez vaincu le Phacolin!"
 self.monsters["colin"] = colin
 
 
-attacks = ["Blanc de blanc", "Eyes contact", "Sieste startégique", "Lancer de gobelet"]
+attacks = ["Blanc de blanc", "Eyes contact", "Sieste stratégique", "Lancer de gobelet"]
 vigne = Monster("vigne", 1, attacks, "La Vigne")
 vigne.set_stats(15, 5, 3, 10, 5, 95, 5)
 vigne.set_stats_g(15, 3, 2, 15, 15, 5, 3)
@@ -29,13 +29,13 @@ jouff.loose_sentence = "Le type était trop frais pour vous!"
 jouff.win_sentence = "Vous avez vaincu le type frais!"
 self.monsters["jouff"] = jouff
 
-attacks = ["Balayette", "Sieste startégique", "Pils chaude", "Billet de 10 par terre"]
-baba = Monster("baba", 1, attacks, "Baba l'ourson")
+attacks = ["Balayette", "Sieste stratégique", "Pils chaude", "Billet de 10 par terre"]
+baba = Monster("baba", 1, attacks, "Baba l'Ourson")
 baba.set_stats(20, 3, 0, 15, 15, 95, 3)
 baba.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 baba.real_stats()
-baba.spawn_sentence = "Baba l'ourson apparaît"
-baba.loose_sentence = "Baba vous lance du miel"
+baba.spawn_sentence = "Baba l'Ourson apparaît!"
+baba.loose_sentence = "Vous vous êtes empêtré dans le miel de Baba!"
 baba.win_sentence = "Vous avez vaincu Baba!"
 self.monsters["baba"] = baba
 
@@ -55,7 +55,7 @@ blabla.set_stats(12, 8, 0, 10, 10, 95, 5)
 blabla.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 blabla.real_stats()
 blabla.spawn_sentence = "Un Blabla-Blabla sauvage apparaît!"
-blabla.loose_sentence = "Le Blabla-Blabla vous à mangé!"
+blabla.loose_sentence = "Le Blabla-Blabla vous a bien graillé!"
 blabla.win_sentence = "Vous avez vaincu le Blabla-Blabla!"
 self.monsters["blabla"] = blabla
 
@@ -75,7 +75,7 @@ darkgob.set_stats(50, 0, 0, 30, 30, 95, 5)
 darkgob.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 darkgob.real_stats()
 darkgob.spawn_sentence = "Un Darkgob sauvage apparaît!"
-darkgob.loose_sentence = "Le Darkgob vous à darké!"
+darkgob.loose_sentence = "Le Darkgob vous a bien Non habes la gueule!"
 darkgob.win_sentence = "Vous avez vaincu le Darkgob!"
 self.monsters["darkgob"] = darkgob
 
@@ -85,7 +85,7 @@ d.set_stats(30, 3, 40, 15, 15, 95, 20)
 d.set_stats_g(15, 3, 2, 15, 15, 5, 0)
 d.real_stats()
 d.spawn_sentence = "Une Dèdèle sauvage apparaît!"
-d.loose_sentence = "Le Dèdèle vous à dèdèlé!"
+d.loose_sentence = "Le Dèdèle vous a dèdèlé (hein?)!"
 d.win_sentence = "Vous avez vaincu le Dèdèle!"
 self.monsters["d"] = d
 
@@ -95,7 +95,7 @@ elisa.set_stats(30, 20, 0, 15, 15, 95, 8)
 elisa.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 elisa.real_stats()
 elisa.spawn_sentence = "Une Vieille sauvage apparaît!"
-elisa.loose_sentence = "La Vieille vous à mangé!"
+elisa.loose_sentence = "La Vieille vous a mangé tout cru!"
 elisa.win_sentence = "Vous avez vaincu la Vieille!"
 self.monsters["elisa"] = elisa
 
@@ -115,7 +115,7 @@ grosmoche.set_stats(15, 3, 0, 15, 15, 95, 5)
 grosmoche.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 grosmoche.real_stats()
 grosmoche.spawn_sentence = "Un Grosmoche sauvage apparaît!"
-grosmoche.loose_sentence = "Le Grosmoche vous a bolossé!"
+grosmoche.loose_sentence = "Le Grosmoche vous a bolossé (vous êtes vraiment nul par contre)!"
 grosmoche.win_sentence = "Vous avez vaincu le Grosmoche!"
 self.monsters["grosmoche"] = grosmoche
 
@@ -130,13 +130,13 @@ jacobs.win_sentence = "Vous avez vaincu la Jacobite!"
 self.monsters["jacobs"] = jacobs
 
 attacks = ["Danse sur le podium", "Eyes contact", "OH DJADJA", "Blanc de blanc"]
-jul = Monster("jul", 2, attacks, "Juligne")
+jul = Monster("jul", 2, attacks, "Julignes")
 jul.set_stats(25, 3, 20, 15, 15, 95, 15)
 jul.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 jul.real_stats()
-jul.spawn_sentence = "Une Juligne sauvage apparaît!"
-jul.loose_sentence = "La Juligne vous a bolossé!"
-jul.win_sentence = "Vous avez vaincu la Juligne!"
+jul.spawn_sentence = "Une Julignes sauvage apparaît!"
+jul.loose_sentence = "La Julignes vous a astucieusement battu!"
+jul.win_sentence = "Vous avez vaincu la Julignes!"
 self.monsters["jul"] = jul
 
 attacks = ["Je t'aime <3", "Je t'aime <3", "Je t'aime <3", "Je t'aime <3"]
@@ -145,17 +145,17 @@ loris.set_stats(29, 29, 29, 15, 15, 95, 35)
 loris.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 loris.real_stats()
 loris.spawn_sentence = "Un LorisJTM sauvage apparaît!"
-loris.loose_sentence = "Le LorisJTM vous a bolossé!"
+loris.loose_sentence = "Le LorisJTM vous a aimé un peu trop!"
 loris.win_sentence = "Vous avez vaincu le LorisJTM!"
 self.monsters["loris"] = loris
 
 attacks = ["Chante faux", "Chante faux", "Chante faux", "Chante faux"]
 math = Monster("mathflam", 3, attacks, "Mathflam")
-math.set_stats(80, 3, 0, 25, 25, 95, 5)
+math.set_stats(80, 3, 20, 25, 25, 95, 5)
 math.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 math.real_stats()
 math.spawn_sentence = "Une Mathflam sauvage apparaît!"
-math.loose_sentence = "La Mathflam vous a bolossé!"
+math.loose_sentence = "La Mathflam vous a démoli les oreilles :( !"
 math.win_sentence = "Vous avez vaincu le Mathflam!"
 self.monsters["math"] = math
 
@@ -175,13 +175,13 @@ melu.set_stats(25, 9, 9, 30, 30, 95, 5)
 melu.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 melu.real_stats()
 melu.spawn_sentence = "Une Mélustucru sauvage apparaît!"
-melu.loose_sentence = "La Mélustucru vous a bolossé!"
+melu.loose_sentence = "La Mélustucru était trop mimi pour vous!"
 melu.win_sentence = "Vous avez vaincu le Mélustucru!"
 self.monsters["melu"] = melu
 
 attacks = ["Billet de 10 par terre", "Billet de 10 par terre", "Billet de 10 par terre", "Billet de 10 par terre"]
 nizet = Monster("nizet", 1, attacks, "Dégarnizet")
-nizet.set_stats(50, 5, 0, 10, 15, 95, 5)
+nizet.set_stats(75, 5, 0, 10, 15, 95, 5)
 nizet.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 nizet.real_stats()
 nizet.spawn_sentence = "Un Dégarnizet sauvage apparaît!"
@@ -195,7 +195,7 @@ playmobile.set_stats(30, 3, 0, 5, 5, 95, 5)
 playmobile.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 playmobile.real_stats()
 playmobile.spawn_sentence = "Un Playmobile fromager sauvage apparaît!"
-playmobile.loose_sentence = "Le Playmobile fromager vous a bolossé!"
+playmobile.loose_sentence = "Le Playmobile fromager vous a induit une intolérance au lactose!"
 playmobile.win_sentence = "Vous avez vaincu le Playmobile fromager!"
 self.monsters["playmobile"] = playmobile
 
@@ -205,7 +205,7 @@ pringle.set_stats(27, 16, 16, 15, 15, 95, 5)
 pringle.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 pringle.real_stats()
 pringle.spawn_sentence = "Un Pring's gle sauvage apparaît!"
-pringle.loose_sentence = "Le Pring's gle fromager vous a bolossé!"
+pringle.loose_sentence = "Le Pring's gle vous a bolossé!"
 pringle.win_sentence = "Vous avez vaincu le Pring's gle!"
 self.monsters["pringle"] = pringle
 
@@ -215,7 +215,7 @@ taco.set_stats(35, 3, 30, 15, 15, 95, 5)
 taco.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 taco.real_stats()
 taco.spawn_sentence = "Un Amateur2Bières sauvage apparaît!"
-taco.loose_sentence = "Le Amateur2Bières vous a bolossé!"
+taco.loose_sentence = "L'Amateur2Bières a bu bien plus que vous!"
 taco.win_sentence = "Vous avez vaincu le Amateur2Bières!"
 self.monsters["taco"] = taco
 
@@ -225,7 +225,7 @@ zoz.set_stats(50, 30, 0, 15, 15, 95, 5)
 zoz.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 zoz.real_stats()
 zoz.spawn_sentence = "Une Zoz sauvage apparaît!"
-zoz.loose_sentence = "La Zoz vous a bolossé!"
+zoz.loose_sentence = "La Zoz vous a atomisé!"
 zoz.win_sentence = "Vous avez vaincu le Zoz!"
 self.monsters["zoz"] = zoz
 
@@ -235,6 +235,6 @@ flo.set_stats(35, 3, 30, 15, 15, 95, 5)
 flo.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 flo.real_stats()
 flo.spawn_sentence = "Un Flossil sauvage apparaît!"
-flo.loose_sentence = "Le Flossil vous a mangé!"
+flo.loose_sentence = "Le Flossil vous a renvoyé 100M d'année dans le passé!"
 flo.win_sentence = "Vous avez vaincu le Flossil!"
 self.monsters["flo"] = flo

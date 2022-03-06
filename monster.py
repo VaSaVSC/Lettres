@@ -41,6 +41,7 @@ class Monster:
         self.stats = None
         self.stats_g = None
         self.fight_stats = None
+        self.base_stats = None
         self.status = ""
         self.level = level
         self.level_range = self.monster_level_range(level)
@@ -55,12 +56,12 @@ class Monster:
 
     def set_stats(self, hp, ad, ap, armor, rm, chance, speed):
         self.stats = Stats(hp, ad, ap, armor, rm, chance, speed)
-        self.fight_stats = deepcopy(self.stats)
 
     def set_stats_g(self, hp, ad, ap, armor, rm, chance, speed):
         self.stats_g = StatsGrowth(hp, ad, ap, armor, rm, chance, speed)
 
     def real_stats(self):
+        self.base_stats = deepcopy(self.stats)
         self.set_stats(self.stats.hp + random_factor(self.stats_g.hp_growth * (self.level-1)),
                        self.stats.ad + random_factor(self.stats_g.ad_growth * (self.level-1)),
                        self.stats.ap + random_factor(self.stats_g.ap_growth * (self.level-1)),
@@ -68,9 +69,10 @@ class Monster:
                        self.stats.rm + random_factor(self.stats_g.rm_growth * (self.level-1)),
                        self.stats.chance - random_factor(self.stats_g.chance_growth * (self.level-1)),
                        self.stats.speed + random_factor(self.stats_g.speed_growth * (self.level-1)))
+        self.fight_stats = deepcopy(self.stats)
 
     def base_stats_(self):
-        self.stats = deepcopy(self.fight_stats)
+        self.stats = deepcopy(self.base_stats)
         self.status = ""
 
     def monster_level_range(self, level):

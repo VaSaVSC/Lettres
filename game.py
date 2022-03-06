@@ -5,7 +5,7 @@ import shutil
 import pathlib
 
 from animation import AnimateSprite
-from fight import poisoned, burned
+from fight import poisoned, burned, paralyzed
 from dialog import DialogBox
 from inventory import Inventory, use_item, Item
 from map import MapManager
@@ -415,18 +415,10 @@ class Game:
                 pygame.display.flip()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
-                        """source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
-                        dest = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").parent.absolute()
-                        dest = dest.parent.absolute()
-                        shutil.move(str(source), str(dest))"""
                         pygame.quit()
                         return
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_q:
-                            """source = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").absolute()
-                            dest = pathlib.Path("Lettre_de_motivation___Calotte_S_Clesse.pdf").parent.absolute()
-                            dest = dest.parent.absolute()
-                            shutil.move(str(source), str(dest))"""
                             pygame.quit()
                             return
 
@@ -662,7 +654,7 @@ class Game:
                     color_status_monster = (255, 255, 0)
             else:
                 color_status_monster = (0, 0, 0)
-            n = self.font_fight.render("Gobzer    HP: " + str(self.player.stats.hp) + "    LVL: " +
+            n = self.font_fight.render("Gobzer    HP: " + str(int(self.player.stats.hp)) + "    LVL: " +
                                        str(self.player.level), False, color_status_player)
             self.screen.blit(n, (460, 515))
             n = self.font_fight.render(self.map_manager.fight.monster.refact_name + "    HP: " +
@@ -703,7 +695,7 @@ class Game:
                 else:
                     first = self.map_manager.fight.monster
                     second = self.player
-                if acc2 == 0 and status1 and (first.status != "sleep" or first.status != "freeze"):
+                if acc2 == 0 and status1 and (first.status != "sleep" or first.status != "freeze" or paralyzed(first)):
                     if first == self.player:
                         if player_attack:
                             self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
@@ -721,7 +713,8 @@ class Game:
                                                     self.map_manager.fight.monster.attack_chosen + ".", False,
                                                     (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
-                if pygame.time.get_ticks() - t0 > 2000 and not attack and status1 and (second.status != "sleep" or second.status != "freeze"):
+                if pygame.time.get_ticks() - t0 > 2000 and not attack and\
+                        status1 and (second.status != "sleep" or second.status != "freeze" or paralyzed(second)):
                     if first == self.player:
                         self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, second, first)
                     else:
@@ -834,8 +827,6 @@ class Game:
                             status2 = True
                             self.map_manager.fight.monster.choose_attack()
             if self.player.stats.hp <= 0 or self.map_manager.fight.monster.stats.hp <= 0:
-                self.player.base_stats_()
-                self.map_manager.fight.monster.base_stats_()
                 if self.player.stats.hp <= 0:
                     self.player.life -= 1
                 else:
@@ -848,6 +839,7 @@ class Game:
                         self.player.gold += self.map_manager.fight.monster.level * 2 + n
                     if self.player.xp >= self.player.xp_needed_to_level_up:
                         self.player.level += 1
+                        self.player.base_stats_()
                         self.player.set_stats()
                         self.player.xp_needed()
                     if self.map_manager.fight.monster.name == "d" and self.player.d_ok == 0:
@@ -859,6 +851,8 @@ class Game:
                     elif self.map_manager.fight.monster.name == "zoz" and self.player.zoz_ok == 0:
                         self.player.zoz_ok = 1
                         self.player.parch += 1
+                self.player.base_stats_()
+                self.map_manager.fight.monster.base_stats_()
                 self.close_open_fight()
 
     def close_open_fight(self):

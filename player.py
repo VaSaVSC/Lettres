@@ -67,7 +67,7 @@ class Player(Entity):
         self.attacks = ["Une bonne Trappiste", "Sieste stratégique", "Lancer de gobelet", "Jus du Coq"]
         self.xp = 0
         self.level = 1
-        self.xp_needed_to_level_up = 100
+        self.xp_needed_to_level_up = 50
         self.status = ""
         self.fight_image = pygame.image.load("./fight_sprites/gob.png")
         self.fight_image = pygame.transform.scale(self.fight_image, (350, 350))
@@ -93,6 +93,7 @@ class Player(Entity):
         if self.stats.chance < 2:
             self.stats.chance = 2
         self.stats.speed += 10
+        self.fight_stats = deepcopy(self.stats)
 
     def fight_event(self):
         pygame.event.post(self.event)
@@ -102,7 +103,8 @@ class Player(Entity):
         self.status = ""
 
     def xp_needed(self):
-        self.xp_needed_to_level_up += 50
+        self.xp = 0
+        self.xp_needed_to_level_up = 50 * self.level
 
     def mono_switch(self):
         self.sprite_sheet = pygame.image.load(f"./sprites/{self.name}{self.mode}.png")

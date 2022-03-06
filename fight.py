@@ -23,6 +23,13 @@ def burned(target):
     return False
 
 
+def paralyzed(target):
+    if target.status == "paralyzed":
+        if rd.randint(1, 10) > 7:
+            return False
+    return True
+
+
 class Fight:
 
     def __init__(self, player, monster):
@@ -101,6 +108,7 @@ class Fight:
                 target.stats.hp -= n
                 if target.status != "" and rd.randint(1, 10) > 5:
                     target.status = "burn"
+                    target.stats.ad -= target.stats.ad/4
             elif attack == "Patate de forain":
                 n = int(np.floor(source.stats.ad - self.dmg_blocked(target.stats.armor)))
                 if n < 1:
@@ -129,7 +137,7 @@ class Fight:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Danse sur le podium":
-                n = int(np.floor(( source.stats.ap / 2) - self.dmg_blocked(target.stats.rm)))
+                n = int(np.floor((source.stats.ap / 2) - self.dmg_blocked(target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
@@ -150,10 +158,16 @@ class Fight:
                 target.stats.ad = 1
             else:
                 target.stats.ad -= 10
-            target.stats.armor -= 5
-            if target.stats.armor <= 0:
-                target.stats.armor = 1
+            target.stats.rm -= 5
+            if target.stats.rm <= 0:
+                target.stats.rm = 1
+            n = int(np.floor((source.stats.ap / 5) - self.dmg_blocked(target.stats.rm)))
+            if n < 1:
+                n = 1
+            target.stats.hp -= n
         elif attack == "Sieste stratégique":
+            if source.status == "paralyzed":
+                source.stats.speed *= 2
             source.status = ""
             source.stats.hp = source.fight_stats.hp
         elif attack == "Pils chaude":

@@ -366,14 +366,13 @@ class MapManager:
             monster.real_stats()
             self.player.fight_stats = deepcopy(self.player.stats)
             self.fight = Fight(self.player, monster)
-            self.player.fight_event()
         else:
             monster = self.monsters[monster_t]
             #monster.level = self.get_map().level
             monster.real_stats()
             self.player.fight_stats = deepcopy(self.player.stats)
             self.fight = Fight(self.player, monster)
-            self.player.fight_event()
+        self.player.fight_event()
 
 
     def tp_player(self, name="player", from_save=False):
