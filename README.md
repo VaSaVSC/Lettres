@@ -34,6 +34,8 @@ des objets sont souvent cachés derrière des maison
 un diamant est caché derrière un arbre
 certain objet du magasin sont inutiles
 l'échelle de richter se trouve derrière l'arbre le plus à droite de la deuxième ligne en partant du fond
+longez les murs dans le donjon pour éviter les monstres
+il y a 3 boss facilement battable au niveau 3
 
 bug:
 problème XP -> juste chager la limite pour les passages niveaux
