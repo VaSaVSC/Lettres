@@ -219,7 +219,7 @@ taco.loose_sentence = "L'Amateur2Bières a bu bien plus que vous!"
 taco.win_sentence = "Vous avez vaincu le Amateur2Bières!"
 self.monsters["taco"] = taco
 
-attacks = ["Jus du Coq", "Eyes contact", "Balayette", "Jus du Coq"]
+attacks = ["Jus du Coq", "Eyes contact", "Lance-caca", "Une bonne Trappiste"]
 zoz = Monster("zoz", 4, attacks, "Zoz")
 zoz.set_stats(50, 30, 0, 15, 15, 95, 5)
 zoz.set_stats_g(15, 3, 2, 15, 15, 5, 3)

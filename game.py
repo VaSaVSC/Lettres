@@ -680,11 +680,11 @@ class Game:
             elif self.map_manager.fight.fight_index == 3:
                 self.screen.blit(self.atk_bg, (150, 150))
                 acc1 = 0
-                for item in self.inventory.items:
+                """for item in self.inventory.items:
                     if item.fight_item:
                         n = self.font_fight2.render(item.refact_name + "     " + str(item.number), False, (0, 0, 0))
                         self.screen.blit(n, (170, 170 + acc1))
-                        acc1 += 50
+                        acc1 += 50"""
                 n = self.font_fight2.render("B = retour", False, (0, 0, 0))
                 self.screen.blit(n, (170, 600))
             elif self.map_manager.fight.fight_index == 4:
@@ -695,7 +695,7 @@ class Game:
                 else:
                     first = self.map_manager.fight.monster
                     second = self.player
-                if acc2 == 0 and status1 and (first.status != "sleep" or first.status != "freeze" or paralyzed(first)):
+                if acc2 == 0 and status1 and first.status != "sleep" and first.status != "freeze" and paralyzed(first):
                     if first == self.player:
                         if player_attack:
                             self.map_manager.fight.use_attack(self.player.attacks[atk_index], first, second)
@@ -714,7 +714,7 @@ class Game:
                                                     (0, 0, 0))
                         self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 2000 and not attack and\
-                        status1 and (second.status != "sleep" or second.status != "freeze" or paralyzed(second)):
+                        status1 and second.status != "sleep" and second.status != "freeze" and paralyzed(second):
                     if first == self.player:
                         self.map_manager.fight.use_attack(self.map_manager.fight.monster.attack_chosen, second, first)
                     else:

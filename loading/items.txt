@@ -96,7 +96,7 @@ Ajoute-le à ta collection.
 
 canne:
 Canne à pêche;
-Objet super utile
+Un objet super utile!
 
 terreriche:
 Terre riche;
