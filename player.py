@@ -90,8 +90,8 @@ class Player(Entity):
         self.stats.armor += 12
         self.stats.rm += 12
         self.stats.chance -= 10
-        if self.stats.chance < 2:
-            self.stats.chance = 2
+        if self.stats.chance < 10:
+            self.stats.chance = 10
         self.stats.speed += 10
         self.fight_stats = deepcopy(self.stats)
 

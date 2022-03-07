@@ -109,9 +109,9 @@ gang2bg.loose_sentence = "Le Gang2bg vous a bolossé!"
 gang2bg.win_sentence = "Vous avez vaincu le Gang2bg!"
 self.monsters["gang2bg"] = gang2bg
 
-attacks = ["Eyes contact", "Quichon tactique", "Jus du Coq", "Billet de 10 par terre"]
+attacks = ["Danse sur le podium", "Quichon tactique", "Jus du Coq", "Billet de 10 par terre"]
 grosmoche = Monster("grosmoche", 3, attacks, "Grosmoche")
-grosmoche.set_stats(15, 3, 0, 15, 15, 95, 5)
+grosmoche.set_stats(30, 20, 20, 15, 15, 95, 5)
 grosmoche.set_stats_g(15, 3, 2, 15, 15, 5, 3)
 grosmoche.real_stats()
 grosmoche.spawn_sentence = "Un Grosmoche sauvage apparaît!"

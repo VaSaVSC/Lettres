@@ -50,7 +50,7 @@ class Fight:
 
     def use_attack(self, attack, source, target):
         n = 0
-        if rd.randint(1, target.stats.chance) > 1:
+        if rd.randint(1, target.stats.chance) > 8:
             if attack == "Quichon tactique":
                 # n = int(np.floor(source.stats.ap / 3 * self.dmg_blocked(target.stats.rm)))
                 n = int(np.floor(self.dmg_blocked(source.stats.ap / 3, target.stats.rm)))
@@ -154,7 +154,7 @@ class Fight:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Je t'aime <3":
-                if source.stats.chance > 10:
+                if source.stats.chance > 19:
                     source.stats.chance -= 10
                 # n = int(np.floor((source.stats.ap / 2) - self.dmg_blocked(target.stats.rm)))
                 n = int(np.floor(self.dmg_blocked(source.stats.ap / 2, target.stats.rm)))
@@ -199,13 +199,13 @@ class Fight:
             source.stats.ap += 3
             source.stats.ad += 3
         elif attack == "Billet de 10 par terre":
-            if source.stats.chance > 6:
+            if source.stats.chance > 14:
                 source.stats.chance -= 5
         elif attack == "Sol trop humide":
-            target.stats.speed -= 3
+            target.stats.speed -= 5
         elif attack == "Bibitive":
             source.stats.speed += 5
-            if source.stats.chance > 3:
+            if source.stats.chance > 11:
                 source.stats.chance -= 2
         elif attack == "Estafette":
             source.stats.hp += 10
