@@ -5,6 +5,11 @@ Développement](https://www.youtube.com/c/Gravenilvectuto/videos)  for the tutor
 ([1](https://www.youtube.com/watch?v=ooITOxbYVTo) and [2](https://www.youtube.com/watch?v=clcmhmpyYSc&t=3162s))
 which help us a lot to start this game :)
 
+> ### Installation
+Soit vous avez git, dans ce cas un petit ***git clone***, autrement faudra télécharger le ***.zip***, puis faudra sans 
+doute utiliser ***pip install pygame***,
+***pip install pytmx*** et ***pip install pyscroll*** qui sont des packages pas présents par défaut (je crois). Après,
+un simple ***python main.py*** et le jeu se lancera :) 
 
 > ### Commandes
 - Déplacement: flèches directionnelles ou ZQSD (ZQSD est préférable au vu des autres touches).

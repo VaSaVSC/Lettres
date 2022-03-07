@@ -187,8 +187,6 @@ class Game:
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
                     #cheat code
-                    elif event.key == pygame.K_COMMA:
-                        self.player.parch = 9
                     elif event.key == pygame.K_DOLLAR and self.player.gold < 989:
                         self.player.gold += 10
                     elif event.key == pygame.K_TAB and self.player.xp < 989:

@@ -87,7 +87,7 @@ Pour aller plus vite.
 
 diamant:
 Diamant;
-Waw un diamant ça vaut
+Waw un diamant ca vaut
 500$
 
 parch:
@@ -120,5 +120,5 @@ Enfin la bonne echelle!
 
 prepuce:
 Petit prepuce;
-Heuuuuuu, pourquoi avoir ça
+Heuuuuuu, pourquoi avoir ca
 sur soi???
