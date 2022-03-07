@@ -88,7 +88,7 @@ class Fight:
                     n = 1
                 target.stats.hp -= n
                 source.stats.hp -= n / 3
-            elif attack == "Glissade alcoolisée":
+            elif attack == "Glissade alcoolisee":
                 # n = int(np.floor(source.stats.ad / 4 - self.dmg_blocked(target.stats.armor)))
                 n = int(np.floor(self.dmg_blocked(source.stats.ad / 4, target.stats.armor)))
                 if n < 1:
@@ -98,7 +98,7 @@ class Fight:
             elif attack == "Non habes":
                 if rd.randint(1, 10) > 9:
                     target.stats.hp -= target.stats.hp
-            elif attack == "Bière trop froide":
+            elif attack == "Biere trop froide":
                 # n = int(np.floor(source.stats.ap / 4 - self.dmg_blocked(target.stats.rm)))
                 n = int(np.floor(self.dmg_blocked(source.stats.ap / 4, target.stats.rm)))
                 if n < 1:
@@ -122,7 +122,7 @@ class Fight:
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
-            elif attack == "Coma éthylique":
+            elif attack == "Coma ethylique":
                 if target.status == "":
                     target.status = "sleep"
                     target.sleep = rd.randint(1, 3)
@@ -180,7 +180,7 @@ class Fight:
             if n < 1:
                 n = 1
             target.stats.hp -= n
-        elif attack == "Sieste stratégique":
+        elif attack == "Sieste strategique":
             if source.status == "paralyzed":
                 source.stats.speed *= 2
             source.status = "sleep"
@@ -189,7 +189,7 @@ class Fight:
         elif attack == "Pils chaude":
             source.stats.armor += 5
             source.stats.rm += 5
-        elif attack == "Spéciale tempérée":
+        elif attack == "Speciale temperee":
             source.stats.armor += 7
             source.stats.rm += 7
             source.stats.ap += 3

@@ -64,7 +64,7 @@ class Player(Entity):
         self.stats = Stats(20, 20, 20, 3, 2, 99, 6)
         self.fight_stats = Stats(20, 10, 0, 3, 2, 99, 6)
         self.base_stats = Stats(10, 5, 0, 3, 2, 99, 6)
-        self.attacks = ["Une bonne Trappiste", "Sieste stratégique", "Lancer de gobelet", "Jus du Coq"]
+        self.attacks = ["Une bonne Trappiste", "Sieste strategique", "Lancer de gobelet", "Jus du Coq"]
         self.xp = 0
         self.level = 1
         self.xp_needed_to_level_up = 50
@@ -128,7 +128,7 @@ class Player(Entity):
 
 def refactor(name):
     if name == "d":
-        return "Dèdèle"
+        return "Dedele"
     name = name[0].upper() + name[1:]
     return name
 

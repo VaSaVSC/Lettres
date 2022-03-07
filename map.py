@@ -228,13 +228,13 @@ class MapManager:
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
             if check_type(obj.type):
                 interactive_obj.append(Obj(obj.name, obj.type, texts[obj.name], obj.x, obj.y, obj.width, obj.height))
-            # items directement présents sur la carte
+            # items directement presents sur la carte
             if obj.type == "item1" or obj.type == "coffre":
                 items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
-            # items qui apparaîtront suite à la complétion d'une quête
+            # items qui apparaîtront suite a la completion d'une quête
             if obj.type == "item2":
                 items.append(Item(obj.name, False, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
-            # items utilisables en combat, et directement présents sur la carte
+            # items utilisables en combat, et directement presents sur la carte
             if obj.type == "item3":
                 items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
 

@@ -33,12 +33,12 @@ class Game:
         self.box = pygame.transform.scale(self.box, (750, 200))
 
         self.intro1 = "N = nouvelle partie"
-        self.intro2 = "S = charger le jeu depuis la dernière sauvegarde"
+        self.intro2 = "S = charger le jeu depuis la derniere sauvegarde"
         self.intro3 = "Q = quitter le jeu"
 
         self.load_from_saved_game = False
 
-        # générer le joueur
+        # generer le joueur
         self.fight_event = pygame.event.Event(pygame.USEREVENT)
         self.player = None
 
@@ -50,7 +50,7 @@ class Game:
 
         self.man_inventory1 = "E = quitter l'inventaire"
         self.man_inventory2 = "A = utiliser item"
-        self.man_inventory3 = "Z/S = item précédent/suivant"
+        self.man_inventory3 = "Z/S = item precedent/suivant"
         self.man_inventory4 = "P = sauvegarde"
         self.inventory_index = 0
 
@@ -427,7 +427,7 @@ class Game:
                             pygame.quit()
                             return
 
-    # méthodes relatives à l'inventaire ----------------------------------------------------
+    # methodes relatives a l'inventaire ----------------------------------------------------
     def handle_inventory_input(self, pressed):
         if self.can_handle_inventory_input:
 
@@ -512,7 +512,7 @@ class Game:
             self.screen.blit(n, (85, 60))
             n = self.font.render("1   Pastis                               10$", False, (0, 0, 0))
             self.screen.blit(n, (85, 185))
-            n = self.font.render("2   Canne à pêche               50$", False, (0, 0, 0))
+            n = self.font.render("2   Canne a pêche               50$", False, (0, 0, 0))
             self.screen.blit(n, (85, 305))
             n = self.font.render("3   Vieille Cara                     13$", False, (0, 0, 0))
             self.screen.blit(n, (85, 425))
@@ -607,7 +607,7 @@ class Game:
         if self.TV_opened:
             self.screen.blit(self.TV_display, (25, 25))
 
-    # méthodes relatives aux combats ------------------------------------------------------------------
+    # methodes relatives aux combats ------------------------------------------------------------------
     def show_fight(self):
         acc = 0
         acc2 = 0
