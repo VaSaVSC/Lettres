@@ -94,7 +94,7 @@ class Fight:
                 if n < 1:
                     n = 1
                 source.stats.hp -= n
-                source.stats.ad *= 2
+                source.stats.ap *= 2
             elif attack == "Non habes":
                 if rd.randint(1, 10) > 9:
                     target.stats.hp -= target.stats.hp
