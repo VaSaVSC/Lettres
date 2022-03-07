@@ -231,7 +231,7 @@ class MapManager:
             # items directement presents sur la carte
             if obj.type == "item1" or obj.type == "coffre":
                 items.append(Item(obj.name, True, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
-            # items qui apparaîtront suite a la completion d'une quête
+            # items qui apparaitront suite a la completion d'une quête
             if obj.type == "item2":
                 items.append(Item(obj.name, False, pygame.Rect(obj.x, obj.y, obj.width, obj.height), obj.type))
             # items utilisables en combat, et directement presents sur la carte

@@ -748,7 +748,7 @@ class Game:
                     elif not status1 and status2:
                         status2 = False
                 if not status1 and not status2 and status:
-                    n = self.font_fight2.render("Le poison ou la brûlure agit.", False, (0, 0, 0))
+                    n = self.font_fight2.render("Le poison ou la brulure agit.", False, (0, 0, 0))
                     self.screen.blit(n, (self.X_POS, self.Y_POS + 110))
                 if pygame.time.get_ticks() - t0 > 5000:
                     if (self.player.status == "sleep" or self.player.status == "freeze") and self.player.sleep > 0:
