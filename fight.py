@@ -210,4 +210,4 @@ class Fight:
         elif attack == "Estafette":
             source.stats.hp += 10
             source.stats.ad += 5
-        print(n)
+        #print(n)

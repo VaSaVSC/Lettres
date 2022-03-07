@@ -180,14 +180,19 @@ class Game:
                         self.handle_store_input(event.key)
                     elif event.key == pygame.K_e and self.store_opened == False and self.TV_opened == False:
                         self.close_open_inventory()
-                    elif event.key == pygame.K_w:
-                        self.map_manager.launch_fight()
-                        self.close_open_fight()
+                    #elif event.key == pygame.K_w:
+                    #    self.map_manager.launch_fight()
+                    #    self.close_open_fight()
                     elif event.key == pygame.K_z or event.key == pygame.K_s or \
                             event.key == pygame.K_a or event.key == pygame.K_p:
                         self.handle_inventory_input(event.key)
-                    #elif event.key == pygame.K_l:
-                        #self.player.parch = 9
+                    #cheat code
+                    elif event.key == pygame.K_COMMA:
+                        self.player.parch = 9
+                    elif event.key == pygame.K_DOLLAR and self.player.gold < 989:
+                        self.player.gold += 10
+                    elif event.key == pygame.K_TAB and self.player.xp < 989:
+                        self.player.xp += 10
                 elif event.type == self.fight_event.type:
                     self.close_open_fight()
 
@@ -579,8 +584,8 @@ class Game:
                 self.player.gold -= 13
 
             if pressed == pygame.K_9 and self.player.gold >= 500 and self.player.store_ok == 0:
-                pastis = Item("parch", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
-                self.inventory.add_item(pastis)
+                #pastis = Item("parch", False, pygame.rect.Rect(-10, -10, 1, 1), "item2")
+                #self.inventory.add_item(pastis)
                 self.player.gold -= 500
                 self.player.parch += 1
                 self.player.store_ok += 1
@@ -775,7 +780,7 @@ class Game:
                     if event.key == pygame.K_SPACE and self.map_manager.fight.fight_index < 1:
                         self.map_manager.fight.fight_index = 1
                     elif self.map_manager.fight.fight_index == 1 and \
-                            (event.key == pygame.K_a or event.key == pygame.K_z or event.key == pygame.K_e):
+                            (event.key == pygame.K_a or event.key == pygame.K_e): #or event.key == pygame.K_z
                         if event.key == pygame.K_a:
                             self.map_manager.fight.fight_index = 2
                         elif event.key == pygame.K_z:
