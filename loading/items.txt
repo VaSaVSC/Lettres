@@ -21,7 +21,7 @@ Jolie robe;
 Parfaite pour une soirée
 mondaine.
 
-télécommande:
+telecommande:
 Télécommande;
 Il y a plein de boutons
 sur ce truc.
@@ -76,7 +76,7 @@ sachet:
 Sachet;
 Ce sachet à l'air bien rempli.
 
-trésor:
+tresor:
 Trésor;
 Il faudrait l'ajouter
 à mon portefeuille.
@@ -118,7 +118,7 @@ richter:
 Richter;
 Enfin la bonne échelle!
 
-prépuce:
+prepuce:
 Petit prépuce;
 Heuuuuuu, pourquoi avoir ça
 sur soi???

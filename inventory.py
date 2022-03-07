@@ -65,7 +65,7 @@ def use_item(item, player, inventory):
     if item.name == "sachet":
         player.gold += rd.randint(1, 10)
         return 1
-    if item.name == "trésor":
+    if item.name == "tresor":
         player.gold += rd.randint(15, 40)
         return 1
     if item.name == "diamant":

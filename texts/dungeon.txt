@@ -13,5 +13,5 @@ ahahah
 sachet:
 Gling Gling ce sachet à l'air bien rempli.
 
-trésor:
+tresor:
 Waw un trésor qui brille.

@@ -432,7 +432,7 @@
   <object id="71" name="w1_plage_exitP" x="187.333" y="746.667">
    <point/>
   </object>
-  <object id="72" name="télécommande" type="item1" x="191.333" y="346" width="14.6667" height="16"/>
+  <object id="72" name="telecommande" type="item1" x="191.333" y="346" width="14.6667" height="16"/>
   <object id="73" name="sachet" type="item1" x="327.333" y="306.667" width="16" height="20.6667"/>
  </objectgroup>
  <objectgroup id="13" name="PNJPaths">

@@ -12,7 +12,7 @@ Vous avez trouvez du vide !
 claude0:
 Jui tout plein :§
 
-télécommande:
+telecommande:
 Waw une télécomande !
 
 sachet:

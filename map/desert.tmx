@@ -449,7 +449,7 @@
 </data>
  </layer>
  <objectgroup id="11" name="PNJ">
-  <object id="85" name="chloé_path1" x="131.5" y="890.5" width="23.5" height="25.5"/>
+  <object id="85" name="chloe_path1" x="131.5" y="890.5" width="23.5" height="25.5"/>
  </objectgroup>
  <objectgroup id="3" name="collision">
   <object id="1" type="collisions" x="1.33333" y="1.33333" width="14.6667" height="525.333"/>

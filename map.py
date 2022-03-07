@@ -115,7 +115,7 @@ class MapManager:
             Portal(origin="desert", origin_point="des_ib_enter",
                    dest="ice_beach", dest_point="des_ib_enterP")
         ], pnjs=[
-            PNJ("chloé", nb_points=1, speed=0)
+            PNJ("chloe", nb_points=1, speed=0)
         ], level=2, default_layer=3)
 
         self.register_map("ice_world", portals=[
@@ -283,7 +283,7 @@ class MapManager:
                     self.launch_fight(monster_t="zoz")
                 elif sprite.name == "darkgob":
                     self.launch_fight(monster_t="darkgob")
-                elif sprite.name == "chloé" and self.inventory.contains("richter"):
+                elif sprite.name == "chloe" and self.inventory.contains("richter"):
                     sprite.mode = "1"
                     for i in self.inventory.items:
                         if i.name == "richter":
@@ -312,7 +312,7 @@ class MapManager:
     def check_interactive_obj_collisions(self, dialog_box):
         for obj in self.get_map().interactive_obj:
             if obj.rect.colliderect(self.player.rect):
-                if obj.name == "TV" and self.inventory.contains("télécommande"):
+                if obj.name == "TV" and self.inventory.contains("telecommande"):
                     return 1
                 else:
                     dialog_box.execute(obj.refact_name, False, obj.dialog)
