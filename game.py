@@ -189,7 +189,7 @@ class Game:
                     #cheat code
                     elif event.key == pygame.K_DOLLAR and self.player.gold < 989:
                         self.player.gold += 10
-                    elif event.key == pygame.K_TAB and self.player.xp < 989:
+                    elif event.key == pygame.K_RIGHTPAREN and self.player.xp < 989:
                         self.player.xp += 10
                 elif event.type == self.fight_event.type:
                     self.close_open_fight()
