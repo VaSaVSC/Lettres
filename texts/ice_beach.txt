@@ -1,11 +1,11 @@
 door:
-La porte est fermée...
+La porte est fermee...
 
 terreriche:
-Mauvaise échelle...
+Mauvaise echelle...
 
 quentin0:
-Il faut que je rende 10e à Zélie :(
+Il faut que je rende 10e a Zelie :(
 Fais le pour moi!
 
 prepuce:

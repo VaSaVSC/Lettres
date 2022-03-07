@@ -1,9 +1,1 @@
-self.map_manager.current_map = 'ice_beach'
-self.map_manager.maps['start'].items[0].should_appear = False
-self.map_manager.maps['start'].group.remove(self.map_manager.maps['start'].items[0])
-self.map_manager.maps['world1'].items[1].should_appear = False
-self.map_manager.maps['world1'].group.remove(self.map_manager.maps['world1'].items[1])
-self.map_manager.maps['world1'].items[3].should_appear = False
-self.map_manager.maps['world1'].group.remove(self.map_manager.maps['world1'].items[3])
-self.map_manager.maps['plage'].items[2].should_appear = False
-self.map_manager.maps['plage'].group.remove(self.map_manager.maps['plage'].items[2])
+self.map_manager.current_map = 'dungeon'

@@ -1,19 +1,19 @@
 panel1:
-Bah alors le Gobz, on était encore plein hier?!?
-Pas grave, je suis là pour te remémorer le tout!
-Comme tu devrais le savoir, le vil démon Calvoche
-cherche à détruire le monde en subtilisant la vie
+Bah alors le Gobz, on etait encore plein hier?!?
+Pas grave, je suis la pour te rememorer le tout!
+Comme tu devrais le savoir, le vil demon Calvoche
+cherche a detruire le monde en subtilisant la vie
 de tous les chauves!
-Dans ce but, il a réduit en miette les deux antiques
+Dans ce but, il a reduit en miette les deux antiques
 parchemins contenant la solution contre la calvitie...
 Suite: voir panneau 2.
 
 panel2:
-Ces parchemins, déguisés en "lettres de motivation"
-par deux clampins dénommés Choupi et Sgt Mayo,
-ont ainsi été morcelés et dispersés à travers le monde!
-L'humanité toute entière (sauf les chevelus du coup)
-est derrière toi!
+Ces parchemins, deguises en "lettres de motivation"
+par deux clampins denommes Choupi et Sgt Mayo,
+ont ainsi ete morceles et disperses a travers le monde!
+L'humanite toute entiere (sauf les chevelus du coup)
+est derriere toi!
 Retrouve les morceaux des parchemins au plus vite!
 
 pizza:

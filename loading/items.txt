@@ -1,15 +1,15 @@
 old_carapils:
 Vieille Cara;
-Une bière blonde excellente,
+Une biere blonde excellente,
 dont le goût a malheureusement
-été altéré par le temps.
+ete altere par le temps.
 Son effet sur l'organisme
-est aléatoire.
+est aleatoire.
 
 null:
 Vide compact;
 Du vide, donc pas grand
-chose d'intéressant...
+chose d'interessant...
 
 pizza:
 Bout de pizza;
@@ -18,11 +18,11 @@ Un grand morceau de pizza
 
 robe:
 Jolie robe;
-Parfaite pour une soirée
+Parfaite pour une soiree
 mondaine.
 
 telecommande:
-Télécommande;
+Telecommande;
 Il y a plein de boutons
 sur ce truc.
 
@@ -34,7 +34,7 @@ un peu de chance.
 
 pastis:
 Pastis;
-Beurk c'est dégeu.
+Beurk c'est degeu.
 
 potion:
 Potion;
@@ -49,7 +49,7 @@ des vis.
 citron:
 Citron frais;
 Miam !
-Très utile pour les
+Tres utile pour les
 Morjitos.
 
 anguille:
@@ -74,12 +74,12 @@ le tournevis.
 
 sachet:
 Sachet;
-Ce sachet à l'air bien rempli.
+Ce sachet a l'air bien rempli.
 
 tresor:
-Trésor;
+Tresor;
 Il faudrait l'ajouter
-à mon portefeuille.
+a mon portefeuille.
 
 monocycle:
 Monocycle;
@@ -92,21 +92,21 @@ Waw un diamant ça vaut
 
 parch:
 Parchemin;
-Ajoute-le à ta collection.
+Ajoute-le a ta collection.
 
 canne:
-Canne à pêche;
+Canne a pêche;
 Un objet super utile!
 
 terreriche:
 Terre riche;
-Une échelle au nom ambigu.
-Va voir près des bateaux!
+Une echelle au nom ambigu.
+Va voir pres des bateaux!
 
 papier:
 Vieux papier;
 Dans un bar, il y a
-une échelle!
+une echelle!
 
 presque:
 Un pas de bol;
@@ -116,9 +116,9 @@ bien des choses.........
 
 richter:
 Richter;
-Enfin la bonne échelle!
+Enfin la bonne echelle!
 
 prepuce:
-Petit prépuce;
+Petit prepuce;
 Heuuuuuu, pourquoi avoir ça
 sur soi???

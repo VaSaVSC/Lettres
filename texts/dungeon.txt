@@ -11,7 +11,7 @@ d0:
 ahahah
 
 sachet:
-Gling Gling ce sachet à l'air bien rempli.
+Gling Gling ce sachet a l'air bien rempli.
 
 tresor:
-Waw un trésor qui brille.
+Waw un tresor qui brille.

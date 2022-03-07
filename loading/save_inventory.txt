@@ -1,8 +1,0 @@
-self.inventory.add_item(Item('pizza', False, pygame.Rect(0, 0, 0, 0), 'item3'))
-self.inventory.items[0].number = 2
-self.inventory.add_item(Item('sachet', False, pygame.Rect(0, 0, 0, 0), 'item1'))
-self.inventory.items[1].number = 1
-self.inventory.add_item(Item('monocycle', False, pygame.Rect(0, 0, 0, 0), 'item2'))
-self.inventory.items[2].number = 1
-self.inventory.add_item(Item('null', False, pygame.Rect(0, 0, 0, 0), 'item1'))
-self.inventory.items[3].number = 1

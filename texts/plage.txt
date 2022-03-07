@@ -1,5 +1,5 @@
 papier:
-Pas d'échelle :§
+Pas d'echelle :§
 
 zelie0:
 Rend mon argent!

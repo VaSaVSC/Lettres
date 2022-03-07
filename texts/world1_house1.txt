@@ -10,7 +10,7 @@ old_carapils:
 Vous avez trouvez une vieille Cara !
 
 TV:
-La télé est éteinte...
+La tele est eteinte...
 
 TV1:
-Bienvenue à "N'oubliez pas les paroles !!!"
+Bienvenue a "N'oubliez pas les paroles !!!"

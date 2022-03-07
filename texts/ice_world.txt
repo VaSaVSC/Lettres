@@ -6,10 +6,10 @@ Zone de pêche, respectez le calme ambiant!
 
 diamant:
 Ho un diamant !
-Il était bien caché.
+Il etait bien cache.
 
 presque:
-Regarde derrière les arbres...
+Regarde derriere les arbres...
 
 richter:
 YESSSS!!!!!

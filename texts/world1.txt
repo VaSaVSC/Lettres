@@ -13,10 +13,10 @@ claude0:
 Jui tout plein :§
 
 telecommande:
-Waw une télécomande !
+Waw une telecomande !
 
 sachet:
-Gling Gling ce sachet à l'air bien rempli.
+Gling Gling ce sachet a l'air bien rempli.
 
 monocycle:
-Ho un vélo à une roue !
+Ho un velo a une roue !
