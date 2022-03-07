@@ -113,7 +113,7 @@ class Fight:
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
-                if target.status != "" and rd.randint(1, 10) > 5:
+                if target.status == "" and rd.randint(1, 10) > 5:
                     target.status = "burn"
                     target.stats.ad -= target.stats.ad/4
             elif attack == "Patate de forain":
