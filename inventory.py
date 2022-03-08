@@ -54,24 +54,23 @@ def use_item(item, player, inventory):
             if player.life < player.max_life:
                 player.life += 1
         return 1
-    if item.name == "robe":
+    elif item.name == "robe":
         return 0
-    if item.name == "pizza":
-        #inventory.remove_item(item)
-        player.stats.hp = player.fight_stats.hp
+    elif item.name == "pizza":
+        player.xp += 3
         return 1
-    if item.name == "null":
+    elif item.name == "null":
         return 1
-    if item.name == "sachet":
+    elif item.name == "sachet":
         player.gold += rd.randint(1, 10)
         return 1
-    if item.name == "tresor":
+    elif item.name == "tresor":
         player.gold += rd.randint(15, 40)
         return 1
-    if item.name == "diamant":
+    elif item.name == "diamant":
         player.gold += 500
         return 1
-    if item.name == "monocycle":
+    elif item.name == "monocycle":
         if player.mono == False:
             player.name = "gobmono"
             player.mono_switch()
@@ -83,8 +82,22 @@ def use_item(item, player, inventory):
             player.speed = 3
             player.mono = False
         return 0
-    if item.name == "pastis":
+    elif item.name == "pastis":
         player.life -= 1
+        return 1
+    elif item.name == "lotion":
+        if rd.randint(1,10) == 3:
+            if 1 <= player.life < 5:
+                player.life += 1
+        return 1
+    elif item.name == "citron":
+        if rd.randint(1,10) > 5:
+            player.gold += 30
+        else:
+            player.gold += 5
+        return 1
+    elif item.name == "anguille":
+        player.xp += 1
         return 1
 
 

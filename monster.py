@@ -76,10 +76,7 @@ class Monster:
         self.status = ""
 
     def monster_level_range(self, level):
-        if level == 1:
-            return {1, 2}
-        else:
-            return {level, level + 1, level + 2}
+        return {level, level + 1}
 
     def choose_attack(self):
         rand = rd.randint(0, 3)

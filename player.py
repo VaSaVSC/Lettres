@@ -67,7 +67,7 @@ class Player(Entity):
         self.attacks = ["Une bonne Trappiste", "Sieste strategique", "Lancer de gobelet", "Jus du Coq"]
         self.xp = 0
         self.level = 1
-        self.xp_needed_to_level_up = 50
+        self.xp_needed_to_level_up = 30
         self.status = ""
         self.fight_image = pygame.image.load("./fight_sprites/gob.png")
         self.fight_image = pygame.transform.scale(self.fight_image, (350, 350))
@@ -104,7 +104,7 @@ class Player(Entity):
 
     def xp_needed(self):
         self.xp = 0
-        self.xp_needed_to_level_up = 50 * self.level
+        self.xp_needed_to_level_up = 30 * self.level
 
     def mono_switch(self):
         self.sprite_sheet = pygame.image.load(f"./sprites/{self.name}{self.mode}.png")

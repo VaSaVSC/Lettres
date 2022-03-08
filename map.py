@@ -362,7 +362,7 @@ class MapManager:
             rand = rd.randint(0, len(self.get_map().monsters) - 1)
             m = self.get_map().monsters[rand]
             monster = self.monsters[m]
-            #monster.level = self.get_map().level
+            monster.level = self.get_map().level
             monster.real_stats()
             self.player.fight_stats = deepcopy(self.player.stats)
             self.fight = Fight(self.player, monster)

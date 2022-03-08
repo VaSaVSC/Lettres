@@ -95,7 +95,7 @@ Parchemin;
 Ajoute-le a ta collection.
 
 canne:
-Canne a pêche;
+Canne a peche;
 Un objet super utile!
 
 terreriche:
@@ -105,7 +105,7 @@ Va voir pres des bateaux!
 
 papier:
 Vieux papier;
-Dans un bar, il y a
+Pres d'un bar, il y a
 une echelle!
 
 presque:

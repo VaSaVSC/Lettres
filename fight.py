@@ -60,13 +60,13 @@ class Fight:
                 source.stats.hp += (source.fight_stats.hp - source.stats.hp) / 4
             elif attack == "Lancer de gobelet":
                 # n = int(np.floor(source.stats.ad / 3 - self.dmg_blocked(target.stats.armor)))
-                n = int(np.floor(self.dmg_blocked(source.stats.ad / 3, target.stats.armor)))
+                n = int(np.floor(self.dmg_blocked(source.stats.ad / 2, target.stats.armor)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n
             elif attack == "Jus du Coq":
                 # n = int(np.floor(source.stats.ap / 2 - self.dmg_blocked(target.stats.rm)))
-                n = int(np.floor(self.dmg_blocked(source.stats.ap / 2, target.stats.rm)))
+                n = int(np.floor(self.dmg_blocked(source.stats.ap / 3, target.stats.rm)))
                 if n < 1:
                     n = 1
                 target.stats.hp -= n

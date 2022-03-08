@@ -2,16 +2,16 @@ null:
 Vous avez trouvez du vide !
 
 zoz0:
-ahah
+AHAHAHAHAHA
 
 darkgob0:
-ahaha
+MOUAHAHHAHA
 
 d0:
-ahahah
+HIHIHIHIHIHI
 
 sachet:
-Gling Gling ce sachet a l'air bien rempli.
+Gling gling ce sachet a l'air bien rempli.
 
 tresor:
 Waw un tresor qui brille.

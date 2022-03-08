@@ -6,10 +6,13 @@ Développement](https://www.youtube.com/c/Gravenilvectuto/videos)  for the tutor
 which help us a lot to start this game :)
 
 > ### Installation
+- VOUS LISEZ CECI SUR GITHUB:
 Soit vous avez git, dans ce cas un petit ***git clone***, autrement faudra télécharger le ***.zip***, puis faudra sans 
 doute utiliser ***pip install pygame***,
 ***pip install pytmx*** et ***pip install pyscroll*** qui sont des packages pas présents par défaut (je crois). Après,
 un simple ***python main.py*** et le jeu se lancera :) 
+- VOUS LISEZ CECI SUR LE PDF:
+Double-cliquez juste sur le fichier ***.exe***, le reste n'y touchez pas.
 
 > ### Commandes
 - Déplacement: flèches directionnelles ou ZQSD (ZQSD est préférable au vu des autres touches).
@@ -22,16 +25,19 @@ il faut l'utiliser dans l'inventaire (il ne disparaîtra pas contrairement aux a
 
 > ### Conseils
 - Le jeu devrait être stable, mais sauvegarder de temps en temps (à faire quand on est dans l'inventaire),
-semble être une bonne idée, on ne sait jamais ^^'
+semble être une bonne idée, on ne sait jamais ^^'; par ailleurs, si vous perdez toutes vos vies (représentées par 5 
+mèches de cheveux) vous perdrez et ne pourrez que: soit recommencer, soit retourner à la précédente sauvegarde, donc 
+vraiment n'hésitez pas à sauvegarder de temps en temps :)
 - Les premiers panneaux du jeu expliquent le scénario.
 - Pour gagner, il faut réunir les 9 parchemins (en réussissant les quêtes et en battant les 3 boss).
-- On est coquins donc on a caché des objets derrières des éléments de décors :3
+- On est coquins donc on a caché des objets derrières des éléments de décors :3 (surtout derrière les arbres enneigés.
 - Certaines quêtes étaient prévues pour être exécutées en "live", mais le jeu peut se terminer quand même:
 une fois la TV allumée, appuyez sur "=", puis espace pour l'éteindre; parlez à Thib vous donnent directement un parchemin.
 - Lors des combats, commencez par appuyer sur la touche espace, puis A pour attaquer (puis les touches de 1 à 4
 au dessus du clavier pour choisir l'attaque), ou E pour fuir (plus les monstres ont un niveau élevé,
 moins vous avez de chance de vous échapper); nous n'avons pas implémenté les objets en combats.
 - Les monstres sont de plus en plus fort au fur à mesure des mondes.
+- Dans le donjon, les monstres ont peur des murs......... #ABONENTENDEUR
 - Vous pouvez marcher sur la glace.
 - En combat, le texte avec les noms, HP et LVL change de couleur en fonction du status:
   - Noir: aucun status particulier;
@@ -43,7 +49,8 @@ moins vous avez de chance de vous échapper); nous n'avons pas implémenté les 
 - Utiliser les sachets d'or, les trésors ou le diamant dans l'inventaire ajoute direct des sous dans la bourse.
 - Les quêtes de Chloé et Andréas se réalisent lorsqu'on vient leur parler avec un certain objet dans l'inventaire:
 leurs lignes de dialogues changeront alors, et vous obtiendrez un parchemin.
-- Le parchemin acheté au magasin reste dans l'inventaire mais n'est pas utilisable.
+- Si les points de vie affichés d'un monstre valent 0, c'est juste parce que on n'affiche que des entiers, et donc les
+vrais points de vie sont juste légèrement supérieurs à 0 en réalité, pas de panique :)
 
 > ### Attaques
 Lorsque le terme "possibilité" est utilisé ci-dessous, c'est qu'il y a une chance aléatoire que l'événement en question

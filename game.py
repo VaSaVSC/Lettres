@@ -455,19 +455,19 @@ class Game:
     def blit_inventory(self, index):
         name = self.inventory.items[index].refact_name
         name = self.font.render(name, False, (0, 0, 0))
-        self.screen.blit(name, (120, 200))
+        self.screen.blit(name, (125, 300))
         number = self.inventory.items[index].number
         n = str(number)
         numb = self.font.render(n, False, (0, 0, 0))
-        self.screen.blit(numb, (300, 200))
+        self.screen.blit(numb, (305, 300))
         info = self.inventory.items[index].info
         for i in range(len(info)):
             x = self.font.render(info[i], False, (0, 0, 0))
-            self.screen.blit(x, (380, 200 + 20 * i))
+            self.screen.blit(x, (385, 300 + 20 * i))
 
     def show_inventory(self):
         if self.inventory_opened:
-            self.screen.blit(self.inventory_display, (40, 100))
+            self.screen.blit(self.inventory_display, (50, 200))
             self.screen.blit(self.box, (self.X_POS, self.Y_POS))
             n = self.font.render(self.man_inventory1, False, (0, 0, 0))
             self.screen.blit(n, (self.X_POS + 50, self.Y_POS + 40))
@@ -833,13 +833,9 @@ class Game:
                 if self.player.stats.hp <= 0:
                     self.player.life -= 1
                 else:
-                    n = self.map_manager.fight.monster.level - self.player.level
-                    if self.map_manager.fight.monster.level*2 + n <= 0:
-                        self.player.xp += 1
-                        self.player.gold += 1
-                    else:
-                        self.player.xp += self.map_manager.fight.monster.level*2 + n
-                        self.player.gold += self.map_manager.fight.monster.level * 2 + n
+                    n = self.xp_and_gold_won(self.player.level, self.map_manager.fight.monster.level)
+                    self.player.xp += n
+                    self.player.gold += n
                     if self.player.xp >= self.player.xp_needed_to_level_up:
                         self.player.level += 1
                         self.player.base_stats_()
@@ -857,6 +853,15 @@ class Game:
                 self.player.base_stats_()
                 self.map_manager.fight.monster.base_stats_()
                 self.close_open_fight()
+
+    def xp_and_gold_won(self, player_level, monster_level):
+        if player_level <= monster_level:
+            return 4*monster_level
+        else:
+            n = (4-player_level)
+            if n <= 0:
+                n = 1
+            return n*monster_level
 
     def close_open_fight(self):
         if self.fighting:

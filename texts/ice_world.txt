@@ -1,8 +1,8 @@
 frans0:
-Chuuuuuuuuut ! Je pêche !
+Chuuuuuuuuut ! Je peche !
 
 panel:
-Zone de pêche, respectez le calme ambiant!
+Zone de peche, respectez le calme ambiant!
 
 diamant:
 Ho un diamant !
@@ -12,7 +12,7 @@ presque:
 Regarde derriere les arbres...
 
 richter:
-YESSSS!!!!!
+YESSSS!!!!! RICHTER GANG GANG
 
 pizza:
 Vous trouvez un morceau de pizza !
